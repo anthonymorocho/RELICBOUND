@@ -29,6 +29,9 @@ namespace BeforeItWasYou.Tests
             var folder = Path.Combine(Application.temporaryCachePath, "TestSaves");
             if (Directory.Exists(folder)) Directory.Delete(folder, true);
             GameServices.Initialize(folder);
+            // En el editor sin ventana de juego enfocada, el teclado iría al editor: se envía todo al juego.
+            InputSystem.settings.editorInputBehaviorInPlayMode = InputSettings.EditorInputBehaviorInPlayMode.AllDeviceInputAlwaysGoesToGameView;
+            InputSystem.settings.backgroundBehavior = InputSettings.BackgroundBehavior.IgnoreFocus;
             _keyboard = InputSystem.AddDevice<Keyboard>();
             yield return null;
         }

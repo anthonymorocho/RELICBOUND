@@ -147,6 +147,7 @@ namespace BeforeItWasYou.UI
             {
                 ShowMain(false);
                 _credits.Open(() => ShowMain(true));
+                SetAdjustHint(false);
             });
             AddMain(container, "SALIR", onQuit);
             _mainList.SelectFirst();
@@ -188,6 +189,10 @@ namespace BeforeItWasYou.UI
         {
             _root.Q("footer-adjust-key").EnableInClassList(Hidden, !visible);
             _root.Q("footer-adjust").EnableInClassList(Hidden, !visible);
+            // Esc solo tiene sentido dentro de un submenú (Opciones, Créditos).
+            var inSubmenu = _options.IsOpen || _credits.IsOpen;
+            _root.Q("footer-back-key").EnableInClassList(Hidden, !inSubmenu);
+            _root.Q("footer-back").EnableInClassList(Hidden, !inSubmenu);
         }
 
         // ---------- Confirmaciones ----------

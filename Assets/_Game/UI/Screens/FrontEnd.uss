@@ -72,8 +72,8 @@
 .title {
     -unity-font: url("project://database/Assets/_Game/UI/Fonts/BebasNeue-Regular.ttf");
     -unity-font-definition: initial;
-    font-size: 138px;
-    letter-spacing: 26px;
+    font-size: 132px;
+    letter-spacing: 15px;
     color: rgb(238, 234, 226);
     margin: 0;
     padding: 0;
@@ -82,11 +82,11 @@
 }
 
 .title--second {
-    margin-top: -26px;
+    margin-top: -30px;
 }
 
 .accent-line {
-    width: 560px;
+    width: 500px;
     height: 4px;
     margin-top: 6px;
     background-image: url("project://database/Assets/_Game/UI/Textures/ui_accent_line.png");
