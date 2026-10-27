@@ -15,9 +15,10 @@ namespace Relicbound.EditorTools
         [MenuItem("Relicbound/Generar escena Boot")]
         public static void Build()
         {
-            var panelSettings = UiSetup.Run();
             ArtImportSetup.EnsureFolder("Assets/Relicbound/Scenes");
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+            // Después de NewScene: crear una escena descarga los assets sin referencias y dejaría esta referencia vacía.
+            var panelSettings = UiSetup.Run();
 
             var cameraGo = new GameObject("Main Camera") { tag = "MainCamera" };
             var camera = cameraGo.AddComponent<Camera>();
