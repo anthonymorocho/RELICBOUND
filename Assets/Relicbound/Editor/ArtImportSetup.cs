@@ -157,13 +157,31 @@ namespace Relicbound.EditorTools
             EnsureFlat("M_Rope", "#8C6E3E", 0.1f);
             EnsureFlat("M_Water", "#2E4A5C", 0.85f);
 
-            // Vegetación y rocas: color plano estilizado (mismos nombres que rb_nature.py).
-            EnsureFlat("M_Bark", "#5A3E2B", 0.1f);
-            EnsureFlat("M_Leaf", "#557F30", 0.15f);
-            EnsureFlat("M_LeafLight", "#648E36", 0.15f);
-            EnsureFlat("M_Pine", "#2F5A3A", 0.15f);
-            EnsureFlat("M_PineLight", "#3D6E45", 0.15f);
-            EnsureFlat("M_Rock", "#8C877C", 0.1f);
+            // Vegetación y rocas: el color va en los vértices (AO horneada en rb_nature.py); viento solo en follaje.
+            EnsureFoliage("M_Bark", 0f, 0.1f);
+            EnsureFoliage("M_Leaf", 1f, 0.12f);
+            EnsureFoliage("M_Pine", 0.6f, 0.12f);
+            EnsureFoliage("M_Rock", 0f, 0.08f);
+        }
+
+        public static Material EnsureFoliage(string name, float wind, float smoothness)
+        {
+            var path = $"{MaterialsFolder}/{name}.mat";
+            var shader = Shader.Find("Relicbound/Foliage");
+            var material = AssetDatabase.LoadAssetAtPath<Material>(path);
+            if (material == null)
+            {
+                material = new Material(shader);
+                AssetDatabase.CreateAsset(material, path);
+            }
+            material.shader = shader;
+            material.SetColor("_BaseColor", Color.white);
+            material.SetFloat("_Wind", wind);
+            material.SetFloat("_Smoothness", smoothness);
+            material.SetFloat("_Translucency", wind > 0f ? 0.3f : 0f);
+            material.enableInstancing = true;
+            EditorUtility.SetDirty(material);
+            return material;
         }
 
         public static Material EnsureFlat(string name, string hex, float smoothness)
