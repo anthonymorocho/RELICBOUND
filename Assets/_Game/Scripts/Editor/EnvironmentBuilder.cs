@@ -50,6 +50,7 @@ namespace BeforeItWasYou.EditorTools
                 {
                     // Recién aparcado en la entrada, algo torcido, con el morro hacia el portón.
                     var parked = MeshCopy(car, "Car_Daniel", architecture, new Vector3(2.15f, 0.02f, 4.75f), -2.5f, 1f);
+                    if (parked == null) throw new System.InvalidOperationException("SM_Car_Daniel.fbx no contiene malla.");
                     var collider = parked.AddComponent<BoxCollider>();
                     collider.center = new Vector3(0f, 0.7f, 0f);
                     collider.size = new Vector3(1.8f, 1.4f, 4.72f);
@@ -310,6 +311,12 @@ namespace BeforeItWasYou.EditorTools
             foreach (var t in asset.GetComponentsInChildren<Transform>(true))
             {
                 if (t.name == childName && t.GetComponent<MeshFilter>() != null) source = t;
+            }
+            // Un FBX de un solo objeto se importa con la malla en la raíz, que toma el nombre del archivo.
+            if (source == null)
+            {
+                var filters = asset.GetComponentsInChildren<MeshFilter>(true);
+                if (filters.Length == 1) source = filters[0].transform;
             }
             if (source == null) return null;
             var go = new GameObject(childName);
