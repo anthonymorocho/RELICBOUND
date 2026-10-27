@@ -5,6 +5,7 @@ using BeforeItWasYou.Player;
 using BeforeItWasYou.UI;
 using UnityEditor;
 using UnityEditor.SceneManagement;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
@@ -83,6 +84,7 @@ namespace BeforeItWasYou.EditorTools
             stepsSource.playOnAwake = false;
             stepsSource.spatialBlend = 0f;
             steps.AddComponent<BusVolume>().Configure(AudioBus.Effects, 0.7f);
+            steps.AddComponent<FootstepAudio>().Configure(controller, stepsSource, AudioAssets.FootstepBanks());
 
             // ---------- Cámara del menú ----------
             var menuGo = new GameObject("MenuCamera");
@@ -101,7 +103,7 @@ namespace BeforeItWasYou.EditorTools
             var uiSource = uiGo.AddComponent<AudioSource>();
             uiSource.playOnAwake = false;
             uiSource.ignoreListenerPause = true;
-            uiGo.AddComponent<UiSounds>().Configure(uiSource, null, null, null);
+            uiGo.AddComponent<UiSounds>().Configure(uiSource, AudioAssets.Clip("UI/UI_Select"), AudioAssets.Clip("UI/UI_Confirm"), AudioAssets.Clip("UI/UI_PanelClose"));
 
             var eventSystem = new GameObject("EventSystem");
             eventSystem.AddComponent<EventSystem>();
@@ -112,15 +114,35 @@ namespace BeforeItWasYou.EditorTools
             prologueSource.playOnAwake = false;
             prologueSource.loop = true;
             prologueSource.spatialBlend = 0f;
+            prologueSource.clip = AudioAssets.Clip("Ambience/AMB_Kitchen_RoomTone");
             prologueGo.AddComponent<BusVolume>().Configure(AudioBus.Ambience, 0.8f);
 
             var directorGo = new GameObject("EpisodeDirector");
             var director = directorGo.AddComponent<EpisodeDirector>();
             director.Configure(ui, controller, interactor, rig, environment.ArrivalSpawn, prologueSource);
+            directorGo.AddComponent<EpisodeState>().Configure(director);
             var phoneSource = directorGo.AddComponent<AudioSource>();
             phoneSource.playOnAwake = false;
             phoneSource.spatialBlend = 0f;
-            directorGo.AddComponent<ArrivalNarrative>().Configure(director, phoneSource, null);
+            directorGo.AddComponent<ArrivalNarrative>().Configure(director, phoneSource, AudioAssets.Clip("Props/PHONE_Vibrate"));
+
+            // Ambiente nocturno: grillos y viento, amortiguados dentro de la casa.
+            var ambienceGo = new GameObject("Ambience");
+            var ambience = new List<AudioSource>();
+            foreach (var (clip, volume) in new[] { ("Ambience/AMB_Night_Crickets", 0.55f), ("Ambience/AMB_Night_Wind", 0.7f) })
+            {
+                var child = new GameObject(clip.Substring(clip.LastIndexOf('/') + 1));
+                child.transform.SetParent(ambienceGo.transform, false);
+                var src = child.AddComponent<AudioSource>();
+                src.clip = AudioAssets.Clip(clip);
+                src.loop = true;
+                src.playOnAwake = true;
+                src.spatialBlend = 0f;
+                child.AddComponent<AudioLowPassFilter>().cutoffFrequency = 22000f;
+                child.AddComponent<BusVolume>().Configure(AudioBus.Ambience, volume);
+                ambience.Add(src);
+            }
+            ambienceGo.AddComponent<AmbienceZone>().Configure(ambience.ToArray(), new Bounds(new Vector3(9.5f, 1.6f, 12f), new Vector3(10f, 3.4f, 12f)));
             EditorUtility.SetDirty(director);
 
             EditorSceneManager.SaveScene(scene, ScenePath);

@@ -32,6 +32,7 @@ namespace BeforeItWasYou.EditorTools
             ConfigureTextures(TexturesFolder, 2048);
             ConfigureTextures(ModelsFolder, 1024);
             ConfigureSky();
+            AudioAssets.Configure();
             ExteriorMaterials.CreateAll();
             CreatePolyHavenMaterials();
             AssetDatabase.SaveAssets();

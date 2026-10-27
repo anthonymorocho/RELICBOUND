@@ -23,14 +23,14 @@ DOOR_H = 2.05
 
 # Habitaciones: nombre -> (x0, y0, x1, y1, suelo, material de suelo, material de pared)
 ROOMS = {
-    "Sala": (4.5, 6.0, 9.7, 10.5, FLOOR, "M_FloorWood", "M_WallSala"),
-    "Comedor": (9.7, 6.0, 14.5, 10.5, FLOOR, "M_FloorWood", "M_WallSala"),
-    "Pasillo": (8.5, 10.5, 9.7, 18.0, FLOOR, "M_FloorWood", "M_WallPasillo"),
-    "Dormitorio2": (4.5, 10.5, 8.5, 14.3, FLOOR, "M_FloorWood", "M_WallDorm2"),
-    "DormitorioElena": (4.5, 14.3, 8.5, 18.0, FLOOR, "M_FloorWood", "M_WallElena"),
-    "Cocina": (9.7, 10.5, 14.5, 15.0, FLOOR, "M_FloorKitchen", "M_WallKitchen"),
+    "Sala": (4.5, 6.0, 9.7, 10.5, FLOOR, "M_FloorWood", "M_InteriorWall"),
+    "Comedor": (9.7, 6.0, 14.5, 10.5, FLOOR, "M_FloorWood", "M_InteriorWall"),
+    "Pasillo": (8.5, 10.5, 9.7, 18.0, FLOOR, "M_FloorWood", "M_InteriorWall"),
+    "Dormitorio2": (4.5, 10.5, 8.5, 14.3, FLOOR, "M_FloorWood", "M_InteriorWall"),
+    "DormitorioElena": (4.5, 14.3, 8.5, 18.0, FLOOR, "M_FloorWood", "M_InteriorWall"),
+    "Cocina": (9.7, 10.5, 14.5, 15.0, FLOOR, "M_FloorKitchen", "M_InteriorWall"),
     "Bano": (9.7, 15.0, 11.9, 18.0, FLOOR, "M_FloorBath", "M_WallBath"),
-    "Lavadero": (11.9, 15.0, 14.5, 18.0, LAUNDRY, "M_FloorLaundry", "M_WallLaundry"),
+    "Lavadero": (11.9, 15.0, 14.5, 18.0, LAUNDRY, "M_FloorLaundry", "M_InteriorWall"),
 }
 
 
@@ -61,20 +61,20 @@ def walls():
     b = G.Builder("Partitions")
     door = lambda a0: (a0, a0 + 0.8, FLOOR, FLOOR + DOOR_H)
     # Sala | Dormitorio 2 (y = 10.5, x 4.5-8.5) y Comedor | Cocina con paso abierto.
-    partition(b, "x", 10.5, 4.5, 8.44, FLOOR, [], "M_WallSala", "M_WallDorm2")
-    partition(b, "x", 10.5, 9.76, 14.5, FLOOR, [(11.0, 11.9, FLOOR, FLOOR + 2.1)], "M_WallSala", "M_WallKitchen")
+    partition(b, "x", 10.5, 4.5, 8.44, FLOOR, [], "M_InteriorWall", "M_InteriorWall")
+    partition(b, "x", 10.5, 9.76, 14.5, FLOOR, [(11.0, 11.9, FLOOR, FLOOR + 2.1)], "M_InteriorWall", "M_InteriorWall")
     # Dormitorios | Pasillo (x = 8.5).
-    partition(b, "y", 8.5, 10.44, 18.0, FLOOR, [door(11.6), door(15.5)], "M_WallDorm2", "M_WallPasillo")
+    partition(b, "y", 8.5, 10.44, 18.0, FLOOR, [door(11.6), door(15.5)], "M_InteriorWall", "M_InteriorWall")
     # Dormitorio 2 | Elena (y = 14.3).
-    partition(b, "x", 14.3, 4.5, 8.44, FLOOR, [], "M_WallDorm2", "M_WallElena")
+    partition(b, "x", 14.3, 4.5, 8.44, FLOOR, [], "M_InteriorWall", "M_InteriorWall")
     # Pasillo | Cocina y Baño (x = 9.7).
-    partition(b, "y", 9.7, 10.44, 18.0, FLOOR, [door(11.2), door(16.1)], "M_WallPasillo", "M_WallKitchen")
+    partition(b, "y", 9.7, 10.44, 18.0, FLOOR, [door(11.2), door(16.1)], "M_InteriorWall", "M_InteriorWall")
     # Cocina | Baño y Lavadero (y = 15), puerta del lavadero con escalón.
-    partition(b, "x", 15.0, 9.76, 14.5, LAUNDRY, [(12.6, 13.4, LAUNDRY, FLOOR + DOOR_H)], "M_WallKitchen", "M_WallBath")
+    partition(b, "x", 15.0, 9.76, 14.5, LAUNDRY, [(12.6, 13.4, LAUNDRY, FLOOR + DOOR_H)], "M_InteriorWall", "M_WallBath")
     # Baño | Lavadero (x = 11.9).
-    partition(b, "y", 11.9, 15.06, 18.0, LAUNDRY, [], "M_WallBath", "M_WallLaundry")
+    partition(b, "y", 11.9, 15.06, 18.0, LAUNDRY, [], "M_WallBath", "M_InteriorWall")
     # Sala | Comedor: arco amplio con machones.
-    partition(b, "y", 9.7, 6.0, 10.44, FLOOR, [(6.45, 10.05, FLOOR, FLOOR + 2.25)], "M_WallSala", "M_WallSala")
+    partition(b, "y", 9.7, 6.0, 10.44, FLOOR, [(6.45, 10.05, FLOOR, FLOOR + 2.25)], "M_InteriorWall", "M_InteriorWall")
     return b.object()
 
 
@@ -287,15 +287,19 @@ def bedroom():
     return b.object()
 
 
+LAMPS = {"Sala": (7.1, 8.25), "Comedor": (12.1, 8.25), "Pasillo": (9.1, 14.2), "Dormitorio2": (6.5, 12.4),
+             "DormitorioElena": (6.5, 16.15), "Bano": (10.8, 16.4), "Lavadero": (13.2, 16.5), "Cocina": (12.1, 12.75)}
+
+
 def fixtures():
-    """Plafones (mismo diseño en todas las habitaciones salvo cocina) e interruptores junto a las puertas."""
-    b = G.Builder("Fixtures")
-    lamps = {"Sala": (7.1, 8.25), "Comedor": (12.1, 8.25), "Pasillo": (9.1, 14.2), "Dormitorio2": (6.5, 12.4),
-             "DormitorioElena": (6.5, 16.15), "Bano": (10.8, 16.4), "Lavadero": (13.2, 16.5)}
-    for name, (x, y) in lamps.items():
-        b.cylinder(x, y, CEIL - 0.02, CEIL, 0.09, "M_Trim", 20)
-        b.cylinder(x, y, CEIL - 0.11, CEIL - 0.02, 0.17, "M_LampShadeGlass", 24, r_top=0.12)
-    return b.object()
+    """Un plafón por habitación (objeto propio: su interruptor solo enciende ese)."""
+    objs = []
+    for name, (x, y) in LAMPS.items():
+        b = G.Builder("Lamp_" + name)
+        b.cylinder(x, y, CEIL - 0.02, CEIL, 0.09, "M_Baseboard", 20)
+        b.cylinder(x, y, CEIL - 0.11, CEIL - 0.02, 0.17, "M_LampShade", 24, r_top=0.12)
+        objs.append(b.object())
+    return objs
 
 
 SWITCHES = [
@@ -337,7 +341,7 @@ def interior_door():
 
 def main():
     G.clear_scene()
-    objs = floors_and_ceilings() + [walls(), trims(), kitchen(), bathroom(), laundry(), bedroom(), fixtures()]
+    objs = floors_and_ceilings() + [walls(), trims(), kitchen(), bathroom(), laundry(), bedroom()] + fixtures()
     G.export_fbx(objs, os.path.join(OUT, "SM_Interior.fbx"))
     G.export_fbx([interior_door()], os.path.join(OUT, "SM_Door_Interior_Leaf.fbx"))
     G.export_fbx([switch_plate("Switch")], os.path.join(OUT, "SM_Switch.fbx"))

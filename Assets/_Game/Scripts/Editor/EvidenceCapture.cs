@@ -24,6 +24,17 @@ namespace BeforeItWasYou.EditorTools
             foreach (Transform view in views.transform)
             {
                 if (!view.name.StartsWith("View_") && !view.name.StartsWith("Menu_")) continue;
+                // Interiores: con las luces de la casa encendidas (al llegar están apagadas).
+                var interiorLights = view.name.StartsWith("View_Int_") ? Object.FindObjectsByType<Light>(FindObjectsSortMode.None) : new Light[0];
+                var toggled = new System.Collections.Generic.List<Light>();
+                foreach (var l in interiorLights)
+                {
+                    if (!l.enabled && l.name.StartsWith("Light_") && l.transform.parent != null && l.transform.parent.name == "Interior")
+                    {
+                        l.enabled = true;
+                        toggled.Add(l);
+                    }
+                }
                 var go = new GameObject("EvidenceCamera");
                 go.transform.SetPositionAndRotation(view.position, view.rotation);
                 var camera = go.AddComponent<Camera>();
@@ -35,6 +46,7 @@ namespace BeforeItWasYou.EditorTools
                 data.antialiasing = AntialiasingMode.SubpixelMorphologicalAntiAliasing;
                 Capture(camera, 1920, 1080, Path.Combine(OutputFolder, view.name.ToLowerInvariant() + ".png"));
                 Object.DestroyImmediate(go);
+                foreach (var l in toggled) l.enabled = false;
             }
         }
 

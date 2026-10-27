@@ -12,7 +12,9 @@ Fecha: 2026-10-27 · Hito actual: **M00 Auditoría y baseline** → inicio de **
 - Escenas generadas por script: `L_Startup` (aviso de contenido + carga) y `L_E01_Arrival` (menú + episodio, `Player_Daniel` con los parámetros pedidos).
 
 ## En curso
-- Fachada nocturna, calle, porche y coche con materiales PBR CC0 para el fondo del menú (M01).
+- M01: fachada nocturna (casa de Elena, calle con farolas y cables, vecinos, vegetación, coche de Daniel) con materiales PBR CC0; revisión visual en capturas reales de Unity.
+- M02: interior completo (tabiques y puertas según el plano, suelos por superficie, cocina, baño, lavadero con el escalón, dormitorios amueblados con muebles CC0), luces de cada habitación con su interruptor, apagadas al llegar.
+- M03: teléfono con la conversación de Lucía (A1 y A2), objetos de misión (carpeta azul en la cómoda, cargador en la mesita, bolsa de ropa) y audio (pasos por superficie, puertas, interruptores, ambiente nocturno amortiguado dentro de casa).
 
 ## Pendiente de decisión del usuario
 - Nombre a mostrar en créditos (dirección/desarrollo). Por ahora los créditos solo listan motor, tipografías y assets de terceros.

@@ -41,10 +41,16 @@ namespace BeforeItWasYou.EditorTools
                     var go = MeshCopy(exterior, name, architecture, Vector3.zero, 0f, 1f);
                     if (go == null) continue;
                     go.AddComponent<MeshCollider>();
-                    if (name == "Site") go.AddComponent<SurfaceType>().Value = Surface.Concrete;
+                    if (name == "Site")
+                    {
+                        var surface = go.AddComponent<SurfaceType>();
+                        surface.Value = Surface.Concrete;
+                        surface.ByMaterial = true;
+                    }
                 }
                 MeshCopy(exterior, "Mailbox", architecture, new Vector3(4.3f, 0f, -1.75f), 0f, 1f)?.AddComponent<MeshCollider>();
                 BuildDoors(root);
+                InteriorBuilder.Build(root);
                 var car = AssetDatabase.LoadAssetAtPath<GameObject>(ArtImport.ModelsFolder + "/Vehicles/SM_Car_Daniel.fbx");
                 if (car != null)
                 {
@@ -77,6 +83,11 @@ namespace BeforeItWasYou.EditorTools
             Marker(markers, "View_Porch", new Vector3(6.55f, 1.62f, 2.2f), new Vector3(3f, 0f, 0f));
             Marker(markers, "View_Driveway", new Vector3(2.4f, 1.62f, 0.6f), new Vector3(4f, 12f, 0f));
             Marker(markers, "View_Backyard", new Vector3(7.2f, 1.62f, 23.8f), new Vector3(4f, 118f, 0f));
+            Marker(markers, "View_Int_Sala", new Vector3(5.0f, Floor + 1.62f, 6.7f), new Vector3(8f, 42f, 0f));
+            Marker(markers, "View_Int_Cocina", new Vector3(10.2f, Floor + 1.62f, 11.0f), new Vector3(10f, 60f, 0f));
+            Marker(markers, "View_Int_Elena", new Vector3(8.0f, Floor + 1.62f, 15.0f), new Vector3(12f, 300f, 0f));
+            Marker(markers, "View_Int_Lavadero", new Vector3(12.9f, Floor + 1.5f, 14.0f), new Vector3(14f, 10f, 0f));
+            Marker(markers, "View_Int_Pasillo", new Vector3(9.1f, Floor + 1.62f, 10.0f), new Vector3(4f, 0f, 0f));
             Marker(markers, "View_Gate", new Vector3(2.2f, 1.62f, 20.5f), new Vector3(3f, 180f, 0f));
             return new Result
             {
@@ -131,12 +142,13 @@ namespace BeforeItWasYou.EditorTools
             Door(doors, "Gate_Side", "SM_Gate_Side_Leaf", new Vector3(1.62f, 0f, 13.0f), 0f, 1.16f, 1.75f, 0.07f, "porton", DoorState.Closed);
         }
 
-        private static void Door(Transform parent, string name, string model, Vector3 hinge, float yaw, float width, float height, float thickness, string id, DoorState state)
+        public static void Door(Transform parent, string name, string model, Vector3 hinge, float yaw, float width, float height, float thickness, string id, DoorState state)
         {
             var go = new GameObject(name) { layer = Layers.Interactable };
             go.transform.SetParent(parent, false);
             go.transform.SetPositionAndRotation(hinge, Quaternion.Euler(0f, yaw, 0f));
-            var leafAsset = AssetDatabase.LoadAssetAtPath<GameObject>($"{ArtImport.ModelsFolder}/Exterior/{model}.fbx");
+            var leafPath = model.Contains("/") ? $"{ArtImport.ModelsFolder}/{model}.fbx" : $"{ArtImport.ModelsFolder}/Exterior/{model}.fbx";
+            var leafAsset = AssetDatabase.LoadAssetAtPath<GameObject>(leafPath);
             var leaf = new GameObject("Leaf") { layer = Layers.Interactable };
             leaf.transform.SetParent(go.transform, false);
             if (leafAsset != null)
@@ -160,7 +172,8 @@ namespace BeforeItWasYou.EditorTools
             source3d.maxDistance = 18f;
             source3d.playOnAwake = false;
             go.AddComponent<BusVolume>().Configure(AudioBus.Effects, 0.9f);
-            door.SetAudio(source3d, null, null);
+            var creaky = name == "Gate_Side" || name == "Door_Shed" || name == "Door_Service";
+            door.SetAudio(source3d, AudioAssets.Clip(creaky ? "Doors/DOOR_Creak" : "Doors/DOOR_Open"), AudioAssets.Clip("Doors/DOOR_Close"));
         }
 
         // ---------- Calle: postes con luminaria ----------
@@ -305,7 +318,7 @@ namespace BeforeItWasYou.EditorTools
         // ---------- Utilidades ----------
 
         /// <summary>Copia la malla de un hijo del FBX en un GameObject propio (sin depender de la jerarquía del modelo).</summary>
-        private static GameObject MeshCopy(GameObject asset, string childName, Transform parent, Vector3 position, float yaw, float scale)
+        public static GameObject MeshCopy(GameObject asset, string childName, Transform parent, Vector3 position, float yaw, float scale)
         {
             Transform source = null;
             foreach (var t in asset.GetComponentsInChildren<Transform>(true))

@@ -33,6 +33,10 @@ namespace BeforeItWasYou.EditorTools
                 text.Append("Poly Haven (polyhaven.com) · CC0 1.0\n");
                 text.Append(string.Join(", ", authors) + "\n\n");
             }
+            text.Append("SONIDO\n");
+            text.Append("Pasos: congusbongus (OpenGameArt) a partir de swuing, ceberation y Eelke (freesound) · CC BY 3.0\n");
+            text.Append("Ambiente, puertas e interruptores: wolfgang, bashar3a, cough-e, starninjas, wforster1, funnydude (OpenGameArt) · CC0\n");
+            text.Append("Interfaz: Kenney (kenney.nl) · CC0\n\n");
             text.Append("COCHE DE DANIEL\n");
             text.Append("Sedán por TopoSphere (sloyd.ai) · CC BY 4.0 · modificado\n\n");
             File.WriteAllText(OutputPath, text.ToString());

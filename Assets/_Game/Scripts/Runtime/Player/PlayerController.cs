@@ -150,11 +150,10 @@ namespace BeforeItWasYou.Player
             var stride = _crouched ? 0.55f : IsRunning ? 1.05f : 0.72f;
             if (_stepDistance < stride) return;
             _stepDistance = 0f;
-            var surface = Surface.Tile;
+            var surface = Surface.Concrete;
             if (Physics.Raycast(transform.position + Vector3.up * 0.3f, Vector3.down, out var hit, 1f, Layers.AllButPlayer, QueryTriggerInteraction.Ignore))
             {
-                var type = hit.collider.GetComponentInParent<SurfaceType>();
-                if (type != null) surface = type.Value;
+                surface = SurfaceType.Resolve(hit);
             }
             var loudness = SurfaceType.Loudness(surface) * (_crouched ? 0.35f : IsRunning ? 1.9f : 1f);
             Footstep?.Invoke(surface, loudness);
