@@ -44,7 +44,14 @@ namespace Relicbound.EditorTools
             AssetDatabase.SaveAssets();
             // Al crearse por primera vez, Unity recarga el asset al guardar: la instancia anterior deja de ser válida
             // y las escenas guardarían una referencia vacía. Se devuelve siempre la versión cargada de disco.
-            return AssetDatabase.LoadAssetAtPath<PanelSettings>(PanelSettingsPath);
+            var loaded = AssetDatabase.LoadAssetAtPath<PanelSettings>(PanelSettingsPath);
+            if (loaded == null)
+            {
+                AssetDatabase.ImportAsset(PanelSettingsPath, ImportAssetOptions.ForceSynchronousImport | ImportAssetOptions.ForceUpdate);
+                loaded = AssetDatabase.LoadAssetAtPath<PanelSettings>(PanelSettingsPath);
+            }
+            if (loaded == null) Debug.LogError("[Relicbound] No se pudo cargar PanelSettings tras crearlo/importarlo.");
+            return loaded;
         }
     }
 }

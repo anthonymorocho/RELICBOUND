@@ -16,8 +16,9 @@ namespace Relicbound.EditorTools
             {
                 ProjectBootstrap.Run();
                 ArtImportSetup.Run();
-                BootSceneBuilder.Build();
+                // Castle primero: deja creados y cargados los assets compartidos (PanelSettings) antes que Boot.
                 CastleSceneBuilder.Build();
+                BootSceneBuilder.Build();
                 EvidenceCapture.CaptureCastle();
                 EditorApplication.Exit(0);
             }
