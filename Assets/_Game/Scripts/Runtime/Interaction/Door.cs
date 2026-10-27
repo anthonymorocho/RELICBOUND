@@ -75,6 +75,13 @@ namespace BeforeItWasYou.Interaction
 
         private void Awake() => SetState(state, true);
 
+        /// <summary>Restaura el estado guardado (una puerta abierta con llave ya no vuelve a cerrarse con llave).</summary>
+        public void Restore(DoorState saved)
+        {
+            if (saved != DoorState.Locked) unlockWithKey = false;
+            SetState(saved, true);
+        }
+
         public override void Interact(Interactor interactor)
         {
             if (state == DoorState.Locked)

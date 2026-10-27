@@ -57,12 +57,23 @@ namespace BeforeItWasYou.Episode
                 if (f.Value) _flags.Add(f.Key);
             }
             foreach (var pickup in FindObjectsByType<Interaction.Pickup>(FindObjectsSortMode.None)) pickup.SyncWithState(this);
+            // Estado del mundo: puertas e interruptores tal como estaban al guardar.
+            foreach (var door in FindObjectsByType<Interaction.Door>(FindObjectsSortMode.None))
+            {
+                if (snapshot.Doors.TryGetValue(door.Id, out var saved) && Enum.TryParse(saved, out Interaction.DoorState state)) door.Restore(state);
+            }
+            foreach (var sw in FindObjectsByType<Interaction.LightSwitch>(FindObjectsSortMode.None))
+            {
+                if (snapshot.Switches.TryGetValue(sw.Id, out var on)) sw.Set(on, true);
+            }
         }
 
         private void Store(Snapshot snapshot)
         {
             snapshot.Items.AddRange(_items);
             foreach (var f in _flags) snapshot.Flags[f] = true;
+            foreach (var door in FindObjectsByType<Interaction.Door>(FindObjectsSortMode.None)) snapshot.Doors[door.Id] = door.State.ToString();
+            foreach (var sw in FindObjectsByType<Interaction.LightSwitch>(FindObjectsSortMode.None)) snapshot.Switches[sw.Id] = sw.On;
         }
     }
 }
