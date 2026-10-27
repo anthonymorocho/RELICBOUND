@@ -1,0 +1,66 @@
+name: Unity
+
+on:
+  push:
+    branches: [main, "claude/**"]
+    paths-ignore: ["docs/**", "**/*.md"]
+  workflow_dispatch:
+
+concurrency:
+  group: unity-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  setup-and-test:
+    name: Configurar y testear (EditMode)
+    runs-on: ubuntu-latest
+    environment: UNITY_LICENSE
+    timeout-minutes: 60
+    env:
+      UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+      UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-linux-${{ hashFiles('Packages/manifest.json', 'ProjectSettings/ProjectVersion.txt') }}
+          restore-keys: Library-linux-
+
+      - name: Configurar proyecto (URP, Player, Input)
+        uses: game-ci/unity-builder@v4
+        with:
+          targetPlatform: StandaloneLinux64
+          buildMethod: Relicbound.EditorTools.ProjectBootstrap.RunFromCommandLine
+          allowDirtyBuild: true
+          versioning: None
+
+      - name: Tests EditMode
+        uses: game-ci/unity-test-runner@v4
+        with:
+          testMode: EditMode
+          artifactsPath: test-results
+
+      - name: Empaquetar archivos generados por Unity
+        if: always()
+        run: |
+          sudo chown -R "$(id -u):$(id -g)" . || true
+          find Assets -name '*.meta' > generated-files.txt
+          ls -d ProjectSettings Packages/packages-lock.json Assets/Relicbound/Settings 2>/dev/null >> generated-files.txt || true
+          tar czf unity-generated.tgz -T generated-files.txt
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: unity-generated
+          path: unity-generated.tgz
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: unity-test-results
+          path: test-results

@@ -5,6 +5,7 @@ on:
     paths:
       - "Assets/Relicbound/Scripts/Core/**"
       - "Tests/**"
+      - "Assets/Relicbound/Tests/**"
       - ".github/workflows/core-tests.yml"
   pull_request:
 

@@ -137,7 +137,7 @@ namespace Relicbound.Core.Tests
                 service.Save(SampleSave(gold: 2), Now);
                 Assert.That(service.Load().Save.Resources[ResourceType.Gold], Is.EqualTo(2));
                 Assert.That(Directory.GetFiles(directory, "*.tmp"), Is.Empty);
-                Assert.That(JObject.Parse(File.ReadAllText(Path.Combine(directory, "save_backup.json")))["format"]!.ToString(), Is.EqualTo("relicbound-save"));
+                Assert.That(JObject.Parse(File.ReadAllText(Path.Combine(directory, "save_backup.json")))["format"].ToString(), Is.EqualTo("relicbound-save"));
             }
             finally
             {
