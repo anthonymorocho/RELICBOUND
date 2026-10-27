@@ -153,6 +153,7 @@ namespace Relicbound.Core.Save
                 save.Progress = save.Progress ?? new ProgressData();
                 save.Tutorial = save.Tutorial ?? new TutorialData();
                 save.Resources = save.Resources ?? new System.Collections.Generic.Dictionary<Economy.ResourceType, long>();
+                save.Castle = save.Castle ?? new System.Collections.Generic.List<Castle.PlacedBuilding>();
                 return null;
             }
             catch (JsonException exception)

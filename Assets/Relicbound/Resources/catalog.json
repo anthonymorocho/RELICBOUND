@@ -1,0 +1,600 @@
+{
+ "_comment": "Catálogo de edificios (docs/06, docs/12). Valores de balance: hipótesis a ajustar con pruebas. Coordenadas en celdas de 1 m; (0,0) = esquina suroeste del terreno de 40x40 (centro del mundo en 20,20).",
+ "gridSizeByKeepLevel": [
+  40,
+  40,
+  40,
+  48,
+  48,
+  48,
+  56,
+  56,
+  56,
+  64
+ ],
+ "buildings": [
+  {
+   "id": "keep",
+   "name": "Torreón",
+   "category": "Core",
+   "width": 10,
+   "depth": 10,
+   "movable": false,
+   "maxCountByKeepLevel": [
+    1
+   ],
+   "produces": "Gold",
+   "levels": [
+    {
+     "cost": {},
+     "hp": 4000,
+     "perHour": 30,
+     "capacity": 240
+    },
+    {
+     "cost": {
+      "Gold": 1500,
+      "Stone": 1200,
+      "Wood": 600
+     },
+     "player": 3,
+     "hp": 5500,
+     "xp": 150,
+     "perHour": 55,
+     "capacity": 440,
+     "storage": 1500
+    },
+    {
+     "cost": {
+      "Gold": 4000,
+      "Stone": 3000,
+      "Wood": 1500,
+      "Iron": 300
+     },
+     "player": 6,
+     "hp": 7500,
+     "xp": 400,
+     "perHour": 90,
+     "capacity": 720,
+     "storage": 3000
+    }
+   ],
+   "role": "Castillo central",
+   "description": "Corazón de tu fortaleza. Su nivel marca el máximo de los demás edificios y amplía el almacén. Recauda algo de oro.",
+   "model": "Keep"
+  },
+  {
+   "id": "wall",
+   "name": "Muralla",
+   "category": "Fortification",
+   "width": 2,
+   "depth": 2,
+   "fortification": true,
+   "maxCountByKeepLevel": [
+    40,
+    60,
+    80
+   ],
+   "levels": [
+    {
+     "cost": {
+      "Stone": 60
+     },
+     "hp": 900,
+     "xp": 2
+    },
+    {
+     "cost": {
+      "Stone": 200,
+      "Gold": 100
+     },
+     "keep": 2,
+     "hp": 1500,
+     "xp": 6
+    },
+    {
+     "cost": {
+      "Stone": 450,
+      "Gold": 250,
+      "Iron": 20
+     },
+     "keep": 3,
+     "hp": 2300,
+     "xp": 12
+    }
+   ],
+   "role": "Defensa",
+   "description": "Lienzo de piedra con adarve y almenas. Cada sección resiste por separado: una brecha abre el paso al enemigo.",
+   "model": "Wall"
+  },
+  {
+   "id": "tower",
+   "name": "Torre de flanqueo",
+   "category": "Fortification",
+   "width": 6,
+   "depth": 6,
+   "fortification": true,
+   "maxCountByKeepLevel": [
+    4,
+    6,
+    8
+   ],
+   "levels": [
+    {
+     "cost": {
+      "Stone": 400,
+      "Wood": 150
+     },
+     "hp": 1600,
+     "xp": 20
+    },
+    {
+     "cost": {
+      "Stone": 900,
+      "Gold": 400
+     },
+     "keep": 2,
+     "hp": 2400,
+     "xp": 45
+    },
+    {
+     "cost": {
+      "Stone": 1800,
+      "Gold": 900,
+      "Iron": 80
+     },
+     "keep": 3,
+     "hp": 3400,
+     "xp": 90
+    }
+   ],
+   "role": "Defensa",
+   "description": "Flanquea los lienzos de muralla. Cuando lleguen los arqueros (P8), disparará a los asaltantes.",
+   "model": "Tower"
+  },
+  {
+   "id": "gate",
+   "name": "Puerta principal",
+   "category": "Fortification",
+   "width": 8,
+   "depth": 6,
+   "fortification": true,
+   "passable": true,
+   "maxCountByKeepLevel": [
+    1,
+    1,
+    2
+   ],
+   "levels": [
+    {
+     "cost": {
+      "Stone": 300,
+      "Wood": 200
+     },
+     "hp": 1400,
+     "xp": 15
+    },
+    {
+     "cost": {
+      "Stone": 700,
+      "Wood": 400,
+      "Gold": 300
+     },
+     "keep": 2,
+     "hp": 2100,
+     "xp": 35
+    },
+    {
+     "cost": {
+      "Stone": 1500,
+      "Wood": 700,
+      "Iron": 120
+     },
+     "keep": 3,
+     "hp": 3000,
+     "xp": 70
+    }
+   ],
+   "role": "Acceso",
+   "description": "Única entrada a la fortaleza. Tus tropas pasan; el enemigo tendrá que derribarla o abrir brecha.",
+   "model": "Gate"
+  },
+  {
+   "id": "workshop",
+   "name": "Taller de asedio",
+   "category": "Military",
+   "width": 6,
+   "depth": 6,
+   "unlockPlayerLevel": 2,
+   "maxCountByKeepLevel": [
+    1
+   ],
+   "levels": [
+    {
+     "cost": {
+      "Wood": 400,
+      "Gold": 300
+     },
+     "hp": 1200,
+     "xp": 30
+    },
+    {
+     "cost": {
+      "Wood": 900,
+      "Gold": 800
+     },
+     "keep": 2,
+     "hp": 1800,
+     "xp": 70
+    },
+    {
+     "cost": {
+      "Wood": 1800,
+      "Gold": 1600,
+      "Iron": 150
+     },
+     "keep": 3,
+     "hp": 2500,
+     "xp": 140
+    }
+   ],
+   "role": "Militar",
+   "description": "Aquí se construyen y mejoran las máquinas de asedio. Sin taller no hay catapulta.",
+   "model": "Workshop"
+  },
+  {
+   "id": "storehouse",
+   "name": "Almacén",
+   "category": "Storage",
+   "width": 5,
+   "depth": 5,
+   "unlockPlayerLevel": 2,
+   "maxCountByKeepLevel": [
+    1,
+    2,
+    2
+   ],
+   "levels": [
+    {
+     "cost": {
+      "Wood": 300,
+      "Stone": 200
+     },
+     "hp": 1000,
+     "xp": 20,
+     "storage": 2000
+    },
+    {
+     "cost": {
+      "Wood": 700,
+      "Stone": 500,
+      "Gold": 200
+     },
+     "keep": 2,
+     "hp": 1500,
+     "xp": 50,
+     "storage": 4500
+    },
+    {
+     "cost": {
+      "Wood": 1400,
+      "Stone": 1100,
+      "Gold": 600
+     },
+     "keep": 3,
+     "hp": 2100,
+     "xp": 100,
+     "storage": 8000
+    }
+   ],
+   "role": "Almacén",
+   "description": "Amplía la capacidad de oro, madera, piedra y hierro de la fortaleza.",
+   "model": "Storehouse"
+  },
+  {
+   "id": "sawmill",
+   "name": "Aserradero",
+   "category": "Production",
+   "width": 5,
+   "depth": 5,
+   "unlockPlayerLevel": 3,
+   "maxCountByKeepLevel": [
+    1,
+    2,
+    2
+   ],
+   "produces": "Wood",
+   "levels": [
+    {
+     "cost": {
+      "Gold": 250,
+      "Stone": 100
+     },
+     "hp": 900,
+     "xp": 20,
+     "perHour": 60,
+     "capacity": 480
+    },
+    {
+     "cost": {
+      "Gold": 600,
+      "Stone": 300
+     },
+     "keep": 2,
+     "hp": 1300,
+     "xp": 50,
+     "perHour": 110,
+     "capacity": 880
+    },
+    {
+     "cost": {
+      "Gold": 1300,
+      "Stone": 700,
+      "Iron": 50
+     },
+     "keep": 3,
+     "hp": 1800,
+     "xp": 100,
+     "perHour": 170,
+     "capacity": 1360
+    }
+   ],
+   "role": "Producción",
+   "description": "Corta madera de los bosques cercanos. Recoge la producción antes de que se llene.",
+   "model": "Sawmill"
+  },
+  {
+   "id": "quarry",
+   "name": "Cantera",
+   "category": "Production",
+   "width": 5,
+   "depth": 5,
+   "unlockPlayerLevel": 3,
+   "maxCountByKeepLevel": [
+    1,
+    2,
+    2
+   ],
+   "produces": "Stone",
+   "levels": [
+    {
+     "cost": {
+      "Gold": 250,
+      "Wood": 150
+     },
+     "hp": 1100,
+     "xp": 20,
+     "perHour": 45,
+     "capacity": 360
+    },
+    {
+     "cost": {
+      "Gold": 600,
+      "Wood": 350
+     },
+     "keep": 2,
+     "hp": 1600,
+     "xp": 50,
+     "perHour": 90,
+     "capacity": 720
+    },
+    {
+     "cost": {
+      "Gold": 1300,
+      "Wood": 800,
+      "Iron": 50
+     },
+     "keep": 3,
+     "hp": 2200,
+     "xp": 100,
+     "perHour": 140,
+     "capacity": 1120
+    }
+   ],
+   "role": "Producción",
+   "description": "Extrae sillares de piedra. Recoge la producción antes de que se llene.",
+   "model": "Quarry"
+  }
+ ],
+ "startingLayout": [
+  {
+   "type": "keep",
+   "x": 15,
+   "z": 18
+  },
+  {
+   "type": "tower",
+   "x": 6,
+   "z": 6
+  },
+  {
+   "type": "tower",
+   "x": 6,
+   "z": 28
+  },
+  {
+   "type": "tower",
+   "x": 28,
+   "z": 6
+  },
+  {
+   "type": "tower",
+   "x": 28,
+   "z": 28
+  },
+  {
+   "type": "wall",
+   "x": 12,
+   "z": 30,
+   "rot": 180
+  },
+  {
+   "type": "wall",
+   "x": 30,
+   "z": 12,
+   "rot": 270
+  },
+  {
+   "type": "wall",
+   "x": 8,
+   "z": 12,
+   "rot": 90
+  },
+  {
+   "type": "wall",
+   "x": 12,
+   "z": 8,
+   "rot": 0
+  },
+  {
+   "type": "wall",
+   "x": 14,
+   "z": 30,
+   "rot": 180
+  },
+  {
+   "type": "wall",
+   "x": 30,
+   "z": 14,
+   "rot": 270
+  },
+  {
+   "type": "wall",
+   "x": 8,
+   "z": 14,
+   "rot": 90
+  },
+  {
+   "type": "wall",
+   "x": 14,
+   "z": 8,
+   "rot": 0
+  },
+  {
+   "type": "wall",
+   "x": 16,
+   "z": 30,
+   "rot": 180
+  },
+  {
+   "type": "wall",
+   "x": 30,
+   "z": 16,
+   "rot": 270
+  },
+  {
+   "type": "wall",
+   "x": 8,
+   "z": 16,
+   "rot": 90
+  },
+  {
+   "type": "wall",
+   "x": 18,
+   "z": 30,
+   "rot": 180
+  },
+  {
+   "type": "wall",
+   "x": 30,
+   "z": 18,
+   "rot": 270
+  },
+  {
+   "type": "wall",
+   "x": 8,
+   "z": 18,
+   "rot": 90
+  },
+  {
+   "type": "wall",
+   "x": 20,
+   "z": 30,
+   "rot": 180
+  },
+  {
+   "type": "wall",
+   "x": 30,
+   "z": 20,
+   "rot": 270
+  },
+  {
+   "type": "wall",
+   "x": 8,
+   "z": 20,
+   "rot": 90
+  },
+  {
+   "type": "wall",
+   "x": 22,
+   "z": 30,
+   "rot": 180
+  },
+  {
+   "type": "wall",
+   "x": 30,
+   "z": 22,
+   "rot": 270
+  },
+  {
+   "type": "wall",
+   "x": 8,
+   "z": 22,
+   "rot": 90
+  },
+  {
+   "type": "wall",
+   "x": 24,
+   "z": 30,
+   "rot": 180
+  },
+  {
+   "type": "wall",
+   "x": 30,
+   "z": 24,
+   "rot": 270
+  },
+  {
+   "type": "wall",
+   "x": 8,
+   "z": 24,
+   "rot": 90
+  },
+  {
+   "type": "wall",
+   "x": 24,
+   "z": 8,
+   "rot": 0
+  },
+  {
+   "type": "wall",
+   "x": 26,
+   "z": 30,
+   "rot": 180
+  },
+  {
+   "type": "wall",
+   "x": 30,
+   "z": 26,
+   "rot": 270
+  },
+  {
+   "type": "wall",
+   "x": 8,
+   "z": 26,
+   "rot": 90
+  },
+  {
+   "type": "wall",
+   "x": 26,
+   "z": 8,
+   "rot": 0
+  },
+  {
+   "type": "gate",
+   "x": 16,
+   "z": 6,
+   "rot": 0
+  }
+ ]
+}

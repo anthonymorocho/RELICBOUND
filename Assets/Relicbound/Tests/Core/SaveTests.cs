@@ -94,7 +94,7 @@ namespace Relicbound.Core.Tests
         public void SaveFromNewerGame_IsNotTouched()
         {
             var storage = new MemorySaveStorage();
-            new SaveService(storage, new SaveMigrator(2).Register(1, _ => { })).Save(SampleSave(), Now);
+            new SaveService(storage, new SaveMigrator(3).Register(1, _ => { }).Register(2, _ => { })).Save(SampleSave(), Now);
 
             var result = new SaveService(storage).Load();
             Assert.That(result.Status, Is.EqualTo(LoadStatus.NewerVersion));
@@ -107,13 +107,29 @@ namespace Relicbound.Core.Tests
             var storage = new MemorySaveStorage();
             new SaveService(storage).Save(SampleSave(gold: 10), Now);
 
-            // Simula una v2 que duplica el oro (p. ej. un cambio de escala de economía).
-            var migrator = new SaveMigrator(2).Register(1, save => save["Resources"]["Gold"] = save["Resources"].Value<long>("Gold") * 2);
+            // Simula una v3 futura que duplica el oro (p. ej. un cambio de escala de economía).
+            var migrator = new SaveMigrator(3)
+                .Register(1, save => save["Castle"] = new JArray())
+                .Register(2, save => save["Resources"]["Gold"] = save["Resources"].Value<long>("Gold") * 2);
             var result = new SaveService(storage, migrator).Load();
 
             Assert.That(result.Status, Is.EqualTo(LoadStatus.Loaded));
-            Assert.That(result.Save.SchemaVersion, Is.EqualTo(2));
+            Assert.That(result.Save.SchemaVersion, Is.EqualTo(3));
             Assert.That(result.Save.Resources[ResourceType.Gold], Is.EqualTo(20));
+        }
+
+        [Test]
+        public void VersionOneSave_MigratesToEditableCastle()
+        {
+            var storage = new MemorySaveStorage();
+            new SaveService(storage, new SaveMigrator(1)).Save(SampleSave(), Now);
+            var raw = JObject.Parse(storage.Read(SaveService.MainKey));
+            Assert.That(raw.Value<int>("version"), Is.EqualTo(1));
+
+            var result = new SaveService(storage).Load();
+            Assert.That(result.Status, Is.EqualTo(LoadStatus.Loaded));
+            Assert.That(result.Save.SchemaVersion, Is.EqualTo(SaveGame.CurrentSchemaVersion));
+            Assert.That(result.Save.Castle, Is.Empty, "Castillo vacío = castillo inicial del catálogo.");
         }
 
         [Test]

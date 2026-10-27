@@ -12,7 +12,7 @@ namespace Relicbound.Core.Save
     /// </summary>
     public sealed class SaveGame
     {
-        public const int CurrentSchemaVersion = 1;
+        public const int CurrentSchemaVersion = 2;
 
         public int SchemaVersion = CurrentSchemaVersion;
         public ProfileData Profile;
@@ -20,6 +20,8 @@ namespace Relicbound.Core.Save
         public Dictionary<ResourceType, long> Resources = new Dictionary<ResourceType, long>();
         public GameSettings Settings = new GameSettings();
         public TutorialData Tutorial = new TutorialData();
+        /// <summary>Distribución del castillo (v2). Vacía = castillo inicial del catálogo.</summary>
+        public List<Relicbound.Core.Castle.PlacedBuilding> Castle = new List<Relicbound.Core.Castle.PlacedBuilding>();
         public DateTime LastSavedUtc;
     }
 

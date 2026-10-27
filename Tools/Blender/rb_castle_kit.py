@@ -42,6 +42,7 @@ def build_materials():
         "roof": textured_material("M_RoofBlue", "RoofBlue", 0.6),
         "wood": textured_material("M_Wood", "Wood", 0.75),
         "iron": textured_material("M_Iron", "Iron", 0.5, 0.7),
+        "wood_dark": K.textured_material("M_WoodDark", "Wood", TEXTURES, 0.8, tint="#8C7A68"),
     }
 
 
@@ -115,8 +116,28 @@ def oriented(obj, rotation_z):
 
 # ---------------------------------------------------------------- piezas
 
-def build_wall_straight(m):
-    """Sección recta de muralla de 2 m. Exterior en -Y."""
+def hoarding(name, length, z, outer_y, m, depth=0.75):
+    """Cadalso de madera: galería volada con suelo, frente de tablas con troneras y tejadillo."""
+    parts = []
+    y = outer_y - depth / 2
+    parts.append(G.box(f"{name}_floor", (length, depth + 0.1, 0.12), (0, y, z), m["wood"], bevel=0.01))
+    for i in range(int(length / 0.5) + 1):
+        x = -length / 2 + i * 0.5
+        parts.append(G.box(f"{name}_beam{i}", (0.1, depth + 0.5, 0.14), (min(max(x, -length / 2 + 0.05), length / 2 - 0.05), y + 0.2, z - 0.14), m["wood_dark"], bevel=0.01))
+    front = G.box(f"{name}_front", (length, 0.1, 1.25), (0, outer_y - depth, z + 0.12), m["wood"], bevel=0.01)
+    for i in range(max(1, int(length / 1.0))):
+        loop = G.box(f"{name}_loop{i}", (0.16, 0.5, 0.5), (-length / 2 + 0.5 + i * 1.0, outer_y - depth, z + 0.65), None, bevel=0.0)
+        G.cut(front, loop)
+    parts.append(front)
+    roof = G.box(f"{name}_roof", (length + 0.04, depth + 0.55, 0.1), (0, y + 0.05, z + 1.45), m["roof"], bevel=0.0)
+    roof.rotation_euler.x = math.radians(-24)
+    bpy.context.view_layer.update()
+    parts.append(roof)
+    return parts
+
+
+def build_wall(m, level=1):
+    """Sección recta de muralla de 2 m. Exterior en -Y. Nivel 2: contrafuerte; nivel 3: cadalso de madera."""
     half_t = WALL_THICKNESS / 2
     parts = [
         G.box("plinth", (SECTION_LENGTH, WALL_THICKNESS + 0.5, 0.9), (0, 0, 0), m["stone"], bevel=0.06, taper=0.12),
@@ -137,12 +158,20 @@ def build_wall_straight(m):
     parts.append(G.box("string_course", (SECTION_LENGTH, WALL_THICKNESS + 0.16, 0.16), (0, 0, 2.6), m["stone"], bevel=0.03))
     parts += protruding_blocks("out", SECTION_LENGTH, WALL_HEIGHT - 0.6, -half_t, m["stone"], seed=3)
     parts += protruding_blocks("in", SECTION_LENGTH, WALL_HEIGHT - 0.6, half_t, m["stone"], seed=8, density=0.1)
+    if level >= 2:
+        parts.append(G.box("buttress", (0.7, 0.9, 3.6), (0, -half_t - 0.4, 0), m["stone"], bevel=0.05, taper=0.0))
+        cap = G.box("buttress_cap", (0.7, 0.9, 0.9), (0, -half_t - 0.4, 3.6), m["stone"], bevel=0.04)
+        cap.rotation_euler.x = math.radians(-40)
+        bpy.context.view_layer.update()
+        parts.append(cap)
+    if level >= 3:
+        parts += hoarding("hoard", SECTION_LENGTH, WALL_HEIGHT + PARAPET_HEIGHT + MERLON_HEIGHT + 0.02, -half_t - 0.05, m)
     for obj in parts:
         G.world_box_uv(obj)
-    return G.join(parts, "SM_Wall_Straight")
+    return G.join(parts, f"SM_Wall_L{level}")
 
 
-def round_tower_parts(m, radius, body_height, roof_height, center=(0.0, 0.0), prefix="tower", slits=True):
+def round_tower_parts(m, radius, body_height, roof_height, center=(0.0, 0.0), prefix="tower", slits=True, gallery=False):
     cx, cy = center
     parts = []
     plinth = G.cylinder(f"{prefix}_plinth", radius + 0.3, 1.0, (cx, cy, 0), m["stone"], segments=32,
@@ -175,6 +204,19 @@ def round_tower_parts(m, radius, body_height, roof_height, center=(0.0, 0.0), pr
     parts.append(course)
     eave_z = body_height + 1.0
     roof_r = top_r + 0.75
+    if gallery:
+        # Galería de madera bajo el tejado (cadalso circular) y tejado más alto y amplio.
+        ring = G.cylinder(f"{prefix}_gallery", top_r + 0.55, 1.3, (cx, cy, eave_z - 0.05), m["wood"], segments=24, bevel=0.01)
+        G.radial_uv(ring, center=center)
+        parts.append(ring)
+        for i in range(12):
+            angle = 2 * math.pi * i / 12
+            post = G.box(f"{prefix}_post{i}", (0.14, 0.14, 1.4),
+                         (cx + math.cos(angle) * (top_r + 0.58), cy + math.sin(angle) * (top_r + 0.58), eave_z - 0.1),
+                         m["wood_dark"], bevel=0.01)
+            parts.append(post)
+        eave_z += 1.25
+        roof_r += 0.35
     roof = G.cone(f"{prefix}_roof", roof_r, roof_height, (cx, cy, eave_z - 0.15), m["roof"], segments=32)
     # Alero con faldón: el cono se alarga hacia abajo y una cinta de madera remata el borde.
     eave = G.cylinder(f"{prefix}_eave", roof_r + 0.04, 0.16, (cx, cy, eave_z - 0.22), m["wood"], segments=32, bevel=0.02)
@@ -192,8 +234,11 @@ def round_tower_parts(m, radius, body_height, roof_height, center=(0.0, 0.0), pr
     return parts + [plinth, body, band, roof, finial, knob]
 
 
-def build_tower_round(m):
-    return G.join(round_tower_parts(m, 2.5, 8.0, 5.6), "SM_Tower_Round")
+def build_tower(m, level=1):
+    """Torre de flanqueo de 6 x 6 celdas. Nivel 2: más alta; nivel 3: galería de madera y chapitel mayor."""
+    height = 8.0 + (level - 1) * 1.8
+    roof = 5.6 + (1.2 if level >= 3 else 0.0)
+    return G.join(round_tower_parts(m, 2.9, height, roof, gallery=level >= 3), f"SM_Tower_L{level}")
 
 
 def arch_cutter(name, width, depth, spring_height, location):
@@ -214,10 +259,10 @@ def arch_cutter(name, width, depth, spring_height, location):
     return rect
 
 
-def build_gatehouse(m):
-    """Caseta de puerta: bloque central de 4,4 m, dos torretas flanqueantes y paso abovedado."""
+def build_gatehouse(m, level=1):
+    """Caseta de puerta: bloque central, dos torretas y paso abovedado. Nivel 2: más alta; nivel 3: cadalso."""
     depth = 6.0
-    height = 7.0
+    height = 7.0 + (level - 1) * 1.2
     parts = []
     block = G.box("gate_block", (4.6, depth, height), (0, 0, 0), m["stone"], bevel=0.0)
     passage = arch_cutter("gate_passage", 2.8, depth + 2, 2.6, (0, 0, -0.1))
@@ -269,15 +314,21 @@ def build_gatehouse(m):
     parts += protruding_blocks("gate_face", 4.4, height - 0.8, -depth / 2, m["stone"], seed=21, density=0.12, z0=4.4)
     for obj in parts:
         G.world_box_uv(obj)
+    if level >= 3:
+        hoard = hoarding("gate_hoard", 4.6, height + 1.62, -depth / 2 - 0.05, m)
+        for obj in hoard:
+            G.world_box_uv(obj)
+        parts += hoard
     for side in (-1, 1):
-        parts += round_tower_parts(m, 1.9, 8.2, 4.4, center=(side * 3.2, -1.4), prefix=f"gate_t{side}")
-    return G.join(parts, "SM_Gatehouse")
+        parts += round_tower_parts(m, 1.9, height + 1.2, 4.4 + (0.8 if level >= 3 else 0.0), center=(side * 3.2, -1.4),
+                                   prefix=f"gate_t{side}", gallery=level >= 3)
+    return G.join(parts, f"SM_Gate_L{level}")
 
 
-def build_keep(m):
-    """Torreón (castillo central nivel 1): 9 x 9 m, 12 m de cuerpo, garitas en las esquinas y tejado a cuatro aguas."""
+def build_keep(m, level=1):
+    """Torreón 9 x 9 m (huella 10 x 10). Nivel 1: 12 m; nivel 2: 15 m; nivel 3: además torre anexa."""
     size = 9.0
-    height = 12.0
+    height = 12.0 + (3.0 if level >= 2 else 0.0)
     half = size / 2
     parts = []
     plinth = G.box("keep_plinth", (size + 0.8, size + 0.8, 1.4), (0, 0, 0), m["stone"], bevel=0.06, taper=0.3)
@@ -293,7 +344,7 @@ def build_keep(m):
             window.rotation_euler.z = angle
             bpy.context.view_layer.update()
             G.cut(body, window)
-    door = arch_cutter("keep_door", 1.6, 1.4, 1.8, (0, -half + 0.2, 1.4))
+    door = arch_cutter("keep_door", 1.6, 1.4, 1.8, (0, -half + 0.2, 0.3))
     G.cut(body, door)
     parts += [plinth, body]
     for sx in (-1, 1):
@@ -318,11 +369,9 @@ def build_keep(m):
                 parts.append(jamb)
             parts += [sill, lintel]
     bpy.context.view_layer.update()
-    parts.append(G.box("keep_door_wood", (1.6, 0.12, 2.6), (0, -half + 0.45, 1.4), m["wood"], bevel=0.0))
-    # Escalinata de madera a la puerta elevada.
-    for i in range(5):
-        parts.append(G.box(f"keep_step{i}", (2.2, 0.45, 0.28 * (i + 1)), (0, -half - 2.2 + i * 0.45, 0), m["wood"],
-                           bevel=0.02))
+    parts.append(G.box("keep_door_wood", (1.6, 0.12, 2.6), (0, -half + 0.45, 0.3), m["wood"], bevel=0.0))
+    # Peldaño de piedra dentro de la huella (las escalinatas invadían celdas vecinas).
+    parts.append(G.box("keep_step", (2.4, 0.5, 0.3), (0, -half - 0.2, 0), m["stone"], bevel=0.03))
 
     # Cornisa, parapeto y almenas.
     top = height
@@ -374,7 +423,9 @@ def build_keep(m):
                 G.radial_uv(obj, center=c)
             G.cone_uv(cap, 2.6, 1.35, top + 1.95, center=c)
             parts += [corbel, turret, cap]
-    return G.join(parts, "SM_Keep_L1")
+    if level >= 3:
+        parts += round_tower_parts(m, 2.0, height + 4.0, 5.0, center=(2.6, 2.6), prefix="keep_annex", gallery=True)
+    return G.join(parts, f"SM_Keep_L{level}")
 
 
 # ---------------------------------------------------------------- exportación y vista previa
@@ -403,19 +454,18 @@ def export_piece(obj):
 def main():
     G.clear_scene()
     m = build_materials()
-    pieces = {
-        "wall": build_wall_straight(m),
-        "tower": build_tower_round(m),
-        "gate": build_gatehouse(m),
-        "keep": build_keep(m),
-    }
-    for obj in pieces.values():
-        G.set_origin_to_ground(obj)
-        bpy.ops.object.shade_auto_smooth(angle=math.radians(35))
-        export_piece(obj)
+    exported = {}
+    for level in (1, 2, 3):
+        for key, builder in (("wall", build_wall), ("tower", build_tower), ("gate", build_gatehouse), ("keep", build_keep)):
+            obj = builder(m, level)
+            G.set_origin_to_ground(obj)
+            bpy.ops.object.shade_auto_smooth(angle=math.radians(35))
+            export_piece(obj)
+            obj.location = (level * 1000, 0, 0)  # apartar del origen para no interferir con los booleanos siguientes
+            exported[(key, level)] = obj
     if PREVIEW:
         import rb_preview
-        rb_preview.render_layout(pieces, m, PREVIEW)
+        rb_preview.render_levels(exported, PREVIEW)
 
 
 main()

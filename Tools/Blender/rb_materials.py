@@ -353,6 +353,31 @@ def dirt():
     return material
 
 
+def plaster():
+    """Revoco de cal entre vigas: blanco cálido con manchas suaves y desconchones."""
+    material, nodes, links, bsdf = _new("RB_Plaster")
+    vector = _uv(nodes, links, 1.0)
+    base = _noise(nodes, links, vector, 4.0, 6.0, 0.6)
+    chips = _noise(nodes, links, vector, 22.0, 4.0, 0.7)
+    tone = _ramp(nodes, [(0.3, "#CFC2A6"), (0.55, "#E3D8C0"), (0.8, "#EDE5D2")])
+    links.new(base.outputs["Fac"], tone.inputs["Fac"])
+    chip_mask = nodes.new("ShaderNodeMath")
+    chip_mask.operation = "GREATER_THAN"
+    chip_mask.inputs[1].default_value = 0.68
+    links.new(chips.outputs["Fac"], chip_mask.inputs[0])
+    mix = nodes.new("ShaderNodeMix")
+    mix.data_type = "RGBA"
+    links.new(chip_mask.outputs["Value"], mix.inputs["Factor"])
+    links.new(tone.outputs["Color"], mix.inputs["A"])
+    mix.inputs["B"].default_value = _hex("#A08C6C")
+    links.new(mix.outputs["Result"], bsdf.inputs["Base Color"])
+    bump = nodes.new("ShaderNodeBump")
+    bump.inputs["Strength"].default_value = 0.5
+    links.new(chips.outputs["Fac"], bump.inputs["Height"])
+    links.new(bump.outputs["Normal"], bsdf.inputs["Normal"])
+    return material
+
+
 def hay():
     """Paja: briznas alargadas en dos direcciones con tonos dorados y sombras entre ellas."""
     material, nodes, links, bsdf = _new("RB_Hay")
@@ -391,6 +416,7 @@ def grass_dry():
 
 
 FAMILIES = {
+    "Plaster": plaster,
     "Hay": hay,
     "Grass": grass,
     "GrassDry": grass_dry,

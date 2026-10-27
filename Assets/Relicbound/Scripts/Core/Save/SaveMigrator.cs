@@ -26,7 +26,9 @@ namespace Relicbound.Core.Save
             return this;
         }
 
-        public static SaveMigrator CreateDefault() => new SaveMigrator(SaveGame.CurrentSchemaVersion);
+        /// <summary>Migraciones reales del juego. v1 → v2: castillo editable (vacío = castillo inicial).</summary>
+        public static SaveMigrator CreateDefault() => new SaveMigrator(SaveGame.CurrentSchemaVersion)
+            .Register(1, save => save["Castle"] = new JArray());
 
         /// <exception cref="SaveFormatException">Versión futura o sin ruta de migración.</exception>
         public void Migrate(JObject save)

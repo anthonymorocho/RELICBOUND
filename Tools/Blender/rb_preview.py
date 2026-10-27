@@ -180,3 +180,21 @@ def render_layout(pieces, materials, path):
             _camera((0, 60, height / 2), distance, 18, yaw, lens=50)
             _render(f"{base}_{key}_{label}{ext}", 640, 640, 32)
         pieces[key].hide_render = True
+
+
+def render_levels(exported, path):
+    """Ficha comparativa: filas = niveles 1-3, columnas = muralla (x3 tramos), torre, puerta, torreón."""
+    _ground()
+    _lighting()
+    columns = {"wall": -18.0, "tower": -9.0, "gate": 2.0, "keep": 16.0}
+    for (key, level), obj in exported.items():
+        y = (level - 2) * 18.0
+        obj.location = (columns[key], y, 0)
+        obj.hide_render = False
+        if key == "wall":
+            for offset in (-2.0, 2.0):
+                copy = obj.copy()
+                copy.location = (columns[key] + offset, y, 0)
+                bpy.context.scene.collection.objects.link(copy)
+    _camera((0, 0, 4), 95, 38, -20, lens=45)
+    _render(path, 1600, 900, 32)
