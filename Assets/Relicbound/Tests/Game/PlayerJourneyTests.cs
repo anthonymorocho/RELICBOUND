@@ -8,6 +8,7 @@ using Relicbound.Game.Castle;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using UnityEngine.UIElements;
 
 namespace Relicbound.Game.Tests
 {
@@ -107,7 +108,7 @@ namespace Relicbound.Game.Tests
 
         private static void LogSplashState()
         {
-            var document = UnityEngine.Object.FindFirstObjectByType<UnityEngine.UIElements.UIDocument>();
+            var document = UnityEngine.Object.FindFirstObjectByType<UIDocument>();
             var logo = document != null ? document.rootVisualElement?.Q("logo") : null;
             Debug.Log($"[Relicbound] Splash: documento={(document != null)} panel={(document?.rootVisualElement?.panel != null)} " +
                       $"logo={(logo != null)} opacidad={(logo != null ? logo.resolvedStyle.opacity : -1f)} " +

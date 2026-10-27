@@ -11,6 +11,7 @@ import os
 import sys
 
 import bpy
+from mathutils import Vector
 
 sys.path.append(os.path.dirname(__file__))
 import rb_castle_kit_materials as K  # noqa: E402
@@ -70,6 +71,43 @@ def corbels_along(name, start, end, z, y, mat, spacing=0.5):
     return parts
 
 
+def protruding_blocks(name, length, height, face_y, mat, seed, density=0.16, z0=0.9, depth=0.07):
+    """Sillares sueltos que sobresalen del paramento (alineados con la rejilla de la textura: 1 x 0,5 m)."""
+    import random
+    rng = random.Random(seed)
+    parts = []
+    rows = int((height - z0) / 0.5)
+    for row in range(rows):
+        offset = 0.5 if row % 2 else 0.0
+        x = -length / 2 + offset
+        while x < length / 2 - 0.2:
+            width = 1.0
+            if rng.random() < density:
+                cx = max(-length / 2 + 0.5, min(length / 2 - 0.5, x + width / 2))
+                block = G.box(f"{name}_blk{row}_{x:.1f}", (width - 0.06, depth * 2, 0.44),
+                              (cx, face_y, z0 + row * 0.5 + 0.03), mat, bevel=0.035)
+                parts.append(block)
+            x += width
+    return parts
+
+
+def quoins(name, corner_x, corner_y, height, mat, z0=1.0, sign_x=1, sign_y=-1):
+    """Aparejo de esquina: sillares alternos largo/corto que sobresalen 4 cm en ambas caras."""
+    parts = []
+    z = z0
+    i = 0
+    while z + 0.5 <= height:
+        long_x = i % 2 == 0
+        sx = 0.9 if long_x else 0.5
+        sy = 0.5 if long_x else 0.9
+        cx = corner_x - sign_x * (sx / 2 - 0.04)
+        cy = corner_y - sign_y * (sy / 2 - 0.04)
+        parts.append(G.box(f"{name}_q{i}", (sx, sy, 0.46), (cx, cy, z), mat, bevel=0.04))
+        z += 0.5
+        i += 1
+    return parts
+
+
 def oriented(obj, rotation_z):
     obj.rotation_euler.z = rotation_z
     return obj
@@ -95,6 +133,10 @@ def build_wall_straight(m):
                            m["stone"])
     parts += merlons_along("merlon", -SECTION_LENGTH / 2, SECTION_LENGTH / 2, WALL_HEIGHT + PARAPET_HEIGHT,
                            -half_t - 0.05, m["stone"], depth=0.5)
+    # Imposta (moldura horizontal) y sillares que sobresalen en ambas caras.
+    parts.append(G.box("string_course", (SECTION_LENGTH, WALL_THICKNESS + 0.16, 0.16), (0, 0, 2.6), m["stone"], bevel=0.03))
+    parts += protruding_blocks("out", SECTION_LENGTH, WALL_HEIGHT - 0.6, -half_t, m["stone"], seed=3)
+    parts += protruding_blocks("in", SECTION_LENGTH, WALL_HEIGHT - 0.6, half_t, m["stone"], seed=8, density=0.1)
     for obj in parts:
         G.world_box_uv(obj)
     return G.join(parts, "SM_Wall_Straight")
@@ -127,9 +169,17 @@ def round_tower_parts(m, radius, body_height, roof_height, center=(0.0, 0.0), pr
         parts.append(corbel)
     band = G.cylinder(f"{prefix}_band", top_r + 0.3, 1.0, (cx, cy, body_height), m["stone"], segments=32,
                       bevel=0.04)
+    course = G.cylinder(f"{prefix}_course", radius - 0.02, 0.18, (cx, cy, body_height * 0.5), m["stone"], segments=32,
+                        bevel=0.03)
+    G.radial_uv(course, center=center)
+    parts.append(course)
     eave_z = body_height + 1.0
     roof_r = top_r + 0.75
     roof = G.cone(f"{prefix}_roof", roof_r, roof_height, (cx, cy, eave_z - 0.15), m["roof"], segments=32)
+    # Alero con faldón: el cono se alarga hacia abajo y una cinta de madera remata el borde.
+    eave = G.cylinder(f"{prefix}_eave", roof_r + 0.04, 0.16, (cx, cy, eave_z - 0.22), m["wood"], segments=32, bevel=0.02)
+    G.radial_uv(eave, center=center)
+    parts.append(eave)
     finial = G.cylinder(f"{prefix}_finial", 0.06, 1.4, (cx, cy, eave_z - 0.15 + roof_height - 0.3), m["iron"],
                         segments=8, bevel=0.0)
     knob = G.cylinder(f"{prefix}_knob", 0.14, 0.22, (cx, cy, eave_z - 0.15 + roof_height + 0.3), m["iron"],
@@ -215,6 +265,8 @@ def build_gatehouse(m):
     parts += merlons_along("gate_mb", -2.3, 2.3, height + 0.8, depth / 2 - 0.25, m["stone"], depth=0.5)
     parts += corbels_along("gate_cf", -2.3, 2.3, height - 0.45, -depth / 2 - 0.12, m["stone"])
 
+    parts.append(G.box("gate_course", (4.7, 0.2, 0.16), (0, -depth / 2 - 0.02, 5.2), m["stone"], bevel=0.03))
+    parts += protruding_blocks("gate_face", 4.4, height - 0.8, -depth / 2, m["stone"], seed=21, density=0.12, z0=4.4)
     for obj in parts:
         G.world_box_uv(obj)
     for side in (-1, 1):
@@ -244,6 +296,28 @@ def build_keep(m):
     door = arch_cutter("keep_door", 1.6, 1.4, 1.8, (0, -half + 0.2, 1.4))
     G.cut(body, door)
     parts += [plinth, body]
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            parts += quoins(f"keep_q{sx}{sy}", sx * (half - 0.07), sy * (half - 0.07), height - 0.9, m["stone"],
+                            z0=1.4, sign_x=sx, sign_y=sy)
+    for face in range(4):
+        angle = face * math.pi / 2
+        nx, ny = math.sin(angle), -math.cos(angle)
+        tx, ty = math.cos(angle), math.sin(angle)
+        for i, (offset, z) in enumerate(((-2.2, 5.0), (2.2, 5.0), (0.0, 8.6))):
+            px = nx * (half + 0.02) + tx * offset
+            py = ny * (half + 0.02) + ty * offset
+            sill = G.box(f"keep_sill{face}{i}", (1.1, 0.28, 0.14), (px, py, z - 0.14), m["stone"], bevel=0.03)
+            sill.rotation_euler.z = angle
+            lintel = G.box(f"keep_lintel{face}{i}", (1.2, 0.24, 0.22), (px, py, z + 1.42), m["stone"], bevel=0.03)
+            lintel.rotation_euler.z = angle
+            for side in (-1, 1):
+                jamb = G.box(f"keep_jamb{face}{i}{side}", (0.18, 0.22, 1.5),
+                             (px + tx * side * 0.48, py + ty * side * 0.48, z - 0.05), m["stone"], bevel=0.02)
+                jamb.rotation_euler.z = angle
+                parts.append(jamb)
+            parts += [sill, lintel]
+    bpy.context.view_layer.update()
     parts.append(G.box("keep_door_wood", (1.6, 0.12, 2.6), (0, -half + 0.45, 1.4), m["wood"], bevel=0.0))
     # Escalinata de madera a la puerta elevada.
     for i in range(5):
@@ -272,6 +346,19 @@ def build_keep(m):
     roof = G.pyramid("keep_roof", roof_size + 0.6, roof_size + 0.6, 6.0, (0, 0, top + 0.1), m["roof"])
     G.world_box_uv(roof)
     parts.append(roof)
+    # Aristas del tejado rematadas con listones de madera.
+    rs = (roof_size + 0.6) / 2
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            start = Vector((sx * rs, sy * rs, top + 0.1))
+            end = Vector((0, 0, top + 6.1))
+            direction = end - start
+            hip = G.box(f"keep_hip{sx}{sy}", (0.16, 0.16, direction.length), (0, 0, 0), m["wood"], bevel=0.02)
+            hip.location = start
+            hip.rotation_euler = direction.to_track_quat("Z", "Y").to_euler()
+            bpy.context.view_layer.update()
+            G.world_box_uv(hip)
+            parts.append(hip)
     parts.append(G.cylinder("keep_finial", 0.07, 1.8, (0, 0, top + 5.6), m["iron"], segments=8, bevel=0.0))
 
     # Garitas en las esquinas, sobre ménsulas cónicas.
