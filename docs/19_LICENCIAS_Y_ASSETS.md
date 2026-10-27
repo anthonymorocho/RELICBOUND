@@ -17,6 +17,8 @@
 |---|---|---|---|---|---|
 | 2026-10-27 | Texturas tileables StoneWall, Wood, RoofBlue, RoofRed, Iron (albedo + normal, 1024²) | **Propias**, generadas con `Tools/Blender/rb_textures.py` | Propiedad del proyecto | No | `Assets/Relicbound/Art/Textures/` |
 | 2026-10-27 | Kit del castillo inicial: SM_Wall_Straight, SM_Tower_Round, SM_Gatehouse, SM_Keep_L1 | **Propios**, generados con `Tools/Blender/rb_castle_kit.py` | Propiedad del proyecto | No | `Assets/Relicbound/Art/Castle/` |
+| 2026-10-27 | Texturas Grass y Dirt (terreno) | **Propias**, `Tools/Blender/rb_textures.py` | Propiedad del proyecto | No | `Assets/Relicbound/Art/Textures/` |
+| 2026-10-27 | Vegetación y rocas: 3 frondosos, 2 pinos, 2 arbustos, 3 rocas | **Propios**, `Tools/Blender/rb_nature.py` | Propiedad del proyecto | No | `Assets/Relicbound/Art/Nature/` |
 
 ## Código de terceros
 | Paquete | Licencia |

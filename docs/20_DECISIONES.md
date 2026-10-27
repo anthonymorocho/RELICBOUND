@@ -13,3 +13,5 @@
 | D-009 | 2026-10-27 | Sin pagar por saltarse esperas; esperas cortas | Prompt §13.3 y §14: nada de ventajas compradas | Aceleradores con gemas |
 | D-010 | 2026-10-27 | Bajar la capacidad del almacén nunca borra recursos | Principio de no destruir progreso | Recortar al límite |
 | D-011 | 2026-10-27 | Builds y tests de Unity en **GitHub Actions (GameCI)** | Permite compilar, probar y generar builds sin el PC del usuario | Compilar solo en local |
+| D-012 | 2026-10-27 | **Método de trabajo:** implementar directamente en Unity, ejecutar, revisar capturas reales y corregir sin pedir aprobación dentro de la fase autorizada; documentación solo como registro interno | Instrucción definitiva del usuario | Mockups y propuestas previas a implementar |
+| D-013 | 2026-10-27 | Arte del kit y vegetación generados por script en Blender (`Tools/Blender`), versionados y reproducibles | Calidad controlable e iterable sin depender de packs; permite regenerar con cambios de dirección artística | Modelado manual no reproducible |

@@ -13,6 +13,7 @@ namespace Relicbound.EditorTools
         public const string TexturesFolder = "Assets/Relicbound/Art/Textures";
         public const string MaterialsFolder = "Assets/Relicbound/Art/Materials";
         public const string CastleFolder = "Assets/Relicbound/Art/Castle";
+        public const string NatureFolder = "Assets/Relicbound/Art/Nature";
 
         [MenuItem("Relicbound/Configurar importación de arte")]
         public static void Run()
@@ -57,6 +58,34 @@ namespace Relicbound.EditorTools
             EnsureLit("M_RoofRed", "RoofRed", 0.4f, 0f);
             EnsureLit("M_Wood", "Wood", 0.25f, 0f);
             EnsureLit("M_Iron", "Iron", 0.5f, 0.7f);
+
+            // Vegetación y rocas: color plano estilizado (mismos nombres que rb_nature.py).
+            EnsureFlat("M_Bark", "#5A3E2B", 0.1f);
+            EnsureFlat("M_Leaf", "#557F30", 0.15f);
+            EnsureFlat("M_LeafLight", "#648E36", 0.15f);
+            EnsureFlat("M_Pine", "#2F5A3A", 0.15f);
+            EnsureFlat("M_PineLight", "#3D6E45", 0.15f);
+            EnsureFlat("M_Rock", "#8C877C", 0.1f);
+        }
+
+        public static Material EnsureFlat(string name, string hex, float smoothness)
+        {
+            var path = $"{MaterialsFolder}/{name}.mat";
+            var shader = Shader.Find("Universal Render Pipeline/Lit");
+            var material = AssetDatabase.LoadAssetAtPath<Material>(path);
+            if (material == null)
+            {
+                material = new Material(shader);
+                AssetDatabase.CreateAsset(material, path);
+            }
+            material.shader = shader;
+            ColorUtility.TryParseHtmlString(hex, out var color);
+            material.SetColor("_BaseColor", color);
+            material.SetFloat("_Smoothness", smoothness);
+            material.SetFloat("_Metallic", 0f);
+            material.enableInstancing = true;
+            EditorUtility.SetDirty(material);
+            return material;
         }
 
         public static Material EnsureLit(string name, string family, float smoothness, float metallic)
@@ -86,9 +115,10 @@ namespace Relicbound.EditorTools
 
         private static void ConfigureModels()
         {
-            foreach (var guid in AssetDatabase.FindAssets("t:Model", new[] { CastleFolder }))
+            foreach (var guid in AssetDatabase.FindAssets("t:Model", new[] { CastleFolder, NatureFolder }))
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
+                var isCastle = path.StartsWith(CastleFolder);
                 var importer = (ModelImporter)AssetImporter.GetAtPath(path);
                 importer.globalScale = 1f;
                 importer.useFileScale = true;
@@ -96,7 +126,7 @@ namespace Relicbound.EditorTools
                 importer.importLights = false;
                 importer.animationType = ModelImporterAnimationType.None;
                 importer.importAnimation = false;
-                importer.addCollider = true; // Selección por raycast (docs/04 §Selección).
+                importer.addCollider = isCastle; // Selección por raycast (docs/04 §Selección).
                 importer.importNormals = ModelImporterNormals.Import;
                 importer.importTangents = ModelImporterTangents.Import;
                 importer.materialImportMode = ModelImporterMaterialImportMode.ImportViaMaterialDescription;

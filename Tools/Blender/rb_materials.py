@@ -312,7 +312,7 @@ def grass():
     shift.operation = "SUBTRACT"
     shift.inputs[1].default_value = 0.15
     links.new(mix.outputs["Value"], shift.inputs[0])
-    tone = _ramp(nodes, [(0.2, "#4F6E2C"), (0.45, "#6E8F3E"), (0.7, "#8FAA4E"), (0.9, "#A9BD62")])
+    tone = _ramp(nodes, [(0.15, "#5A7A33"), (0.5, "#6A8A3C"), (0.85, "#7E9C47")])
     links.new(shift.outputs["Value"], tone.inputs["Fac"])
     links.new(tone.outputs["Color"], bsdf.inputs["Base Color"])
     bump = nodes.new("ShaderNodeBump")
@@ -353,8 +353,20 @@ def dirt():
     return material
 
 
+def grass_dry():
+    """Hierba seca/clara para variación a gran escala del terreno."""
+    material = grass()
+    material.name = "RB_GrassDry"
+    ramp = next(n for n in material.node_tree.nodes if n.type == "VALTORGB")
+    colors = ["#7F8A45", "#909A4E", "#A3A65A"]
+    for element, color in zip(ramp.color_ramp.elements, colors):
+        element.color = _hex(color)
+    return material
+
+
 FAMILIES = {
     "Grass": grass,
+    "GrassDry": grass_dry,
     "Dirt": dirt,
     "StoneWall": stone_wall,
     "Wood": wood_planks,

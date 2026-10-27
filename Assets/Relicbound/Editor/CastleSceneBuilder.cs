@@ -26,9 +26,10 @@ namespace Relicbound.EditorTools
             ArtImportSetup.EnsureFolder(EnvironmentFolder);
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
-            BuildTerrain();
+            var terrain = BuildTerrain();
             var castle = new GameObject("Castle");
             BuildCastleLayout(castle.transform);
+            ScatterNature(terrain, new GameObject("Nature").transform);
             var sun = BuildLighting();
             BuildPostProcessing();
             BuildCamera();
@@ -71,18 +72,21 @@ namespace Relicbound.EditorTools
             Piece("SM_Keep_L1", root, new Vector3(0f, 0f, 2.5f), 0f).name = "Keep";
         }
 
-        private static void BuildTerrain()
+        private static Terrain BuildTerrain()
         {
-            var grass = TerrainLayerFor("Grass", 8f);
+            var grass = TerrainLayerFor("Grass", 9f);
+            var dry = TerrainLayerFor("GrassDry", 11f);
             var dirt = TerrainLayerFor("Dirt", 6f);
 
-            var data = new TerrainData
-            {
-                heightmapResolution = 257,
-                alphamapResolution = 512,
-            };
+            // El asset se crea antes de pintar: si se crea después, Unity pierde los mapas de mezcla.
+            var dataPath = $"{EnvironmentFolder}/TD_CastleGround.asset";
+            AssetDatabase.DeleteAsset(dataPath);
+            var data = new TerrainData();
+            AssetDatabase.CreateAsset(data, dataPath);
+            data.heightmapResolution = 257;
+            data.alphamapResolution = 512;
             data.size = new Vector3(TerrainSize, 12f, TerrainSize);
-            data.terrainLayers = new[] { grass, dirt };
+            data.terrainLayers = new[] { grass, dry, dirt };
 
             // Llano alrededor del castillo y colinas suaves a partir de 34 m.
             var res = data.heightmapResolution;
@@ -104,7 +108,7 @@ namespace Relicbound.EditorTools
 
             // Patio de tierra y camino desde la puerta, con borde irregular.
             var ares = data.alphamapResolution;
-            var maps = new float[ares, ares, 2];
+            var maps = new float[ares, ares, 3];
             for (var y = 0; y < ares; y++)
             {
                 for (var x = 0; x < ares; x++)
@@ -117,12 +121,18 @@ namespace Relicbound.EditorTools
                     var path = wz < -9f ? 1f - Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(pathWidth, pathWidth + 1.4f, Mathf.Abs(wx + Mathf.Sin(wz * 0.08f) * 1.5f) + edgeNoise * 0.6f)) : 0f;
                     var worn = Mathf.Clamp01((Mathf.PerlinNoise(wx * 0.12f + 30f, wz * 0.12f) - 0.72f) * 2f);
                     var d = Mathf.Clamp01(Mathf.Max(Mathf.Max(yard, path), worn));
-                    maps[y, x, 0] = 1f - d;
-                    maps[y, x, 1] = d;
+                    // Variación a gran escala (no se repite): rompe el patrón del tile de césped.
+                    var macro = Mathf.PerlinNoise(wx * 0.018f + 70f, wz * 0.018f + 40f) * 0.7f
+                                + Mathf.PerlinNoise(wx * 0.06f + 11f, wz * 0.06f + 5f) * 0.3f;
+                    var dryWeight = Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(0.42f, 0.7f, macro)) * 0.85f;
+                    maps[y, x, 0] = (1f - d) * (1f - dryWeight);
+                    maps[y, x, 1] = (1f - d) * dryWeight;
+                    maps[y, x, 2] = d;
                 }
             }
             data.SetAlphamaps(0, 0, maps);
-            AssetDatabase.CreateAsset(data, $"{EnvironmentFolder}/TD_CastleGround.asset");
+            EditorUtility.SetDirty(data);
+            AssetDatabase.SaveAssets();
 
             var terrainGo = Terrain.CreateTerrainGameObject(data);
             terrainGo.name = "Ground";
@@ -132,6 +142,67 @@ namespace Relicbound.EditorTools
             terrain.drawInstanced = true;
             terrain.heightmapPixelError = 4f;
             terrainGo.isStatic = true;
+            return terrain;
+        }
+
+        /// <summary>
+        /// Bosquecillos alrededor del castillo con densidad por ruido (semilla fija): deja libres el patio,
+        /// un margen de 3 m junto a las murallas, el camino y el campo abierto frente a la puerta.
+        /// </summary>
+        private static void ScatterNature(Terrain terrain, Transform root)
+        {
+            var random = new System.Random(20261027);
+            var broadleaf = Models("SM_Tree_Broadleaf_01", "SM_Tree_Broadleaf_02", "SM_Tree_Broadleaf_03");
+            var pines = Models("SM_Tree_Pine_01", "SM_Tree_Pine_02");
+            var bushes = Models("SM_Bush_01", "SM_Bush_02");
+            var rocks = Models("SM_Rock_01", "SM_Rock_02", "SM_Rock_03");
+
+            var placed = new System.Collections.Generic.List<Vector3>();
+            for (var attempt = 0; attempt < 6000 && placed.Count < 260; attempt++)
+            {
+                var x = (float)(random.NextDouble() - 0.5) * (TerrainSize - 8f);
+                var z = (float)(random.NextDouble() - 0.5) * (TerrainSize - 8f);
+                var ring = Mathf.Max(Mathf.Abs(x), Mathf.Abs(z));
+                if (ring < 16f) continue;                                   // castillo y margen de murallas
+                if (Mathf.Abs(x + Mathf.Sin(z * 0.08f) * 1.5f) < 5f && z < 0f) continue; // camino
+                if (z < -14f && z > -40f && Mathf.Abs(x) < 16f) continue;   // explanada frente a la puerta (despliegue)
+
+                var density = Mathf.PerlinNoise(x * 0.04f + 50f, z * 0.04f + 20f);
+                var nearCastle = ring < 28f;
+                var roll = (float)random.NextDouble();
+                if (roll > density * (nearCastle ? 0.6f : 1.1f)) continue;
+
+                var position = new Vector3(x, 0f, z);
+                var tooClose = false;
+                foreach (var other in placed)
+                {
+                    if ((other - position).sqrMagnitude < 9f) { tooClose = true; break; }
+                }
+                if (tooClose) continue;
+                placed.Add(position);
+
+                GameObject[] pool;
+                var kind = random.NextDouble();
+                if (nearCastle) pool = kind < 0.55 ? bushes : kind < 0.85 ? rocks : broadleaf;
+                else pool = kind < 0.45 ? broadleaf : kind < 0.7 ? pines : kind < 0.88 ? bushes : rocks;
+
+                var model = pool[random.Next(pool.Length)];
+                var instance = (GameObject)PrefabUtility.InstantiatePrefab(model, root);
+                position.y = terrain.SampleHeight(position) + terrain.transform.position.y - 0.05f;
+                instance.transform.SetPositionAndRotation(position, Quaternion.Euler(0f, (float)random.NextDouble() * 360f, 0f));
+                instance.transform.localScale = Vector3.one * Mathf.Lerp(0.85f, 1.2f, (float)random.NextDouble());
+                instance.isStatic = true;
+            }
+        }
+
+        private static GameObject[] Models(params string[] names)
+        {
+            var result = new GameObject[names.Length];
+            for (var i = 0; i < names.Length; i++)
+            {
+                result[i] = AssetDatabase.LoadAssetAtPath<GameObject>($"{ArtImportSetup.NatureFolder}/{names[i]}.fbx");
+            }
+            return result;
         }
 
         private static TerrainLayer TerrainLayerFor(string family, float tile)
@@ -208,9 +279,9 @@ namespace Relicbound.EditorTools
             bloom.threshold.Override(1.1f);
             bloom.intensity.Override(0.15f);
             var color = profile.Add<ColorAdjustments>(true);
-            color.postExposure.Override(0.25f);
-            color.contrast.Override(8f);
-            color.saturation.Override(6f);
+            color.postExposure.Override(0f);
+            color.contrast.Override(10f);
+            color.saturation.Override(-8f);
             var vignette = profile.Add<Vignette>(true);
             vignette.intensity.Override(0.18f);
             foreach (var component in profile.components) AssetDatabase.AddObjectToAsset(component, profile);
