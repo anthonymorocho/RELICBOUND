@@ -15,6 +15,9 @@ jobs:
     name: Configurar y testear (EditMode)
     runs-on: ubuntu-latest
     environment: UNITY_LICENSE
+    permissions:
+      contents: read
+      checks: write
     timeout-minutes: 60
     env:
       UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -44,14 +47,17 @@ jobs:
         with:
           testMode: EditMode
           artifactsPath: test-results
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          checkName: Tests EditMode
 
       - name: Empaquetar archivos generados por Unity
         if: always()
         run: |
           sudo chown -R "$(id -u):$(id -g)" . || true
-          find Assets -name '*.meta' > generated-files.txt
-          ls -d ProjectSettings Packages/packages-lock.json Assets/Relicbound/Settings 2>/dev/null >> generated-files.txt || true
-          tar czf unity-generated.tgz -T generated-files.txt
+          # Todo lo que Unity haya creado o modificado (metas, ProjectSettings, assets de URP...).
+          git status --porcelain --untracked-files=all -- Assets Packages ProjectSettings | cut -c4- > generated-files.txt
+          cat generated-files.txt
+          if [ -s generated-files.txt ]; then tar czf unity-generated.tgz -T generated-files.txt; else tar czf unity-generated.tgz --files-from /dev/null; fi
 
       - uses: actions/upload-artifact@v4
         if: always()

@@ -39,3 +39,7 @@ sysinfo.txt
 /Tests/**/bin/
 /Tests/**/obj/
 /Tests/**/TestResults/
+
+# Python
+__pycache__/
+*.pyc
