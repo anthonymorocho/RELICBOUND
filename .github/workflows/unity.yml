@@ -34,11 +34,11 @@ jobs:
           key: Library-linux-${{ hashFiles('Packages/manifest.json', 'ProjectSettings/ProjectVersion.txt') }}
           restore-keys: Library-linux-
 
-      - name: Configurar proyecto (URP, Player, Input)
+      - name: Configurar proyecto, generar escena Castle y capturar evidencias
         uses: game-ci/unity-builder@v4
         with:
           targetPlatform: StandaloneLinux64
-          buildMethod: Relicbound.EditorTools.ProjectBootstrap.RunFromCommandLine
+          buildMethod: Relicbound.EditorTools.CiPipeline.RunFromCommandLine
           allowDirtyBuild: true
           versioning: None
 
@@ -64,6 +64,12 @@ jobs:
         with:
           name: unity-generated
           path: unity-generated.tgz
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence
+          path: Evidence/
 
       - uses: actions/upload-artifact@v4
         if: always()

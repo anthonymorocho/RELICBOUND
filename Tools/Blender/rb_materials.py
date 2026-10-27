@@ -70,15 +70,40 @@ def _torus(nodes, links, vector, radius=1.0, tube=0.5):
     return combine.outputs["Vector"]
 
 
+def _clifford(nodes, links, vector):
+    """UV 0..1 -> (cos u, sin u, cos v) + W = sin v: dos círculos de radio 1, periódico e isótropo en U y V."""
+    sep = nodes.new("ShaderNodeSeparateXYZ")
+    links.new(vector, sep.inputs["Vector"])
+    outputs = []
+    for axis in ("X", "Y"):
+        angle = nodes.new("ShaderNodeMath")
+        angle.operation = "MULTIPLY"
+        angle.inputs[1].default_value = 6.283185307
+        links.new(sep.outputs[axis], angle.inputs[0])
+        cos = nodes.new("ShaderNodeMath")
+        cos.operation = "COSINE"
+        sin = nodes.new("ShaderNodeMath")
+        sin.operation = "SINE"
+        links.new(angle.outputs["Value"], cos.inputs[0])
+        links.new(angle.outputs["Value"], sin.inputs[0])
+        outputs += [cos.outputs["Value"], sin.outputs["Value"]]
+    combine = nodes.new("ShaderNodeCombineXYZ")
+    links.new(outputs[0], combine.inputs["X"])
+    links.new(outputs[1], combine.inputs["Y"])
+    links.new(outputs[2], combine.inputs["Z"])
+    return combine.outputs["Vector"], outputs[3]
+
+
 def _noise(nodes, links, vector, scale, detail=6.0, roughness=0.6):
-    """Ruido tileable en el tile UV 0..1 (escala aproximada en repeticiones por tile)."""
-    vector = _torus(nodes, links, vector)
-    scale = scale / 6.283185307
+    """Ruido tileable e isótropo en el tile UV 0..1 (escala ~ manchas por tile)."""
+    vec4, w = _clifford(nodes, links, vector)
     noise = nodes.new("ShaderNodeTexNoise")
-    noise.inputs["Scale"].default_value = scale
+    noise.noise_dimensions = "4D"
+    noise.inputs["Scale"].default_value = scale / 6.283185307
     noise.inputs["Detail"].default_value = detail
     noise.inputs["Roughness"].default_value = roughness
-    links.new(vector, noise.inputs["Vector"])
+    links.new(vec4, noise.inputs["Vector"])
+    links.new(w, noise.inputs["W"])
     return noise
 
 
@@ -272,7 +297,65 @@ def iron():
     return material
 
 
+def grass():
+    """Césped estilizado: manchas grandes de tono, motas de brizna y algo de tierra asomando."""
+    material, nodes, links, bsdf = _new("RB_Grass")
+    vector = _uv(nodes, links, 1.0)
+    large = _noise(nodes, links, vector, 3.0, 4.0, 0.5)
+    fine = _noise(nodes, links, vector, 120.0, 2.0, 0.8)
+    mix = nodes.new("ShaderNodeMath")
+    mix.operation = "MULTIPLY_ADD"
+    mix.inputs[1].default_value = 0.35
+    links.new(fine.outputs["Fac"], mix.inputs[0])
+    links.new(large.outputs["Fac"], mix.inputs[2])
+    shift = nodes.new("ShaderNodeMath")
+    shift.operation = "SUBTRACT"
+    shift.inputs[1].default_value = 0.15
+    links.new(mix.outputs["Value"], shift.inputs[0])
+    tone = _ramp(nodes, [(0.2, "#4F6E2C"), (0.45, "#6E8F3E"), (0.7, "#8FAA4E"), (0.9, "#A9BD62")])
+    links.new(shift.outputs["Value"], tone.inputs["Fac"])
+    links.new(tone.outputs["Color"], bsdf.inputs["Base Color"])
+    bump = nodes.new("ShaderNodeBump")
+    bump.inputs["Strength"].default_value = 0.4
+    links.new(fine.outputs["Fac"], bump.inputs["Height"])
+    links.new(bump.outputs["Normal"], bsdf.inputs["Normal"])
+    return material
+
+
+def dirt():
+    """Tierra apisonada de patio y caminos con guijarros."""
+    material, nodes, links, bsdf = _new("RB_Dirt")
+    vector = _uv(nodes, links, 1.0)
+    base = _noise(nodes, links, vector, 5.0, 6.0, 0.55)
+    tone = _ramp(nodes, [(0.3, "#7C6143"), (0.55, "#9A7B55"), (0.8, "#B09068")])
+    links.new(base.outputs["Fac"], tone.inputs["Fac"])
+    pebbles = nodes.new("ShaderNodeTexVoronoi")
+    pebbles.voronoi_dimensions = "4D"
+    vec4, w = _clifford(nodes, links, vector)
+    links.new(vec4, pebbles.inputs["Vector"])
+    links.new(w, pebbles.inputs["W"])
+    pebbles.inputs["Scale"].default_value = 40.0 / 6.283185307
+    pebbles.inputs["Randomness"].default_value = 1.0
+    pebble_mask = nodes.new("ShaderNodeMath")
+    pebble_mask.operation = "LESS_THAN"
+    pebble_mask.inputs[1].default_value = 0.22
+    links.new(pebbles.outputs["Distance"], pebble_mask.inputs[0])
+    stones = nodes.new("ShaderNodeMix")
+    stones.data_type = "RGBA"
+    links.new(pebble_mask.outputs["Value"], stones.inputs["Factor"])
+    links.new(tone.outputs["Color"], stones.inputs["A"])
+    stones.inputs["B"].default_value = _hex("#A39C8C")
+    links.new(stones.outputs["Result"], bsdf.inputs["Base Color"])
+    bump = nodes.new("ShaderNodeBump")
+    bump.inputs["Strength"].default_value = 0.5
+    links.new(pebble_mask.outputs["Value"], bump.inputs["Height"])
+    links.new(bump.outputs["Normal"], bsdf.inputs["Normal"])
+    return material
+
+
 FAMILIES = {
+    "Grass": grass,
+    "Dirt": dirt,
     "StoneWall": stone_wall,
     "Wood": wood_planks,
     "RoofBlue": roof_tiles,
