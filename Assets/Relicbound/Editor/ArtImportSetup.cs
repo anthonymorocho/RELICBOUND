@@ -14,6 +14,7 @@ namespace Relicbound.EditorTools
         public const string MaterialsFolder = "Assets/Relicbound/Art/Materials";
         public const string CastleFolder = "Assets/Relicbound/Art/Castle";
         public const string NatureFolder = "Assets/Relicbound/Art/Nature";
+        public const string PropsFolder = "Assets/Relicbound/Art/Props";
 
         [MenuItem("Relicbound/Configurar importación de arte")]
         public static void Run()
@@ -30,6 +31,11 @@ namespace Relicbound.EditorTools
             foreach (var guid in AssetDatabase.FindAssets("t:Texture2D", new[] { TexturesFolder }))
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
+                if (path.EndsWith("T_BannerMasks.png"))
+                {
+                    ConfigureMask(path);
+                    continue;
+                }
                 var importer = (TextureImporter)AssetImporter.GetAtPath(path);
                 var isNormal = path.EndsWith("_normal.png");
                 importer.textureType = isNormal ? TextureImporterType.NormalMap : TextureImporterType.Default;
@@ -49,6 +55,33 @@ namespace Relicbound.EditorTools
             }
         }
 
+        private static void ConfigureMask(string path)
+        {
+            var importer = (TextureImporter)AssetImporter.GetAtPath(path);
+            importer.textureType = TextureImporterType.Default;
+            importer.sRGBTexture = false;
+            importer.alphaSource = TextureImporterAlphaSource.FromInput;
+            importer.wrapMode = TextureWrapMode.Clamp;
+            importer.mipmapEnabled = true;
+            importer.textureCompression = TextureImporterCompression.Uncompressed;
+            importer.SaveAndReimport();
+        }
+
+        public static Material BannerMaterial()
+        {
+            var path = $"{MaterialsFolder}/M_Banner.mat";
+            var material = AssetDatabase.LoadAssetAtPath<Material>(path);
+            if (material == null)
+            {
+                material = new Material(Shader.Find("Relicbound/Banner"));
+                AssetDatabase.CreateAsset(material, path);
+            }
+            material.SetTexture("_Masks", AssetDatabase.LoadAssetAtPath<Texture2D>($"{TexturesFolder}/T_BannerMasks.png"));
+            material.enableInstancing = false;
+            EditorUtility.SetDirty(material);
+            return material;
+        }
+
         private static void CreateMaterials()
         {
             EnsureFolder(MaterialsFolder);
@@ -58,6 +91,11 @@ namespace Relicbound.EditorTools
             EnsureLit("M_RoofRed", "RoofRed", 0.4f, 0f);
             EnsureLit("M_Wood", "Wood", 0.25f, 0f);
             EnsureLit("M_Iron", "Iron", 0.5f, 0.7f);
+            EnsureLit("M_Hay", "Hay", 0.05f, 0f);
+            var woodDark = EnsureLit("M_WoodDark", "Wood", 0.2f, 0f);
+            woodDark.SetColor("_BaseColor", new Color(0.55f, 0.48f, 0.41f));
+            EnsureFlat("M_Rope", "#8C6E3E", 0.1f);
+            EnsureFlat("M_Water", "#2E4A5C", 0.85f);
 
             // Vegetación y rocas: color plano estilizado (mismos nombres que rb_nature.py).
             EnsureFlat("M_Bark", "#5A3E2B", 0.1f);
@@ -119,7 +157,7 @@ namespace Relicbound.EditorTools
 
         private static void ConfigureModels()
         {
-            foreach (var guid in AssetDatabase.FindAssets("t:Model", new[] { CastleFolder, NatureFolder }))
+            foreach (var guid in AssetDatabase.FindAssets("t:Model", new[] { CastleFolder, NatureFolder, PropsFolder }))
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
                 var isCastle = path.StartsWith(CastleFolder);

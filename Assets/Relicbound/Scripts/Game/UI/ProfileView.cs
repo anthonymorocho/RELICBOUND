@@ -45,13 +45,16 @@ namespace Relicbound.Game.UI
 
             _playerField.RegisterValueChangedCallback(_ => { _playerTouched = true; Validate(); });
             _castleField.RegisterValueChangedCallback(_ => { _castleTouched = true; Validate(); });
-            _foundButton.clicked += Submit;
+            _foundButton.clicked += () => Submit();
             Validate();
         }
 
         public string SelectedBanner { get; private set; }
 
         public event Action<string, string, string> Submitted;
+
+        /// <summary>Al elegir estandarte, el castillo del fondo se viste con él al instante.</summary>
+        public event Action<string> BannerChanged;
 
         public void Show(bool visible)
         {
@@ -73,6 +76,7 @@ namespace Relicbound.Game.UI
         public void SelectBanner(string id)
         {
             SelectedBanner = id;
+            BannerChanged?.Invoke(id);
             for (var i = 0; i < _bannerButtons.Count; i++)
             {
                 _bannerButtons[i].EnableInClassList("banner-choice--selected", Banners.Starting[i].Id == id);

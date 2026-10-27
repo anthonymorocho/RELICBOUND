@@ -40,6 +40,7 @@ namespace Relicbound.EditorTools
             var castle = new GameObject("Castle");
             BuildCastleLayout(castle.transform);
             AttachBuildingViews(castle.transform, definitions);
+            DressCastle(castle.transform);
             ScatterNature(terrain, new GameObject("Nature").transform);
             var sun = BuildLighting();
             BuildPostProcessing();
@@ -339,6 +340,66 @@ namespace Relicbound.EditorTools
             }
             AssetDatabase.SaveAssets();
             return result;
+        }
+
+        /// <summary>
+        /// Vida en la fortaleza: estandartes con la heráldica del jugador, gallardetes en las torres y objetos de patio.
+        /// Nada de esto ocupa celdas de construcción (docs/05): se colocan pegados a muros y torreón.
+        /// </summary>
+        private static void DressCastle(Transform castle)
+        {
+            var bannerMaterial = ArtImportSetup.BannerMaterial();
+            var dressing = new GameObject("Dressing").transform;
+            dressing.SetParent(castle, false);
+
+            void Banner(string name, Vector3 position, float yaw, BannerShape shape, float width, float height, float amplitude)
+            {
+                var go = new GameObject(name, typeof(MeshFilter), typeof(MeshRenderer));
+                go.transform.SetParent(dressing, false);
+                go.transform.SetPositionAndRotation(position, Quaternion.Euler(0f, yaw, 0f));
+                go.GetComponent<MeshRenderer>().sharedMaterial = bannerMaterial;
+                go.AddComponent<BannerCloth>().Configure(shape, width, height, amplitude);
+            }
+
+            // Torreón (centro en z = 2,5; fachada sur en z = -2,0): dos estandartes colgados bajo la cornisa.
+            foreach (var x in new[] { -2.3f, 2.3f })
+            {
+                Banner("Banner_Keep", new Vector3(x, 11.55f, -2.12f), 0f, BannerShape.Hanging, 1.5f, 3.4f, 0.10f);
+            }
+            // Puerta: estandarte grande sobre el arco, en la cara exterior.
+            Banner("Banner_Gate", new Vector3(0f, 6.85f, -14.18f), 0f, BannerShape.Hanging, 1.5f, 2.3f, 0.08f);
+            // Gallardetes en el remate de cada torre (punta del tejado a ~15 m).
+            foreach (var sx in new[] { -1f, 1f })
+            {
+                foreach (var sz in new[] { -1f, 1f })
+                {
+                    Banner("Pennant_Tower", new Vector3(sx * TowerOffset, 15.45f, sz * TowerOffset), -50f, BannerShape.Pennant, 1.9f, 0.85f, 0.22f);
+                }
+            }
+
+            void Prop(string model, Vector3 position, float yaw, float scale = 1f)
+            {
+                var asset = AssetDatabase.LoadAssetAtPath<GameObject>($"{ArtImportSetup.PropsFolder}/{model}.fbx");
+                var instance = (GameObject)PrefabUtility.InstantiatePrefab(asset, dressing);
+                instance.transform.SetPositionAndRotation(position, Quaternion.Euler(0f, yaw, 0f));
+                instance.transform.localScale = Vector3.one * scale;
+                instance.isStatic = true;
+            }
+
+            // Patio (interior libre: |x|,|z| < 9,5). El torreón ocupa x ∈ [-5,5], z ∈ [-2,7].
+            Prop("SM_Well", new Vector3(-6.4f, 0f, -5.6f), 15f);
+            Prop("SM_Cart", new Vector3(5.6f, 0f, -6.9f), 160f);
+            Prop("SM_HayBale", new Vector3(7.6f, 0f, -4.6f), 80f);
+            Prop("SM_HayBale", new Vector3(7.9f, 0.6f, -4.5f), 95f, 0.9f);
+            Prop("SM_Barrel", new Vector3(-8.0f, 0f, 6.8f), 0f);
+            Prop("SM_Barrel", new Vector3(-7.1f, 0f, 7.6f), 40f);
+            Prop("SM_Barrel", new Vector3(-8.1f, 0f, 7.9f), 75f, 0.92f);
+            Prop("SM_Crate", new Vector3(7.5f, 0f, 7.3f), 10f);
+            Prop("SM_Crate", new Vector3(8.3f, 0f, 6.3f), 35f, 0.85f);
+            Prop("SM_Crate", new Vector3(7.8f, 0.9f, 7.0f), 20f, 0.8f);
+            // Fuera, junto al camino: carga recién llegada.
+            Prop("SM_Barrel", new Vector3(3.4f, 0f, -17.5f), 20f);
+            Prop("SM_Crate", new Vector3(4.3f, 0f, -18.4f), 60f, 0.9f);
         }
 
         private static void AttachBuildingViews(Transform castle, Dictionary<string, BuildingDefinition> definitions)

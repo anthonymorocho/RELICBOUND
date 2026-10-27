@@ -57,7 +57,7 @@ jobs:
           # Todo lo que Unity haya creado o modificado (metas, ProjectSettings, assets de URP...).
           git status --porcelain --untracked-files=all -- Assets Packages ProjectSettings | cut -c4- > generated-files.txt
           cat generated-files.txt
-          if [ -s generated-files.txt ]; then tar czf unity-generated.tgz -T generated-files.txt; else tar czf unity-generated.tgz --files-from /dev/null; fi
+          if [ -s generated-files.txt ]; then tar czf unity-generated.tgz --ignore-failed-read -T generated-files.txt; else tar czf unity-generated.tgz --files-from /dev/null; fi
 
       - uses: actions/upload-artifact@v4
         if: always()

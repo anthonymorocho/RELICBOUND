@@ -81,6 +81,7 @@ namespace Relicbound.Game.Castle
             _notice = new NoticeView(ui);
 
             _profile.Submitted += OnProfileSubmitted;
+            _profile.BannerChanged += BannerCloth.DressAll;
             _intro.SkipRequested += () => _skipIntro = true;
             _hud.SettingsRequested += OpenSettings;
             _settings.Changed += QualityApplier.Apply;
@@ -109,6 +110,7 @@ namespace Relicbound.Game.Castle
                     StartCoroutine(PlayIntro());
                     break;
                 case BootStage.Castle:
+                    BannerCloth.DressAll(_root.Session.Profile.BannerId);
                     _profile.Show(false);
                     _intro.Show(false);
                     cameraRig.Mode = CameraMode.Interactive;
@@ -125,6 +127,7 @@ namespace Relicbound.Game.Castle
         private void OnProfileSubmitted(string playerName, string castleName, string bannerId)
         {
             _root.CreateProfile(playerName, castleName, bannerId);
+            BannerCloth.DressAll(bannerId);
             QualityApplier.Apply(_root.Session.Settings);
             EnterStage(_root.Flow.Stage);
         }

@@ -15,6 +15,7 @@ from mathutils import Vector, noise
 
 sys.path.append(os.path.dirname(__file__))
 import rb_geo as G  # noqa: E402
+from rb_nature_shapes import blob  # noqa: E402
 
 args = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
 TEXTURES = os.path.abspath(args[0]) if args else os.path.abspath("Assets/Relicbound/Art/Textures")
@@ -32,22 +33,6 @@ def flat_material(name, color, roughness=0.8):
                                                  for c in srgb], 1)
     bsdf.inputs["Roughness"].default_value = roughness
     return material
-
-
-def blob(name, radius, location, seed, material, roughness=0.35, subdivisions=3, squash=0.85):
-    """Esfera deformada por ruido: masa de follaje o roca."""
-    bm = bmesh.new()
-    bmesh.ops.create_icosphere(bm, subdivisions=subdivisions, radius=radius)
-    offset = Vector((seed * 13.1, seed * 7.7, seed * 3.3))
-    for v in bm.verts:
-        direction = v.co.normalized()
-        n = noise.noise(direction * 1.6 + offset)
-        n2 = noise.noise(direction * 4.0 + offset * 2)
-        v.co = direction * radius * (1 + roughness * n + roughness * 0.35 * n2)
-        v.co.z *= squash
-    obj = G.mesh_object(name, bm, material)
-    obj.location = location
-    return obj
 
 
 def trunk(name, height, radius, location, seed, material, lean=0.15):

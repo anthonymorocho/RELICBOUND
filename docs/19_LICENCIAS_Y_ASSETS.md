@@ -23,6 +23,8 @@
 | 2026-10-27 | Fuente Nunito Sans SemiBold y ExtraBold (instancias estáticas) | https://github.com/google/fonts/tree/main/ofl/nunitosans | SIL OFL 1.1 (texto incluido) | Mención en créditos recomendada | `Assets/Relicbound/UI/Fonts/` |
 | 2026-10-27 | Iconos de recursos (oro, madera, piedra, hierro, gemas) | **Propios**, `Tools/Blender/rb_icons.py` | Propiedad del proyecto | No | `Assets/Relicbound/UI/Icons/` |
 | 2026-10-27 | Texturas 9-slice de interfaz (paneles, botones, campos, barras) | **Propias**, `Tools/UI/make_ui_textures.py` | Propiedad del proyecto | No | `Assets/Relicbound/UI/Textures/` |
+| 2026-10-27 | Objetos de patio (barril, caja, bala de paja, carro, pozo) y textura Hay | **Propios**, `Tools/Blender/rb_props.py` | Propiedad del proyecto | No | `Assets/Relicbound/Art/Props/` |
+| 2026-10-27 | Máscaras heráldicas de estandartes | **Propias**, `Tools/UI/make_banner_masks.py` | Propiedad del proyecto | No | `Assets/Relicbound/Art/Textures/T_BannerMasks.png` |
 
 ## Código de terceros
 | Paquete | Licencia |

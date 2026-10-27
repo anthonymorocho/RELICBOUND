@@ -13,6 +13,7 @@ import sys
 import bpy
 
 sys.path.append(os.path.dirname(__file__))
+import rb_castle_kit_materials as K  # noqa: E402
 import rb_geo as G  # noqa: E402
 
 WALL_HEIGHT = 4.2          # altura del adarve
@@ -31,23 +32,7 @@ PREVIEW = os.path.abspath(args[2]) if len(args) > 2 else None
 # ---------------------------------------------------------------- materiales
 
 def textured_material(name, family, roughness=0.8, metallic=0.0):
-    material = bpy.data.materials.new(name)
-    material.use_nodes = True
-    nodes = material.node_tree.nodes
-    links = material.node_tree.links
-    bsdf = nodes["Principled BSDF"]
-    bsdf.inputs["Roughness"].default_value = roughness
-    bsdf.inputs["Metallic"].default_value = metallic
-    albedo = nodes.new("ShaderNodeTexImage")
-    albedo.image = bpy.data.images.load(os.path.join(TEXTURES, f"T_{family}_albedo.png"))
-    links.new(albedo.outputs["Color"], bsdf.inputs["Base Color"])
-    normal_tex = nodes.new("ShaderNodeTexImage")
-    normal_tex.image = bpy.data.images.load(os.path.join(TEXTURES, f"T_{family}_normal.png"))
-    normal_tex.image.colorspace_settings.name = "Non-Color"
-    normal_map = nodes.new("ShaderNodeNormalMap")
-    links.new(normal_tex.outputs["Color"], normal_map.inputs["Color"])
-    links.new(normal_map.outputs["Normal"], bsdf.inputs["Normal"])
-    return material
+    return K.textured_material(name, family, TEXTURES, roughness, metallic)
 
 
 def build_materials():

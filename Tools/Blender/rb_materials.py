@@ -353,6 +353,32 @@ def dirt():
     return material
 
 
+def hay():
+    """Paja: briznas alargadas en dos direcciones con tonos dorados y sombras entre ellas."""
+    material, nodes, links, bsdf = _new("RB_Hay")
+    vector = _uv(nodes, links, 1.0)
+    vec4, w = _clifford(nodes, links, vector)
+    streak = nodes.new("ShaderNodeTexNoise")
+    streak.noise_dimensions = "4D"
+    streak.inputs["Scale"].default_value = 3.0
+    streak.inputs["Detail"].default_value = 10.0
+    streak.inputs["Roughness"].default_value = 0.7
+    stretch = nodes.new("ShaderNodeVectorMath")
+    stretch.operation = "MULTIPLY"
+    stretch.inputs[1].default_value = (1.0, 10.0, 10.0)
+    links.new(vec4, stretch.inputs[0])
+    links.new(stretch.outputs["Vector"], streak.inputs["Vector"])
+    links.new(w, streak.inputs["W"])
+    tone = _ramp(nodes, [(0.3, "#8C6F2E"), (0.5, "#C9A85A"), (0.7, "#E3C677")])
+    links.new(streak.outputs["Fac"], tone.inputs["Fac"])
+    links.new(tone.outputs["Color"], bsdf.inputs["Base Color"])
+    bump = nodes.new("ShaderNodeBump")
+    bump.inputs["Strength"].default_value = 0.9
+    links.new(streak.outputs["Fac"], bump.inputs["Height"])
+    links.new(bump.outputs["Normal"], bsdf.inputs["Normal"])
+    return material
+
+
 def grass_dry():
     """Hierba seca/clara para variación a gran escala del terreno."""
     material = grass()
@@ -365,6 +391,7 @@ def grass_dry():
 
 
 FAMILIES = {
+    "Hay": hay,
     "Grass": grass,
     "GrassDry": grass_dry,
     "Dirt": dirt,
