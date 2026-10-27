@@ -29,18 +29,21 @@ namespace Relicbound.Game.Castle
             switch (settings.Quality)
             {
                 case QualityPreset.Low:
+                    GrassField.DensityScale = 0.3f;
                     _runtimeAsset.renderScale = 0.75f;
                     _runtimeAsset.msaaSampleCount = 1;
                     _runtimeAsset.shadowCascadeCount = 1;
                     _runtimeAsset.shadowDistance = 70f;
                     break;
                 case QualityPreset.Medium:
+                    GrassField.DensityScale = Application.isMobilePlatform ? 0.45f : 0.75f;
                     _runtimeAsset.renderScale = Application.isMobilePlatform ? 0.85f : 1f;
                     _runtimeAsset.msaaSampleCount = 2;
                     _runtimeAsset.shadowCascadeCount = 2;
                     _runtimeAsset.shadowDistance = 100f;
                     break;
                 default:
+                    GrassField.DensityScale = 1f;
                     _runtimeAsset.renderScale = 1f;
                     _runtimeAsset.msaaSampleCount = 4;
                     _runtimeAsset.shadowCascadeCount = 4;

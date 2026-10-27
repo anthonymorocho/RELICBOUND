@@ -42,6 +42,7 @@ namespace Relicbound.EditorTools
             AttachBuildingViews(castle.transform, definitions);
             DressCastle(castle.transform);
             ScatterNature(terrain, new GameObject("Nature").transform);
+            BuildGrass(terrain);
             var sun = BuildLighting();
             BuildPostProcessing();
             var camera = BuildCamera();
@@ -212,6 +213,43 @@ namespace Relicbound.EditorTools
             }
         }
 
+        private static void BuildGrass(Terrain terrain)
+        {
+            Material GrassMaterial(string name, Color root, Color tip, Color head)
+            {
+                var path = $"{EnvironmentFolder}/{name}.mat";
+                var material = AssetDatabase.LoadAssetAtPath<Material>(path);
+                if (material == null)
+                {
+                    material = new Material(Shader.Find("Relicbound/Grass"));
+                    AssetDatabase.CreateAsset(material, path);
+                }
+                material.SetColor("_BaseColor", root);
+                material.SetColor("_TipColor", tip);
+                material.SetColor("_HeadColor", head);
+                material.enableInstancing = true;
+                EditorUtility.SetDirty(material);
+                return material;
+            }
+
+            var grass = GrassMaterial("M_Grass", new Color(0.22f, 0.33f, 0.12f), new Color(0.58f, 0.68f, 0.30f), Color.white);
+            var flowers = new[]
+            {
+                GrassMaterial("M_FlowerWhite", new Color(0.22f, 0.33f, 0.12f), new Color(0.45f, 0.58f, 0.25f), new Color(0.95f, 0.93f, 0.86f)),
+                GrassMaterial("M_FlowerYellow", new Color(0.22f, 0.33f, 0.12f), new Color(0.45f, 0.58f, 0.25f), new Color(0.98f, 0.80f, 0.25f)),
+                GrassMaterial("M_FlowerViolet", new Color(0.22f, 0.33f, 0.12f), new Color(0.45f, 0.58f, 0.25f), new Color(0.62f, 0.45f, 0.85f)),
+            };
+            var go = new GameObject("Grass");
+            var field = go.AddComponent<GrassField>();
+            var data = new SerializedObject(field);
+            data.FindProperty("terrain").objectReferenceValue = terrain;
+            data.FindProperty("grassMaterial").objectReferenceValue = grass;
+            var array = data.FindProperty("flowerMaterials");
+            array.arraySize = flowers.Length;
+            for (var i = 0; i < flowers.Length; i++) array.GetArrayElementAtIndex(i).objectReferenceValue = flowers[i];
+            data.ApplyModifiedPropertiesWithoutUndo();
+        }
+
         private static GameObject[] Models(params string[] names)
         {
             var result = new GameObject[names.Length];
@@ -257,9 +295,11 @@ namespace Relicbound.EditorTools
             var sun = sunGo.AddComponent<Light>();
             sun.type = LightType.Directional;
             sun.color = new Color(1f, 0.93f, 0.82f); // ~5200 K (docs/02)
-            sun.intensity = 1.6f;
+            sun.intensity = 1.75f;
             sun.shadows = LightShadows.Soft;
-            sun.shadowStrength = 0.85f;
+            sun.shadowStrength = 0.9f;
+            sun.shadowBias = 0.05f;
+            sun.shadowNormalBias = 0.3f;
             sunGo.transform.rotation = Quaternion.Euler(48f, -40f, 0f);
 
             var sky = new Material(Shader.Find("Skybox/Procedural"));
@@ -272,9 +312,10 @@ namespace Relicbound.EditorTools
             RenderSettings.skybox = sky;
 
             RenderSettings.ambientMode = AmbientMode.Trilight;
-            RenderSettings.ambientSkyColor = new Color(0.62f, 0.72f, 0.86f);
-            RenderSettings.ambientEquatorColor = new Color(0.55f, 0.6f, 0.5f);
-            RenderSettings.ambientGroundColor = new Color(0.3f, 0.28f, 0.22f);
+            // Relleno frío desde el cielo y rebote cálido del suelo: volumen sin aplanar las sombras.
+            RenderSettings.ambientSkyColor = new Color(0.55f, 0.66f, 0.84f);
+            RenderSettings.ambientEquatorColor = new Color(0.52f, 0.55f, 0.46f);
+            RenderSettings.ambientGroundColor = new Color(0.33f, 0.28f, 0.2f);
 
             RenderSettings.fog = true;
             RenderSettings.fogMode = FogMode.Linear;
@@ -296,11 +337,26 @@ namespace Relicbound.EditorTools
             bloom.threshold.Override(1.1f);
             bloom.intensity.Override(0.15f);
             var color = profile.Add<ColorAdjustments>(true);
-            color.postExposure.Override(0f);
-            color.contrast.Override(10f);
-            color.saturation.Override(-8f);
+            color.postExposure.Override(0.05f);
+            color.contrast.Override(14f);
+            color.saturation.Override(-4f);
+            // Luz cálida de tarde: balance algo cálido, sombras azuladas y altas luces ámbar.
+            var white = profile.Add<WhiteBalance>(true);
+            white.temperature.Override(8f);
+            var split = profile.Add<SplitToning>(true);
+            split.shadows.Override(new Color(0.36f, 0.45f, 0.62f));
+            split.highlights.Override(new Color(0.85f, 0.72f, 0.52f));
+            split.balance.Override(-15f);
             var vignette = profile.Add<Vignette>(true);
-            vignette.intensity.Override(0.18f);
+            vignette.intensity.Override(0.22f);
+            vignette.smoothness.Override(0.45f);
+            // Fondo ligeramente desenfocado (profundidad de maqueta). La cámara ajusta las distancias al zoom.
+            var depth = profile.Add<DepthOfField>(true);
+            depth.mode.Override(DepthOfFieldMode.Gaussian);
+            depth.gaussianStart.Override(95f);
+            depth.gaussianEnd.Override(210f);
+            depth.gaussianMaxRadius.Override(1.2f);
+            depth.highQualitySampling.Override(true);
             foreach (var component in profile.components) AssetDatabase.AddObjectToAsset(component, profile);
 
             var volumeGo = new GameObject("PostProcess");

@@ -3,6 +3,8 @@ using Relicbound.Core.CameraControl;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.EnhancedTouch;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using ETouch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 namespace Relicbound.Game.CameraControl
@@ -43,6 +45,7 @@ namespace Relicbound.Game.CameraControl
         private float _targetYaw = -35f;
         private float _targetDistance = 70f;
 
+        private DepthOfField _depthOfField;
         private bool _pointerDown;
         private Vector3 _grabWorld;
         private float _lastPinchDistance;
@@ -64,6 +67,9 @@ namespace Relicbound.Game.CameraControl
             _limits = CameraLimits.ForGrid(40, 1f, 8f, minDistance, maxDistance);
             _gesture = new PointerGesture(Screen.dpi);
             _targetPivot = _pivot = Vector3.zero;
+            var volume = FindFirstObjectByType<Volume>();
+            // profile (no sharedProfile): copia en tiempo de ejecución, el asset del proyecto no se modifica.
+            if (volume != null) volume.profile.TryGet(out _depthOfField);
             Apply(true);
         }
 
@@ -276,6 +282,13 @@ namespace Relicbound.Game.CameraControl
             var rotation = Quaternion.Euler(pitch, _yaw, 0f);
             var lookAt = _pivot + Vector3.up * 3f;
             transform.SetPositionAndRotation(lookAt - rotation * Vector3.forward * _distance, rotation);
+
+            if (_depthOfField != null)
+            {
+                // Nítido hasta un poco más allá del castillo; el horizonte se suaviza.
+                _depthOfField.gaussianStart.value = _distance + 25f;
+                _depthOfField.gaussianEnd.value = _distance + 140f;
+            }
         }
     }
 }

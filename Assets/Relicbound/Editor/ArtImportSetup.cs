@@ -145,11 +145,12 @@ namespace Relicbound.EditorTools
         {
             EnsureFolder(MaterialsFolder);
             // Nombres iguales a los materiales de rb_castle_kit.py para que el FBX los remapee.
-            EnsureLit("M_StoneWall", "StoneWall", 0.15f, 0f);
-            EnsureLit("M_RoofBlue", "RoofBlue", 0.4f, 0f);
-            EnsureLit("M_RoofRed", "RoofRed", 0.4f, 0f);
-            EnsureLit("M_Wood", "Wood", 0.25f, 0f);
-            EnsureLit("M_Iron", "Iron", 0.5f, 0.7f);
+            // Kit del castillo: shader con desgaste (docs/02). Parámetros: suavidad, metálico, suciedad, musgo, variación.
+            EnsureStylized("M_StoneWall", "StoneWall", 0.12f, 0f, 0.7f, 0.55f, 0.16f);
+            EnsureStylized("M_RoofBlue", "RoofBlue", 0.35f, 0f, 0.0f, 0.35f, 0.10f);
+            EnsureStylized("M_RoofRed", "RoofRed", 0.35f, 0f, 0.0f, 0.35f, 0.10f);
+            EnsureStylized("M_Wood", "Wood", 0.2f, 0f, 0.5f, 0.2f, 0.12f);
+            EnsureStylized("M_Iron", "Iron", 0.5f, 0.7f, 0.3f, 0f, 0.08f);
             EnsureLit("M_Hay", "Hay", 0.05f, 0f);
             var woodDark = EnsureLit("M_WoodDark", "Wood", 0.2f, 0f);
             woodDark.SetColor("_BaseColor", new Color(0.55f, 0.48f, 0.41f));
@@ -180,6 +181,32 @@ namespace Relicbound.EditorTools
             material.SetColor("_BaseColor", color);
             material.SetFloat("_Smoothness", smoothness);
             material.SetFloat("_Metallic", 0f);
+            material.enableInstancing = true;
+            EditorUtility.SetDirty(material);
+            return material;
+        }
+
+        public static Material EnsureStylized(string name, string family, float smoothness, float metallic, float grime, float moss, float variation)
+        {
+            var path = $"{MaterialsFolder}/{name}.mat";
+            var shader = Shader.Find("Relicbound/StylizedLit");
+            var material = AssetDatabase.LoadAssetAtPath<Material>(path);
+            if (material == null)
+            {
+                material = new Material(shader);
+                AssetDatabase.CreateAsset(material, path);
+            }
+            material.shader = shader;
+            material.SetTexture("_BaseMap", LoadTexture(family, "albedo"));
+            material.SetTexture("_BumpMap", LoadTexture(family, "normal"));
+            material.SetColor("_BaseColor", Color.white);
+            material.SetFloat("_BumpScale", 1f);
+            material.SetFloat("_Smoothness", smoothness);
+            material.SetFloat("_Metallic", metallic);
+            material.SetColor("_EmissionColor", Color.black);
+            material.SetFloat("_GrimeStrength", grime);
+            material.SetFloat("_MossAmount", moss);
+            material.SetFloat("_Variation", variation);
             material.enableInstancing = true;
             EditorUtility.SetDirty(material);
             return material;

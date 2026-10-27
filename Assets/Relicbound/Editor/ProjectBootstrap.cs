@@ -63,6 +63,14 @@ namespace Relicbound.EditorTools
             pipeline.shadowCascadeCount = 4;
             EditorUtility.SetDirty(pipeline);
 
+            // Sombras finas y suaves (PC; el preset móvil las reduce en tiempo de ejecución).
+            var pipelineData = new SerializedObject(pipeline);
+            SetInt(pipelineData, "m_MainLightShadowmapResolution", 4096);
+            SetBool(pipelineData, "m_SoftShadowsSupported", true);
+            SetFloat(pipelineData, "m_Cascade4Split", 0f);
+            pipelineData.ApplyModifiedPropertiesWithoutUndo();
+            EnsureAmbientOcclusion(AssetDatabase.LoadAssetAtPath<UniversalRendererData>(RendererPath));
+
             GraphicsSettings.defaultRenderPipeline = pipeline;
             var current = QualitySettings.GetQualityLevel();
             for (var level = 0; level < QualitySettings.names.Length; level++)
@@ -73,6 +81,63 @@ namespace Relicbound.EditorTools
             QualitySettings.SetQualityLevel(current, false);
 
             PlayerSettings.colorSpace = ColorSpace.Linear;
+        }
+
+        /// <summary>
+        /// Añade SSAO al renderer. La clase del feature no es pública en URP 17: se crea por reflexión y se registra
+        /// en el mapa de features del renderer para que Unity lo serialice correctamente.
+        /// </summary>
+        private static void EnsureAmbientOcclusion(UniversalRendererData renderer)
+        {
+            if (renderer == null) return;
+            var type = typeof(UniversalRendererData).Assembly.GetType("UnityEngine.Rendering.Universal.ScreenSpaceAmbientOcclusion");
+            if (type == null) return;
+            ScriptableRendererFeature feature = null;
+            foreach (var existing in renderer.rendererFeatures)
+            {
+                if (existing != null && existing.GetType() == type) feature = existing;
+            }
+            if (feature == null)
+            {
+                feature = (ScriptableRendererFeature)ScriptableObject.CreateInstance(type);
+                feature.name = "ScreenSpaceAmbientOcclusion";
+                AssetDatabase.AddObjectToAsset(feature, renderer);
+                renderer.rendererFeatures.Add(feature);
+                AssetDatabase.SaveAssets();
+                var data = new SerializedObject(renderer);
+                var map = data.FindProperty("m_RendererFeatureMap");
+                if (map != null && AssetDatabase.TryGetGUIDAndLocalFileIdentifier(feature, out _, out long localId))
+                {
+                    map.arraySize = renderer.rendererFeatures.Count;
+                    map.GetArrayElementAtIndex(map.arraySize - 1).longValue = localId;
+                    data.ApplyModifiedPropertiesWithoutUndo();
+                }
+            }
+            var settings = new SerializedObject(feature);
+            SetFloat(settings, "m_Settings.Intensity", 1.1f);
+            SetFloat(settings, "m_Settings.Radius", 0.6f);
+            SetFloat(settings, "m_Settings.DirectLightingStrength", 0.35f);
+            SetFloat(settings, "m_Settings.Falloff", 60f);
+            settings.ApplyModifiedPropertiesWithoutUndo();
+            EditorUtility.SetDirty(renderer);
+        }
+
+        private static void SetInt(SerializedObject data, string path, int value)
+        {
+            var property = data.FindProperty(path);
+            if (property != null) property.intValue = value;
+        }
+
+        private static void SetBool(SerializedObject data, string path, bool value)
+        {
+            var property = data.FindProperty(path);
+            if (property != null) property.boolValue = value;
+        }
+
+        private static void SetFloat(SerializedObject data, string path, float value)
+        {
+            var property = data.FindProperty(path);
+            if (property != null) property.floatValue = value;
         }
 
         private static void ConfigurePlayer()
