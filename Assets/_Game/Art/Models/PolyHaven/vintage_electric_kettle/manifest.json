@@ -1,0 +1,53 @@
+{
+  "id": "vintage_electric_kettle",
+  "materials": [
+    {
+      "name": "PH_vintage_electric_kettle_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_vintage_electric_kettle_0_BaseColor.jpg",
+      "normal": "PH_vintage_electric_kettle_0_Normal.jpg",
+      "mask": "PH_vintage_electric_kettle_0_Mask.png"
+    },
+    {
+      "name": "PH_vintage_electric_kettle_1",
+      "alpha": "BLEND",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_vintage_electric_kettle_1_BaseColor.jpg",
+      "normal": "PH_vintage_electric_kettle_1_Normal.jpg",
+      "mask": "PH_vintage_electric_kettle_1_Mask.png"
+    }
+  ],
+  "triangles": 14838,
+  "trianglesOriginal": 14838,
+  "size": [
+    0.32089072465896606,
+    0.3047400116920471,
+    0.24855303764343262
+  ],
+  "variants": [
+    {
+      "name": "vintage_electric_kettle",
+      "size": [
+        0.32089072465896606,
+        0.3047400116920471,
+        0.24855303764343262
+      ],
+      "triangles": 14838
+    }
+  ]
+}

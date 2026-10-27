@@ -18,6 +18,29 @@
                 <ui:Label name="toast-text" text="" class="toast__text" />
                 <ui:Label text="Tab" class="key" />
             </ui:VisualElement>
+            <ui:VisualElement name="phone" class="phone phone--away" picking-mode="Ignore">
+                <ui:VisualElement class="phone__screen" picking-mode="Ignore">
+                    <ui:VisualElement class="phone__status" picking-mode="Ignore">
+                        <ui:Label name="phone-clock" text="21:12" class="phone__clock" />
+                        <ui:VisualElement class="phone__icons" picking-mode="Ignore">
+                            <ui:VisualElement class="phone__bars" />
+                            <ui:VisualElement class="phone__battery"><ui:VisualElement class="phone__battery-fill" /></ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="phone__header" picking-mode="Ignore">
+                        <ui:Label text="L" class="phone__avatar" />
+                        <ui:VisualElement picking-mode="Ignore">
+                            <ui:Label name="phone-contact" text="Lucía" class="phone__name" />
+                            <ui:Label name="phone-presence" text="en línea" class="phone__presence" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:ScrollView name="phone-messages" class="phone__messages" vertical-scroller-visibility="Hidden" horizontal-scroller-visibility="Hidden" />
+                    <ui:VisualElement name="phone-replies" class="phone__replies" picking-mode="Ignore" />
+                    <ui:VisualElement class="phone__composer" picking-mode="Ignore">
+                        <ui:Label name="phone-composer" text="Mensaje" class="phone__composer-text" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
             <ui:VisualElement name="hud-subtitles" class="subtitles" picking-mode="Ignore">
                 <ui:Label name="hud-subtitle" text="" class="subtitle" />
             </ui:VisualElement>

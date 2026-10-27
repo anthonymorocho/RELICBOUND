@@ -1,0 +1,53 @@
+{
+  "id": "lightbulb_01",
+  "materials": [
+    {
+      "name": "PH_lightbulb_01_0",
+      "alpha": "BLEND",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_lightbulb_01_0_BaseColor.jpg",
+      "normal": "PH_lightbulb_01_0_Normal.jpg",
+      "mask": "PH_lightbulb_01_0_Mask.png"
+    },
+    {
+      "name": "PH_lightbulb_01_1",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_lightbulb_01_1_BaseColor.jpg",
+      "normal": "PH_lightbulb_01_1_Normal.jpg",
+      "mask": "PH_lightbulb_01_1_Mask.png"
+    }
+  ],
+  "triangles": 4372,
+  "trianglesOriginal": 4372,
+  "size": [
+    0.05998999997973442,
+    0.10028897225856781,
+    0.05999000743031502
+  ],
+  "variants": [
+    {
+      "name": "lightbulb_01",
+      "size": [
+        0.05998999997973442,
+        0.10028897225856781,
+        0.05999000743031502
+      ],
+      "triangles": 4372
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "id": "sofa_03",
+  "materials": [
+    {
+      "name": "PH_sofa_03_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_sofa_03_0_BaseColor.jpg",
+      "normal": "PH_sofa_03_0_Normal.jpg",
+      "mask": "PH_sofa_03_0_Mask.png"
+    },
+    {
+      "name": "PH_sofa_03_1",
+      "alpha": "BLEND",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_sofa_03_1_BaseColor.jpg",
+      "normal": "PH_sofa_03_1_Normal.jpg",
+      "mask": "PH_sofa_03_1_Mask.png"
+    }
+  ],
+  "triangles": 8003,
+  "trianglesOriginal": 8003,
+  "size": [
+    2.73117733001709,
+    1.118264079093933,
+    0.9250842332839966
+  ],
+  "variants": [
+    {
+      "name": "sofa_03",
+      "size": [
+        2.73117733001709,
+        1.118264079093933,
+        0.9250842332839966
+      ],
+      "triangles": 8003
+    }
+  ]
+}

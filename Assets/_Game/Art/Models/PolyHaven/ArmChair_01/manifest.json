@@ -1,0 +1,38 @@
+{
+  "id": "ArmChair_01",
+  "materials": [
+    {
+      "name": "PH_ArmChair_01_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_ArmChair_01_0_BaseColor.jpg",
+      "normal": "PH_ArmChair_01_0_Normal.jpg",
+      "mask": "PH_ArmChair_01_0_Mask.png"
+    }
+  ],
+  "triangles": 5626,
+  "trianglesOriginal": 5626,
+  "size": [
+    0.848430871963501,
+    1.0650876760482788,
+    0.7657603025436401
+  ],
+  "variants": [
+    {
+      "name": "ArmChair_01",
+      "size": [
+        0.848430871963501,
+        1.0650876760482788,
+        0.7657603025436401
+      ],
+      "triangles": 5626
+    }
+  ]
+}

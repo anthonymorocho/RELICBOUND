@@ -1,0 +1,11 @@
+{
+  "id": "kitchen_wood",
+  "name": "Kitchen Wood",
+  "dimensions_mm": [
+    600.0000238418579,
+    600.0000238418579
+  ],
+  "authors": [
+    "Rob Tuytel"
+  ]
+}

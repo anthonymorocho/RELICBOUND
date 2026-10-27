@@ -20,6 +20,7 @@ namespace BeforeItWasYou.Input
         public InputAction Interact { get; }
         public InputAction Phone { get; }
         public InputAction Pause { get; }
+        public InputAction[] Choices { get; }
 
         public InputActionMap Ui { get; }
         public InputAction Navigate { get; }
@@ -56,6 +57,14 @@ namespace BeforeItWasYou.Input
             Pause = Player.AddAction("Pause", InputActionType.Button);
             Pause.AddBinding("<Keyboard>/escape");
             Pause.AddBinding("<Gamepad>/start");
+
+            Choices = new InputAction[3];
+            for (var i = 0; i < Choices.Length; i++)
+            {
+                Choices[i] = Player.AddAction("Choice" + (i + 1), InputActionType.Button);
+                Choices[i].AddBinding("<Keyboard>/" + (i + 1));
+                Choices[i].AddBinding("<Keyboard>/numpad" + (i + 1));
+            }
 
             Ui = new InputActionMap("UI");
             Navigate = Ui.AddAction("Navigate", InputActionType.Value);

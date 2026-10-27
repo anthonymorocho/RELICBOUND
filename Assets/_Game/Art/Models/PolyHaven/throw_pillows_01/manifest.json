@@ -1,0 +1,38 @@
+{
+  "id": "throw_pillows_01",
+  "materials": [
+    {
+      "name": "PH_throw_pillows_01_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_throw_pillows_01_0_BaseColor.jpg",
+      "normal": "PH_throw_pillows_01_0_Normal.jpg",
+      "mask": "PH_throw_pillows_01_0_Mask.png"
+    }
+  ],
+  "triangles": 6362,
+  "trianglesOriginal": 6362,
+  "size": [
+    0.9400650262832642,
+    0.4501592516899109,
+    0.4518609642982483
+  ],
+  "variants": [
+    {
+      "name": "throw_pillows_01",
+      "size": [
+        0.9400650262832642,
+        0.4501592516899109,
+        0.4518609642982483
+      ],
+      "triangles": 6362
+    }
+  ]
+}

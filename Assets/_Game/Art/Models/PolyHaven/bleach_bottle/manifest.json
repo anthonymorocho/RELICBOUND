@@ -1,0 +1,38 @@
+{
+  "id": "bleach_bottle",
+  "materials": [
+    {
+      "name": "PH_bleach_bottle_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_bleach_bottle_0_BaseColor.jpg",
+      "normal": "PH_bleach_bottle_0_Normal.jpg",
+      "mask": "PH_bleach_bottle_0_Mask.png"
+    }
+  ],
+  "triangles": 4052,
+  "trianglesOriginal": 4052,
+  "size": [
+    0.08839114010334015,
+    0.2937394976615906,
+    0.06121089309453964
+  ],
+  "variants": [
+    {
+      "name": "bleach_bottle",
+      "size": [
+        0.08839114010334015,
+        0.2937394976615906,
+        0.06121089309453964
+      ],
+      "triangles": 4052
+    }
+  ]
+}

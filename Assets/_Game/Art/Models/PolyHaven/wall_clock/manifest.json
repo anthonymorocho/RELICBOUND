@@ -1,0 +1,51 @@
+{
+  "id": "wall_clock",
+  "materials": [
+    {
+      "name": "PH_wall_clock_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_wall_clock_0_BaseColor.jpg",
+      "normal": "PH_wall_clock_0_Normal.jpg",
+      "mask": "PH_wall_clock_0_Mask.png"
+    },
+    {
+      "name": "PH_wall_clock_1",
+      "alpha": "BLEND",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929,
+        0.4000000059604645
+      ],
+      "mask": "PH_wall_clock_1_Mask.png"
+    }
+  ],
+  "triangles": 3658,
+  "trianglesOriginal": 3658,
+  "size": [
+    0.3204909861087799,
+    0.3204909861087799,
+    0.04722309485077858
+  ],
+  "variants": [
+    {
+      "name": "wall_clock",
+      "size": [
+        0.3204909861087799,
+        0.3204909861087799,
+        0.04722309485077858
+      ],
+      "triangles": 3658
+    }
+  ]
+}

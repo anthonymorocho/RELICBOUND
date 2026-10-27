@@ -1,0 +1,38 @@
+{
+  "id": "Rockingchair_01",
+  "materials": [
+    {
+      "name": "PH_Rockingchair_01_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_Rockingchair_01_0_BaseColor.jpg",
+      "normal": "PH_Rockingchair_01_0_Normal.jpg",
+      "mask": "PH_Rockingchair_01_0_Mask.png"
+    }
+  ],
+  "triangles": 11866,
+  "trianglesOriginal": 11866,
+  "size": [
+    0.7081280946731567,
+    0.9949284791946411,
+    0.833482027053833
+  ],
+  "variants": [
+    {
+      "name": "Rockingchair_01",
+      "size": [
+        0.7081280946731567,
+        0.9949284791946411,
+        0.833482027053833
+      ],
+      "triangles": 11866
+    }
+  ]
+}

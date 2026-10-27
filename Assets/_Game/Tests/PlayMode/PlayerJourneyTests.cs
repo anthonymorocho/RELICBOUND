@@ -94,6 +94,21 @@ namespace BeforeItWasYou.Tests
             Assert.Greater(moved, 1f, "Daniel debe caminar con W.");
             Assert.Less(moved, 3.5f, "Caminar no debe ser a velocidad de carrera.");
 
+            // Lucía escribe al poco de llegar; Daniel saca el móvil con Tab y responde con 1.
+            var narrative = Object.FindFirstObjectByType<ArrivalNarrative>();
+            yield return WaitFor(() => narrative.Log.Messages.Count >= 1, 15f, "Lucía no escribió al llegar.");
+            yield return new WaitForSeconds(1.2f);
+            yield return JourneyCapture.Capture("06_aviso_mensaje");
+            yield return Tap(Key.Tab);
+            yield return new WaitForSecondsRealtime(0.6f);
+            yield return JourneyCapture.Capture("07_movil");
+            yield return Tap(Key.Digit1);
+            Assert.AreEqual(2, narrative.Log.Messages.Count, "La respuesta de Daniel debe enviarse con 1.");
+            yield return WaitFor(() => narrative.Log.Messages.Count >= 3, 10f, "Lucía no contestó.");
+            yield return new WaitForSecondsRealtime(0.5f);
+            yield return JourneyCapture.Capture("08_conversacion");
+            yield return Tap(Key.Tab);
+
             // Pausa con Esc y vuelta al juego.
             yield return Tap(Key.Escape);
             Assert.AreEqual(GameState.Paused, GameServices.Flow.State);

@@ -1,0 +1,38 @@
+{
+  "id": "ClassicNightstand_01",
+  "materials": [
+    {
+      "name": "PH_ClassicNightstand_01_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_ClassicNightstand_01_0_BaseColor.jpg",
+      "normal": "PH_ClassicNightstand_01_0_Normal.jpg",
+      "mask": "PH_ClassicNightstand_01_0_Mask.png"
+    }
+  ],
+  "triangles": 2002,
+  "trianglesOriginal": 2002,
+  "size": [
+    0.5677522420883179,
+    0.6999650001525879,
+    0.424192875623703
+  ],
+  "variants": [
+    {
+      "name": "ClassicNightstand_01",
+      "size": [
+        0.5677522420883179,
+        0.6999650001525879,
+        0.424192875623703
+      ],
+      "triangles": 2002
+    }
+  ]
+}

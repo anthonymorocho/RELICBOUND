@@ -1,0 +1,38 @@
+{
+  "id": "television_02",
+  "materials": [
+    {
+      "name": "PH_television_02_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_television_02_0_BaseColor.jpg",
+      "normal": "PH_television_02_0_Normal.jpg",
+      "mask": "PH_television_02_0_Mask.png"
+    }
+  ],
+  "triangles": 2310,
+  "trianglesOriginal": 2310,
+  "size": [
+    0.39974847435951233,
+    0.41141477227211,
+    0.35019391775131226
+  ],
+  "variants": [
+    {
+      "name": "television_02",
+      "size": [
+        0.39974847435951233,
+        0.41141477227211,
+        0.35019391775131226
+      ],
+      "triangles": 2310
+    }
+  ]
+}

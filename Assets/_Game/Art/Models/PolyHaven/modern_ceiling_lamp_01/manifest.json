@@ -1,0 +1,68 @@
+{
+  "id": "modern_ceiling_lamp_01",
+  "materials": [
+    {
+      "name": "PH_modern_ceiling_lamp_01_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_modern_ceiling_lamp_01_0_BaseColor.jpg",
+      "normal": "PH_modern_ceiling_lamp_01_0_Normal.jpg",
+      "mask": "PH_modern_ceiling_lamp_01_0_Mask.png"
+    },
+    {
+      "name": "PH_modern_ceiling_lamp_01_1",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_modern_ceiling_lamp_01_1_BaseColor.jpg",
+      "normal": "PH_modern_ceiling_lamp_01_1_Normal.jpg",
+      "mask": "PH_modern_ceiling_lamp_01_1_Mask.png"
+    },
+    {
+      "name": "PH_modern_ceiling_lamp_01_2",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_modern_ceiling_lamp_01_2_BaseColor.jpg",
+      "normal": "PH_modern_ceiling_lamp_01_2_Normal.jpg",
+      "mask": "PH_modern_ceiling_lamp_01_2_Mask.png"
+    }
+  ],
+  "triangles": 5602,
+  "trianglesOriginal": 5602,
+  "size": [
+    0.4316493272781372,
+    0.9515514969825745,
+    0.4316607713699341
+  ],
+  "variants": [
+    {
+      "name": "modern_ceiling_lamp_01",
+      "size": [
+        0.4316493272781372,
+        0.9515514969825745,
+        0.4316607713699341
+      ],
+      "triangles": 5602
+    }
+  ]
+}

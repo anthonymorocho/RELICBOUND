@@ -1,0 +1,38 @@
+{
+  "id": "side_table_01",
+  "materials": [
+    {
+      "name": "PH_side_table_01_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_side_table_01_0_BaseColor.jpg",
+      "normal": "PH_side_table_01_0_Normal.jpg",
+      "mask": "PH_side_table_01_0_Mask.png"
+    }
+  ],
+  "triangles": 2756,
+  "trianglesOriginal": 2756,
+  "size": [
+    0.5500000715255737,
+    0.5506622791290283,
+    0.45000001788139343
+  ],
+  "variants": [
+    {
+      "name": "side_table_01",
+      "size": [
+        0.5500000715255737,
+        0.5506622791290283,
+        0.45000001788139343
+      ],
+      "triangles": 2756
+    }
+  ]
+}

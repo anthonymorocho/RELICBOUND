@@ -1,0 +1,53 @@
+{
+  "id": "book_encyclopedia_set_01",
+  "materials": [
+    {
+      "name": "PH_book_encyclopedia_set_01_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_book_encyclopedia_set_01_0_BaseColor.jpg",
+      "normal": "PH_book_encyclopedia_set_01_0_Normal.jpg",
+      "mask": "PH_book_encyclopedia_set_01_0_Mask.png"
+    },
+    {
+      "name": "PH_book_encyclopedia_set_01_1",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_book_encyclopedia_set_01_1_BaseColor.jpg",
+      "normal": "PH_book_encyclopedia_set_01_1_Normal.jpg",
+      "mask": "PH_book_encyclopedia_set_01_1_Mask.png"
+    }
+  ],
+  "triangles": 67306,
+  "trianglesOriginal": 67306,
+  "size": [
+    0.5512974262237549,
+    0.23741818964481354,
+    0.16306233406066895
+  ],
+  "variants": [
+    {
+      "name": "book_encyclopedia_set_01",
+      "size": [
+        0.5512974262237549,
+        0.23741818964481354,
+        0.16306233406066895
+      ],
+      "triangles": 67306
+    }
+  ]
+}

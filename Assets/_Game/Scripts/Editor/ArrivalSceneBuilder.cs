@@ -117,6 +117,10 @@ namespace BeforeItWasYou.EditorTools
             var directorGo = new GameObject("EpisodeDirector");
             var director = directorGo.AddComponent<EpisodeDirector>();
             director.Configure(ui, controller, interactor, rig, environment.ArrivalSpawn, prologueSource);
+            var phoneSource = directorGo.AddComponent<AudioSource>();
+            phoneSource.playOnAwake = false;
+            phoneSource.spatialBlend = 0f;
+            directorGo.AddComponent<ArrivalNarrative>().Configure(director, phoneSource, null);
             EditorUtility.SetDirty(director);
 
             EditorSceneManager.SaveScene(scene, ScenePath);

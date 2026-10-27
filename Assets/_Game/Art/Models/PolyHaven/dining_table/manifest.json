@@ -1,0 +1,38 @@
+{
+  "id": "dining_table",
+  "materials": [
+    {
+      "name": "PH_dining_table_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_dining_table_0_BaseColor.jpg",
+      "normal": "PH_dining_table_0_Normal.jpg",
+      "mask": "PH_dining_table_0_Mask.png"
+    }
+  ],
+  "triangles": 1048,
+  "trianglesOriginal": 1048,
+  "size": [
+    2.2558960914611816,
+    0.8769892454147339,
+    1.3902360200881958
+  ],
+  "variants": [
+    {
+      "name": "dining_table",
+      "size": [
+        2.2558960914611816,
+        0.8769892454147339,
+        1.3902360200881958
+      ],
+      "triangles": 1048
+    }
+  ]
+}

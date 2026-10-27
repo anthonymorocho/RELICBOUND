@@ -1,0 +1,38 @@
+{
+  "id": "cardboard_box_01",
+  "materials": [
+    {
+      "name": "PH_cardboard_box_01_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_cardboard_box_01_0_BaseColor.jpg",
+      "normal": "PH_cardboard_box_01_0_Normal.jpg",
+      "mask": "PH_cardboard_box_01_0_Mask.png"
+    }
+  ],
+  "triangles": 16952,
+  "trianglesOriginal": 16952,
+  "size": [
+    0.38702359795570374,
+    0.3417995572090149,
+    0.5158704519271851
+  ],
+  "variants": [
+    {
+      "name": "cardboard_box_01",
+      "size": [
+        0.38702359795570374,
+        0.3417995572090149,
+        0.5158704519271851
+      ],
+      "triangles": 16952
+    }
+  ]
+}

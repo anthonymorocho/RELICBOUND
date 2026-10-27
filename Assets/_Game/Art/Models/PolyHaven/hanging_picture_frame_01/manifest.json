@@ -1,0 +1,67 @@
+{
+  "id": "hanging_picture_frame_01",
+  "materials": [
+    {
+      "name": "PH_hanging_picture_frame_01_0",
+      "alpha": "BLEND",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_hanging_picture_frame_01_0_BaseColor.jpg",
+      "normal": "PH_hanging_picture_frame_01_0_Normal.jpg",
+      "mask": "PH_hanging_picture_frame_01_0_Mask.png"
+    },
+    {
+      "name": "PH_hanging_picture_frame_01_1",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_hanging_picture_frame_01_1_BaseColor.jpg",
+      "mask": "PH_hanging_picture_frame_01_1_Mask.png"
+    },
+    {
+      "name": "PH_hanging_picture_frame_01_2",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_hanging_picture_frame_01_2_BaseColor.jpg",
+      "normal": "PH_hanging_picture_frame_01_2_Normal.jpg",
+      "mask": "PH_hanging_picture_frame_01_2_Mask.png"
+    }
+  ],
+  "triangles": 2586,
+  "trianglesOriginal": 2586,
+  "size": [
+    0.593999981880188,
+    0.840999960899353,
+    0.015749314799904823
+  ],
+  "variants": [
+    {
+      "name": "hanging_picture_frame_01",
+      "size": [
+        0.593999981880188,
+        0.840999960899353,
+        0.015749316662549973
+      ],
+      "triangles": 2586
+    }
+  ]
+}

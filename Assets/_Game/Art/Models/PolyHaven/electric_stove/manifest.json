@@ -1,0 +1,53 @@
+{
+  "id": "electric_stove",
+  "materials": [
+    {
+      "name": "PH_electric_stove_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_electric_stove_0_BaseColor.jpg",
+      "normal": "PH_electric_stove_0_Normal.jpg",
+      "mask": "PH_electric_stove_0_Mask.png"
+    },
+    {
+      "name": "PH_electric_stove_1",
+      "alpha": "BLEND",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_electric_stove_1_BaseColor.jpg",
+      "normal": "PH_electric_stove_1_Normal.jpg",
+      "mask": "PH_electric_stove_1_Mask.png"
+    }
+  ],
+  "triangles": 13914,
+  "trianglesOriginal": 13914,
+  "size": [
+    0.5025948286056519,
+    0.8586971759796143,
+    0.6476211547851562
+  ],
+  "variants": [
+    {
+      "name": "electric_stove",
+      "size": [
+        0.5025948286056519,
+        0.8586971759796143,
+        0.6476211547851562
+      ],
+      "triangles": 13914
+    }
+  ]
+}

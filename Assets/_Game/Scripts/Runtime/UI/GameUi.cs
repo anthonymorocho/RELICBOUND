@@ -68,6 +68,17 @@ namespace BeforeItWasYou.UI
         public bool IsBusyWithMenus => _ready && (IsModalOpen || _options.IsOpen || _credits.IsOpen);
         public VisualElement Root => _root;
 
+        private PhoneView _phoneView;
+
+        public PhoneView Phone
+        {
+            get
+            {
+                EnsureReady();
+                return _phoneView;
+            }
+        }
+
         private bool _ready;
 
         private void OnEnable() => EnsureReady();
@@ -96,6 +107,7 @@ namespace BeforeItWasYou.UI
             _toast = _root.Q("toast");
             _toastText = _root.Q<Label>("toast-text");
             _hudSubtitle = _root.Q<Label>("hud-subtitle");
+            _phoneView = new PhoneView(_root);
             _options = new OptionsScreen(_root.Q("options"));
             _credits = new CreditsScreen(_root.Q("credits"));
             if (credits != null) CreditsScreen.SetExtraBlocks(CreditsScreen.Parse(credits.text));

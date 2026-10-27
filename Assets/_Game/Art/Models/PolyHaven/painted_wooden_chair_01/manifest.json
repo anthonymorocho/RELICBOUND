@@ -1,0 +1,38 @@
+{
+  "id": "painted_wooden_chair_01",
+  "materials": [
+    {
+      "name": "PH_painted_wooden_chair_01_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_painted_wooden_chair_01_0_BaseColor.jpg",
+      "normal": "PH_painted_wooden_chair_01_0_Normal.jpg",
+      "mask": "PH_painted_wooden_chair_01_0_Mask.png"
+    }
+  ],
+  "triangles": 724,
+  "trianglesOriginal": 724,
+  "size": [
+    0.43175143003463745,
+    0.9564821124076843,
+    0.5398241877555847
+  ],
+  "variants": [
+    {
+      "name": "painted_wooden_chair_01",
+      "size": [
+        0.43175143003463745,
+        0.9564821124076843,
+        0.5398241877555847
+      ],
+      "triangles": 724
+    }
+  ]
+}

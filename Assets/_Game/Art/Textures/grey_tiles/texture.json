@@ -1,0 +1,11 @@
+{
+  "id": "grey_tiles",
+  "name": "Grey Tiles",
+  "dimensions_mm": [
+    2200.000047683716,
+    2200.000047683716
+  ],
+  "authors": [
+    "Amal Kumar"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "id": "steel_frame_shelves_01",
+  "materials": [
+    {
+      "name": "PH_steel_frame_shelves_01_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_steel_frame_shelves_01_0_BaseColor.jpg",
+      "normal": "PH_steel_frame_shelves_01_0_Normal.jpg",
+      "mask": "PH_steel_frame_shelves_01_0_Mask.png"
+    }
+  ],
+  "triangles": 4348,
+  "trianglesOriginal": 4348,
+  "size": [
+    10.974145889282227,
+    21.405006408691406,
+    5.021175384521484
+  ],
+  "variants": [
+    {
+      "name": "steel_frame_shelves_01",
+      "size": [
+        10.974145889282227,
+        21.405006408691406,
+        5.021175384521484
+      ],
+      "triangles": 4348
+    }
+  ]
+}

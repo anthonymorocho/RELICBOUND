@@ -21,7 +21,10 @@ COLORS = {
     "CarPaint": (0.18, 0.2, 0.24), "CarGlass": (0.02, 0.02, 0.025), "CarTire": (0.02, 0.02, 0.02), "CarRim": (0.6, 0.6, 0.62),
     "CarHeadlight": (0.9, 0.9, 0.85), "CarTaillight": (0.5, 0.02, 0.02), "CarGrille": (0.03, 0.03, 0.03), "CarPlate": (0.85, 0.85, 0.8),
     "CarTrim": (0.03, 0.03, 0.03), "CarSeam": (0.01, 0.01, 0.01), "CarChrome": (0.8, 0.8, 0.8), "CarInterior": (0.05, 0.05, 0.05),
-    "Siding": (0.62, 0.55, 0.45), "Trim": (0.85, 0.84, 0.8), "Roof": (0.12, 0.12, 0.13), "Foundation": (0.4, 0.4, 0.4),
+    "FloorWood": (0.35, 0.22, 0.12), "FloorKitchen": (0.7, 0.7, 0.66), "FloorBath": (0.6, 0.62, 0.6), "Wall": (0.75, 0.7, 0.6),
+    "Ceiling": (0.85, 0.85, 0.82), "Baseboard": (0.9, 0.9, 0.86), "Cabinet": (0.55, 0.38, 0.22), "Countertop": (0.3, 0.3, 0.3),
+    "Fridge": (0.85, 0.85, 0.82), "Porcelain": (0.92, 0.92, 0.9), "Quilt": (0.45, 0.2, 0.2), "Mattress": (0.85, 0.85, 0.8),
+    "Wardrobe": (0.5, 0.35, 0.22), "Appliance": (0.9, 0.9, 0.9), "Siding": (0.62, 0.55, 0.45), "Trim": (0.85, 0.84, 0.8), "Roof": (0.12, 0.12, 0.13), "Foundation": (0.4, 0.4, 0.4),
     "Glass": (0.05, 0.07, 0.09), "Curtain": (0.5, 0.45, 0.4), "Lawn": (0.15, 0.25, 0.08), "Asphalt": (0.08, 0.08, 0.08),
     "Sidewalk": (0.45, 0.45, 0.43), "Driveway": (0.5, 0.5, 0.48), "Path": (0.5, 0.48, 0.45), "Fence": (0.35, 0.27, 0.2),
     "Door": (0.25, 0.12, 0.08), "Brick": (0.45, 0.2, 0.15), "Mulch": (0.2, 0.12, 0.07), "Shed": (0.38, 0.3, 0.22),
@@ -61,5 +64,12 @@ cam.location = (cx, cz, cy)
 cam.rotation_euler = (math.radians(90 - pitch), 0, math.radians(-yaw))
 scene.collection.objects.link(cam)
 scene.camera = cam
+import os
+if os.environ.get("PREVIEW_LAMP"):
+    lamp = bpy.data.objects.new("Lamp", bpy.data.lights.new("Lamp", "POINT"))
+    lamp.data.energy = float(os.environ["PREVIEW_LAMP"])
+    lamp.data.shadow_soft_size = 0.3
+    lamp.location = (cx, cz, cy + 0.6)
+    scene.collection.objects.link(lamp)
 scene.render.filepath = out
 bpy.ops.render.render(write_still=True)

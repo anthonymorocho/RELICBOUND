@@ -1,0 +1,38 @@
+{
+  "id": "old_bed_frame",
+  "materials": [
+    {
+      "name": "PH_old_bed_frame_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_old_bed_frame_0_BaseColor.jpg",
+      "normal": "PH_old_bed_frame_0_Normal.jpg",
+      "mask": "PH_old_bed_frame_0_Mask.png"
+    }
+  ],
+  "triangles": 49990,
+  "trianglesOriginal": 49990,
+  "size": [
+    0.9046578407287598,
+    1.2014838457107544,
+    2.0017261505126953
+  ],
+  "variants": [
+    {
+      "name": "old_bed_frame",
+      "size": [
+        0.9046578407287598,
+        1.2014838457107544,
+        2.0017261505126953
+      ],
+      "triangles": 49990
+    }
+  ]
+}

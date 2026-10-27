@@ -1,0 +1,38 @@
+{
+  "id": "jug_01",
+  "materials": [
+    {
+      "name": "PH_jug_01_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_jug_01_0_BaseColor.jpg",
+      "normal": "PH_jug_01_0_Normal.jpg",
+      "mask": "PH_jug_01_0_Mask.png"
+    }
+  ],
+  "triangles": 5770,
+  "trianglesOriginal": 5770,
+  "size": [
+    0.2753216624259949,
+    0.21131345629692078,
+    0.1675262302160263
+  ],
+  "variants": [
+    {
+      "name": "jug_01",
+      "size": [
+        0.2753216624259949,
+        0.21131345629692078,
+        0.1675262302160263
+      ],
+      "triangles": 5770
+    }
+  ]
+}

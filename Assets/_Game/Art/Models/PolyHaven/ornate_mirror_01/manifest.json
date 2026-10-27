@@ -1,0 +1,38 @@
+{
+  "id": "ornate_mirror_01",
+  "materials": [
+    {
+      "name": "PH_ornate_mirror_01_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_ornate_mirror_01_0_BaseColor.jpg",
+      "normal": "PH_ornate_mirror_01_0_Normal.jpg",
+      "mask": "PH_ornate_mirror_01_0_Mask.png"
+    }
+  ],
+  "triangles": 14246,
+  "trianglesOriginal": 14246,
+  "size": [
+    0.4864957332611084,
+    0.7441554069519043,
+    0.025958335027098656
+  ],
+  "variants": [
+    {
+      "name": "ornate_mirror_01",
+      "size": [
+        0.4864957332611084,
+        0.7441554069519043,
+        0.025958335027098656
+      ],
+      "triangles": 14246
+    }
+  ]
+}

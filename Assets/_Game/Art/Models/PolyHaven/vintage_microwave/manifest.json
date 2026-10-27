@@ -1,0 +1,53 @@
+{
+  "id": "vintage_microwave",
+  "materials": [
+    {
+      "name": "PH_vintage_microwave_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_vintage_microwave_0_BaseColor.jpg",
+      "normal": "PH_vintage_microwave_0_Normal.jpg",
+      "mask": "PH_vintage_microwave_0_Mask.png"
+    },
+    {
+      "name": "PH_vintage_microwave_1",
+      "alpha": "BLEND",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_vintage_microwave_1_BaseColor.jpg",
+      "normal": "PH_vintage_microwave_1_Normal.jpg",
+      "mask": "PH_vintage_microwave_1_Mask.png"
+    }
+  ],
+  "triangles": 8120,
+  "trianglesOriginal": 8120,
+  "size": [
+    1.0737111568450928,
+    0.5258261561393738,
+    0.7455552816390991
+  ],
+  "variants": [
+    {
+      "name": "vintage_microwave",
+      "size": [
+        1.0737111568450928,
+        0.5258261561393738,
+        0.7455552816390991
+      ],
+      "triangles": 8120
+    }
+  ]
+}

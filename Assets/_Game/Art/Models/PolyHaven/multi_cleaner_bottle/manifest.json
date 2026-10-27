@@ -1,0 +1,38 @@
+{
+  "id": "multi_cleaner_bottle",
+  "materials": [
+    {
+      "name": "PH_multi_cleaner_bottle_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_multi_cleaner_bottle_0_BaseColor.jpg",
+      "normal": "PH_multi_cleaner_bottle_0_Normal.jpg",
+      "mask": "PH_multi_cleaner_bottle_0_Mask.png"
+    }
+  ],
+  "triangles": 6792,
+  "trianglesOriginal": 6792,
+  "size": [
+    0.08847218751907349,
+    0.22856293618679047,
+    0.0897514820098877
+  ],
+  "variants": [
+    {
+      "name": "multi_cleaner_bottle",
+      "size": [
+        0.08847218751907349,
+        0.22856293618679047,
+        0.0897514820098877
+      ],
+      "triangles": 6792
+    }
+  ]
+}

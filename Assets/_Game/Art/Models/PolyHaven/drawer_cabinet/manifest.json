@@ -1,0 +1,38 @@
+{
+  "id": "drawer_cabinet",
+  "materials": [
+    {
+      "name": "PH_drawer_cabinet_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_drawer_cabinet_0_BaseColor.jpg",
+      "normal": "PH_drawer_cabinet_0_Normal.jpg",
+      "mask": "PH_drawer_cabinet_0_Mask.png"
+    }
+  ],
+  "triangles": 26406,
+  "trianglesOriginal": 26406,
+  "size": [
+    1.1410778760910034,
+    1.881253957748413,
+    0.48808470368385315
+  ],
+  "variants": [
+    {
+      "name": "drawer_cabinet",
+      "size": [
+        1.1410778760910034,
+        1.881253957748413,
+        0.48808470368385315
+      ],
+      "triangles": 26406
+    }
+  ]
+}

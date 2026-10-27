@@ -1,0 +1,38 @@
+{
+  "id": "wicker_basket_01",
+  "materials": [
+    {
+      "name": "PH_wicker_basket_01_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_wicker_basket_01_0_BaseColor.jpg",
+      "normal": "PH_wicker_basket_01_0_Normal.jpg",
+      "mask": "PH_wicker_basket_01_0_Mask.png"
+    }
+  ],
+  "triangles": 22276,
+  "trianglesOriginal": 22276,
+  "size": [
+    0.3832242488861084,
+    0.1174229308962822,
+    0.29501521587371826
+  ],
+  "variants": [
+    {
+      "name": "wicker_basket_01",
+      "size": [
+        0.3832242488861084,
+        0.1174229308962822,
+        0.29501521587371826
+      ],
+      "triangles": 22276
+    }
+  ]
+}

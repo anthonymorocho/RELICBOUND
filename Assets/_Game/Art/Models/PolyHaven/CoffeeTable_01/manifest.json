@@ -1,0 +1,38 @@
+{
+  "id": "CoffeeTable_01",
+  "materials": [
+    {
+      "name": "PH_CoffeeTable_01_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_CoffeeTable_01_0_BaseColor.jpg",
+      "normal": "PH_CoffeeTable_01_0_Normal.jpg",
+      "mask": "PH_CoffeeTable_01_0_Mask.png"
+    }
+  ],
+  "triangles": 10404,
+  "trianglesOriginal": 10404,
+  "size": [
+    1.5400111675262451,
+    0.5232373476028442,
+    0.972847044467926
+  ],
+  "variants": [
+    {
+      "name": "CoffeeTable_01",
+      "size": [
+        1.5400111675262451,
+        0.5232373476028442,
+        0.972847044467926
+      ],
+      "triangles": 10404
+    }
+  ]
+}

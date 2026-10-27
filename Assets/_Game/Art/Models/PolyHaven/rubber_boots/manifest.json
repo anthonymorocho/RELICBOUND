@@ -1,0 +1,80 @@
+{
+  "id": "rubber_boots",
+  "materials": [
+    {
+      "name": "PH_rubber_boots_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_rubber_boots_0_BaseColor.jpg",
+      "normal": "PH_rubber_boots_0_Normal.jpg",
+      "mask": "PH_rubber_boots_0_Mask.png"
+    },
+    {
+      "name": "PH_rubber_boots_1",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_rubber_boots_1_BaseColor.jpg",
+      "normal": "PH_rubber_boots_1_Normal.jpg",
+      "mask": "PH_rubber_boots_1_Mask.png"
+    }
+  ],
+  "triangles": 56128,
+  "trianglesOriginal": 56128,
+  "size": [
+    0.8906568884849548,
+    0.37276914715766907,
+    0.2662065029144287
+  ],
+  "variants": [
+    {
+      "name": "rubber_boots_A",
+      "size": [
+        0.09127983450889587,
+        0.3727691173553467,
+        0.2662065029144287
+      ],
+      "triangles": 14032
+    },
+    {
+      "name": "rubber_boots_B",
+      "size": [
+        0.09127984941005707,
+        0.37276914715766907,
+        0.2662065029144287
+      ],
+      "triangles": 14032
+    },
+    {
+      "name": "rubber_boots_C",
+      "size": [
+        0.09127983450889587,
+        0.3727691173553467,
+        0.2662065029144287
+      ],
+      "triangles": 14032
+    },
+    {
+      "name": "rubber_boots_D",
+      "size": [
+        0.09127986431121826,
+        0.37276914715766907,
+        0.2662065029144287
+      ],
+      "triangles": 14032
+    }
+  ]
+}

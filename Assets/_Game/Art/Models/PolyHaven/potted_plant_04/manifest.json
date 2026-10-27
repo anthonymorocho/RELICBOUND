@@ -1,0 +1,38 @@
+{
+  "id": "potted_plant_04",
+  "materials": [
+    {
+      "name": "PH_potted_plant_04_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_potted_plant_04_0_BaseColor.jpg",
+      "normal": "PH_potted_plant_04_0_Normal.jpg",
+      "mask": "PH_potted_plant_04_0_Mask.png"
+    }
+  ],
+  "triangles": 8929,
+  "trianglesOriginal": 8929,
+  "size": [
+    0.16788631677627563,
+    0.26745766401290894,
+    0.18475142121315002
+  ],
+  "variants": [
+    {
+      "name": "potted_plant_04",
+      "size": [
+        0.16788631677627563,
+        0.26745766401290894,
+        0.18475142121315002
+      ],
+      "triangles": 8929
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "id": "wooden_broom",
+  "materials": [
+    {
+      "name": "PH_wooden_broom_0",
+      "alpha": "BLEND",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_wooden_broom_0_BaseColor.jpg"
+    },
+    {
+      "name": "PH_wooden_broom_1",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_wooden_broom_1_BaseColor.jpg",
+      "normal": "PH_wooden_broom_1_Normal.jpg",
+      "mask": "PH_wooden_broom_1_Mask.png"
+    }
+  ],
+  "triangles": 14258,
+  "trianglesOriginal": 14258,
+  "size": [
+    0.49023744463920593,
+    1.4535678625106812,
+    0.11251410841941833
+  ],
+  "variants": [
+    {
+      "name": "wooden_broom",
+      "size": [
+        0.49023744463920593,
+        1.4535678625106812,
+        0.11251410841941833
+      ],
+      "triangles": 14258
+    }
+  ]
+}
