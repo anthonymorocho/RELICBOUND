@@ -157,6 +157,20 @@ namespace BeforeItWasYou.EditorTools
             Item(f, "cardboard_box_01", new Vector3(7.6f, Floor, 13.75f), 8f, 1.1f, true);
             Item(f, "cardboard_box_01", new Vector3(7.62f, Floor + 0.34f, 13.72f), 352f, 1f, false);
             Item(f, "book_encyclopedia_set_01", new Vector3(4.85f, Floor + 1.79f, 12.6f), 90f, 1f, false);
+            // Escondite: el armario de Elena (cabe una persona de pie).
+            var hide = new GameObject("HideSpot_Armario") { layer = Layers.Interactable };
+            hide.transform.SetParent(f, false);
+            hide.transform.position = new Vector3(7.8f, Floor + 1.1f, 17.235f);
+            hide.AddComponent<BoxCollider>().size = new Vector3(0.06f, 2.0f, 1.3f);
+            var inside = new GameObject("Inside").transform;
+            inside.SetParent(hide.transform, false);
+            inside.SetPositionAndRotation(new Vector3(7.93f, Floor + 0.02f, 17.235f), Quaternion.Euler(0f, 270f, 0f));
+            var exit = new GameObject("Exit").transform;
+            exit.SetParent(hide.transform, false);
+            exit.SetPositionAndRotation(new Vector3(7.3f, Floor + 0.02f, 17.235f), Quaternion.Euler(0f, 270f, 0f));
+            var spot = hide.AddComponent<HideSpot>();
+            spot.Id = "armario_elena";
+            spot.Configure(inside, exit);
             // Objetos de misión (A2).
             MissionItem(f, "SM_Prop_BlueFolder", "carpeta_azul", "Coger la carpeta azul", new Vector3(6.02f, Floor + 1.123f, 14.72f), 12f);
             MissionItem(f, "SM_Prop_Charger", "cargador", "Coger el cargador", new Vector3(4.96f, Floor + 0.632f, 16.12f), 205f);

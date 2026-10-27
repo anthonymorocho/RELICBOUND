@@ -53,6 +53,16 @@ namespace BeforeItWasYou.UI
 
         public void SetClock(string time) => _clock.text = time;
 
+        private bool _callHint;
+
+        /// <summary>Muestra en el móvil la opción de llamar a emergencias (tecla 3).</summary>
+        public void SetCallHint(bool visible)
+        {
+            if (_callHint == visible) return;
+            _callHint = visible;
+            Rebuild();
+        }
+
         public void SetTyping(bool typing)
         {
             _presence.text = typing ? "escribiendo..." : "en línea";
@@ -91,6 +101,7 @@ namespace BeforeItWasYou.UI
 
         private void Rebuild()
         {
+            if (_log == null) return;
             var typing = _typing != null;
             _messages.Clear();
             _typing = null;
@@ -121,6 +132,19 @@ namespace BeforeItWasYou.UI
                 row.Add(key);
                 row.Add(text);
                 _replies.Add(row);
+            }
+            if (_callHint)
+            {
+                var call = new VisualElement();
+                call.AddToClassList("reply");
+                call.AddToClassList("reply--call");
+                var key = new Label("3");
+                key.AddToClassList("reply__key");
+                var text = new Label("Llamar a emergencias");
+                text.AddToClassList("reply__text");
+                call.Add(key);
+                call.Add(text);
+                _replies.Add(call);
             }
             _composer.text = _log.Replies.Count > 0 ? "Elige qué responder" : "Mensaje";
             ScrollToEnd();

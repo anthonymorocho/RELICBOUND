@@ -108,6 +108,11 @@ MODELS = [
     ("jug_01", "1k"),
     ("potted_plant_04", "1k"),
     ("book_encyclopedia_set_01", "1k"),
+    # Refugio de Víctor en el cobertizo.
+    ("russian_food_cans_01", "1k"),
+    ("plastic_bottle_gallon", "1k"),
+    ("long_life_food", "1k"),
+    ("trashbag", "1k"),
 ]
 
 

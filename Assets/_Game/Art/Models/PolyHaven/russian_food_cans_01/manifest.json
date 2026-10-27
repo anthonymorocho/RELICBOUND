@@ -1,0 +1,38 @@
+{
+  "id": "russian_food_cans_01",
+  "materials": [
+    {
+      "name": "PH_russian_food_cans_01_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_russian_food_cans_01_0_BaseColor.jpg",
+      "normal": "PH_russian_food_cans_01_0_Normal.jpg",
+      "mask": "PH_russian_food_cans_01_0_Mask.png"
+    }
+  ],
+  "triangles": 1348,
+  "trianglesOriginal": 1348,
+  "size": [
+    0.1423535794019699,
+    0.08489999175071716,
+    0.046203918755054474
+  ],
+  "variants": [
+    {
+      "name": "russian_food_cans_01",
+      "size": [
+        0.1423535794019699,
+        0.08489999175071716,
+        0.046203918755054474
+      ],
+      "triangles": 1348
+    }
+  ]
+}

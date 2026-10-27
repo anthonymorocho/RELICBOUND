@@ -923,3 +923,180 @@
     font-size: 15px;
     color: rgb(120, 136, 142);
 }
+
+/* ---------- Fallo ---------- */
+
+.fail {
+    background-color: rgba(0, 0, 0, 0.92);
+    align-items: center;
+    justify-content: center;
+}
+
+.fail__box {
+    width: 760px;
+    align-items: center;
+}
+
+.fail__title {
+    -unity-font: url("project://database/Assets/_Game/UI/Fonts/Oswald-Light.ttf");
+    -unity-font-definition: initial;
+    font-size: 44px;
+    letter-spacing: 12px;
+    color: rgb(236, 232, 224);
+    -unity-text-align: middle-center;
+}
+
+.fail__text {
+    font-size: 19px;
+    color: rgb(160, 154, 146);
+    margin-top: 12px;
+    margin-bottom: 36px;
+    white-space: normal;
+    -unity-text-align: middle-center;
+}
+
+/* ---------- Epílogo ---------- */
+
+.epilogue__text {
+    position: absolute;
+    left: 360px;
+    right: 360px;
+    top: 40%;
+    font-size: 24px;
+    color: rgb(214, 208, 198);
+    white-space: normal;
+    -unity-text-align: middle-center;
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 1.4s;
+}
+
+.epilogue__text--on {
+    opacity: 1;
+}
+
+.credits-roll {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    align-items: center;
+}
+
+.credits-roll__heading {
+    -unity-font: url("project://database/Assets/_Game/UI/Fonts/Oswald-Medium.ttf");
+    -unity-font-definition: initial;
+    font-size: 17px;
+    letter-spacing: 6px;
+    color: rgb(196, 58, 52);
+    margin-top: 40px;
+    margin-bottom: 8px;
+    -unity-text-align: middle-center;
+}
+
+.credits-roll__line {
+    font-size: 20px;
+    color: rgb(214, 208, 198);
+    white-space: normal;
+    max-width: 1100px;
+    -unity-text-align: middle-center;
+    margin-bottom: 4px;
+}
+
+.credits-roll__title {
+    -unity-font: url("project://database/Assets/_Game/UI/Fonts/BebasNeue-Regular.ttf");
+    -unity-font-definition: initial;
+    font-size: 96px;
+    letter-spacing: 14px;
+    color: rgb(238, 234, 226);
+    -unity-text-align: middle-center;
+}
+
+/* ---------- Llamada ---------- */
+
+.call {
+    position: absolute;
+    top: 48px;
+    left: 0;
+    right: 0;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.4s;
+}
+
+.call--on {
+    opacity: 1;
+}
+
+.call__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: rgb(92, 196, 120);
+    margin-right: 10px;
+}
+
+.call__name {
+    -unity-font: url("project://database/Assets/_Game/UI/Fonts/Inter-SemiBold.ttf");
+    -unity-font-definition: initial;
+    font-size: 18px;
+    color: rgb(236, 232, 224);
+    margin-right: 12px;
+}
+
+.call__time {
+    font-size: 17px;
+    color: rgb(170, 164, 156);
+}
+
+.reply--call {
+    border-color: rgba(220, 90, 80, 0.55);
+    background-color: rgba(120, 30, 26, 0.4);
+}
+
+/* ---------- Escondite (rendija del armario) ---------- */
+
+.hide-slit {
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.35s;
+}
+
+.hide-slit--on {
+    opacity: 1;
+}
+
+.hide-slit__side {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 44%;
+    background-color: rgb(4, 3, 3);
+}
+
+.hide-slit__side--left {
+    left: 0;
+    border-right-width: 3px;
+    border-right-color: rgb(28, 20, 16);
+}
+
+.hide-slit__side--right {
+    right: 0;
+    border-left-width: 3px;
+    border-left-color: rgb(28, 20, 16);
+}
+
+.hide-slit__hint {
+    position: absolute;
+    bottom: 60px;
+    left: 0;
+    right: 0;
+    font-size: 16px;
+    color: rgb(150, 144, 136);
+    -unity-text-align: middle-center;
+}

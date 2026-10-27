@@ -2,6 +2,7 @@ using BeforeItWasYou.Audio;
 using BeforeItWasYou.Episode;
 using BeforeItWasYou.Interaction;
 using BeforeItWasYou.Player;
+using BeforeItWasYou.Services;
 using BeforeItWasYou.UI;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -56,6 +57,7 @@ namespace BeforeItWasYou.EditorTools
             volume.isGlobal = true;
             volume.priority = 0;
             volume.sharedProfile = PostProcessProfiles.Night();
+            volumeGo.AddComponent<PostProcessSettings>();
 
             // ---------- Daniel ----------
             var daniel = new GameObject("Player_Daniel") { layer = Layers.Player };
@@ -121,6 +123,7 @@ namespace BeforeItWasYou.EditorTools
             var director = directorGo.AddComponent<EpisodeDirector>();
             director.Configure(ui, controller, interactor, rig, environment.ArrivalSpawn, prologueSource);
             directorGo.AddComponent<EpisodeState>().Configure(director);
+            StoryBuilder.Build(environment.Root, director);
             var phoneSource = directorGo.AddComponent<AudioSource>();
             phoneSource.playOnAwake = false;
             phoneSource.spatialBlend = 0f;

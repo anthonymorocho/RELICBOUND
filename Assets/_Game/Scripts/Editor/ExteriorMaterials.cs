@@ -124,6 +124,15 @@ namespace BeforeItWasYou.EditorTools
             Plain("M_Canvas", C(0.55f, 0.5f, 0.42f), 0.15f),
             Plain("M_ClothFolded", C(0.42f, 0.5f, 0.6f), 0.1f),
             Plain("M_ClothFolded2", C(0.7f, 0.55f, 0.52f), 0.1f),
+            // Refugio de Víctor.
+            Plain("M_BackpackFabric", C(0.2f, 0.24f, 0.19f), 0.2f),
+            Plain("M_BackpackDark", C(0.07f, 0.075f, 0.07f), 0.25f),
+            Plain("M_Cardboard", C(0.52f, 0.4f, 0.27f), 0.15f),
+            Plain("M_CardboardTape", C(0.6f, 0.5f, 0.35f), 0.5f),
+            S("M_Blanket", "floral_jacquard", 0.38f, C(0.45f, 0.5f, 0.55f), 0.4f),
+            Plain("M_Ceramic", C(0.85f, 0.82f, 0.74f), 0.85f),
+            Plain("M_CoffeeDregs", C(0.12f, 0.07f, 0.04f), 0.9f),
+            Plain("M_Lentils", C(0.35f, 0.24f, 0.14f), 0.5f),
             // Cristales y luces.
             new Spec { Name = "M_Glass", Tint = C(0.02f, 0.025f, 0.03f), Smoothness = 0.97f, Transparent = true, Alpha = 0.42f },
             new Spec { Name = "M_GlassDoor", Tint = C(0.03f, 0.03f, 0.03f), Smoothness = 0.95f, Transparent = true, Alpha = 0.5f },

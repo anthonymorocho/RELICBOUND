@@ -68,6 +68,57 @@ def bag():
     return b.object()
 
 
+def backpack():
+    """Mochila de Víctor: gastada, llena, con correas y bolsillo delantero."""
+    b = G.Builder("Prop_Backpack")
+    w, d, h = 0.32, 0.2, 0.46
+    b.prism([(-w / 2, -d / 2), (w / 2, -d / 2), (w / 2 + 0.01, d / 2), (-w / 2 - 0.01, d / 2)], h, "M_BackpackFabric", z0=0.0, bottom=True)
+    b.prism([(-w / 2 + 0.02, d / 2), (w / 2 - 0.02, d / 2), (w / 2 - 0.05, d / 2 + 0.035), (-w / 2 + 0.05, d / 2 + 0.035)], h * 0.82, "M_BackpackFabric", z0=h * 0.05)
+    b.box(-w / 2 + 0.03, -d / 2 + 0.02, h, w / 2 - 0.03, d / 2 - 0.02, h + 0.045, "M_BackpackFabric")
+    b.box(-w / 2 + 0.05, d / 2 + 0.03, h * 0.45, w / 2 - 0.05, d / 2 + 0.07, h * 0.75, "M_BackpackDark")
+    for x in (-0.09, 0.09):
+        b.box(x - 0.025, -d / 2 - 0.02, 0.04, x + 0.025, -d / 2, h - 0.02, "M_BackpackDark")
+    b.box(-0.06, -0.01, h + 0.045, 0.06, 0.01, h + 0.08, "M_BackpackDark")
+    b.box(-w / 2 + 0.02, d / 2 + 0.068, h * 0.6, w / 2 - 0.02, d / 2 + 0.072, h * 0.605, "M_Chrome")
+    return b.object()
+
+
+def refuge():
+    """Cama improvisada: cartones extendidos, manta doblada encima y un abrigo hecho bola como almohada."""
+    b = G.Builder("Prop_Refuge")
+    b.box(-0.45, -0.95, 0.0, 0.42, 0.98, 0.012, "M_Cardboard")
+    b.box(-0.4, -0.9, 0.012, 0.47, 0.6, 0.022, "M_Cardboard")
+    b.box(-0.36, -0.7, 0.022, 0.38, 0.55, 0.07, "M_Blanket")
+    b.box(-0.34, -0.68, 0.07, 0.36, -0.1, 0.1, "M_Blanket")
+    b.box(-0.22, 0.6, 0.022, 0.24, 0.92, 0.14, "M_ClothFolded")
+    return b.object()
+
+
+def mug():
+    b = G.Builder("Prop_Mug")
+    b.cylinder(0, 0, 0.0, 0.095, 0.04, "M_Ceramic", 20)
+    b.cylinder(0, 0, 0.088, 0.096, 0.034, "M_CoffeeDregs", 20)
+    b.box(0.038, -0.006, 0.02, 0.062, 0.006, 0.075, "M_Ceramic")
+    return b.object()
+
+
+def open_can():
+    b = G.Builder("Prop_OpenCan")
+    b.cylinder(0, 0, 0.0, 0.11, 0.038, "M_Steel", 20)
+    b.cylinder(0, 0, 0.1, 0.104, 0.035, "M_Lentils", 20)
+    b.box(-0.03, 0.038, 0.11, 0.03, 0.04, 0.17, "M_Steel")
+    b.box(-0.004, -0.02, 0.06, 0.004, 0.0, 0.2, "M_Chrome")
+    b.box(-0.008, -0.03, 0.18, 0.008, 0.0, 0.2, "M_Chrome")
+    return b.object()
+
+
+def laundry_box():
+    b = G.Builder("Prop_LaundryBox")
+    b.box(-0.24, -0.17, 0.0, 0.24, 0.17, 0.3, "M_Cardboard")
+    b.box(-0.245, -0.175, 0.28, 0.245, 0.175, 0.3, "M_CardboardTape")
+    return b.object()
+
+
 G.clear_scene()
-for obj in (folder(), charger(), bag()):
+for obj in (folder(), charger(), bag(), backpack(), refuge(), mug(), open_can(), laundry_box()):
     G.export_fbx([obj], os.path.join(OUT, f"SM_{obj.name}.fbx"))

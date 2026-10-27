@@ -27,6 +27,14 @@ namespace BeforeItWasYou.Interaction
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private AudioClip openClip;
         [SerializeField] private AudioClip closeClip;
+        [SerializeField] private AudioClip unlockClip;
+        [SerializeField] private bool unlockWithKey;
+        [SerializeField] private bool latchFails;
+
+        /// <summary>Se dispara la primera vez que la puerta no engancha y vuelve a abrirse sola.</summary>
+        public event System.Action<Door> FailedToLatch;
+        public event System.Action<Door> Opened;
+        private bool _latchReported;
 
         private float _current;
         private float _target;
@@ -36,7 +44,7 @@ namespace BeforeItWasYou.Interaction
 
         public override string Prompt => state switch
         {
-            DoorState.Locked => lockedReason,
+            DoorState.Locked => unlockWithKey ? "Abrir con la llave" : lockedReason,
             DoorState.Open => "Cerrar",
             _ => "Abrir",
         };
@@ -55,14 +63,34 @@ namespace BeforeItWasYou.Interaction
             closeClip = close;
         }
 
+        /// <summary>Puerta cerrada con llave que Daniel abre con la suya (la puerta principal).</summary>
+        public void ConfigureKey(AudioClip unlock)
+        {
+            unlockWithKey = true;
+            unlockClip = unlock;
+        }
+
+        /// <summary>El cierre no engancha: al cerrarla vuelve a quedar entornada (puerta de servicio).</summary>
+        public void ConfigureFaultyLatch() => latchFails = true;
+
         private void Awake() => SetState(state, true);
 
         public override void Interact(Interactor interactor)
         {
-            if (state == DoorState.Locked) return;
+            if (state == DoorState.Locked)
+            {
+                if (!unlockWithKey) return;
+                unlockWithKey = false;
+                if (audioSource != null && unlockClip != null) audioSource.PlayOneShot(unlockClip);
+                state = DoorState.Closed;
+                Invoke(nameof(OpenAfterUnlock), 0.55f);
+                _pendingOpener = interactor;
+                return;
+            }
             if (state == DoorState.Open)
             {
                 SetState(DoorState.Closed, false);
+                if (latchFails) Invoke(nameof(SwingBack), 1.6f);
                 return;
             }
             if (opensBothWays && interactor != null)
@@ -72,7 +100,23 @@ namespace BeforeItWasYou.Interaction
                 _direction = local.z > 0f ? -1f : 1f;
             }
             SetState(DoorState.Open, false);
+            Opened?.Invoke(this);
             if (interactor != null) NoiseEvents.Emit(transform.position, 5f, interactor.gameObject);
+        }
+
+        private Interactor _pendingOpener;
+
+        private void OpenAfterUnlock() => Interact(_pendingOpener);
+
+        private void SwingBack()
+        {
+            if (state != DoorState.Closed) return;
+            SetState(DoorState.Ajar, false);
+            if (!_latchReported)
+            {
+                _latchReported = true;
+                FailedToLatch?.Invoke(this);
+            }
         }
 
         public void SetState(DoorState next, bool instant)

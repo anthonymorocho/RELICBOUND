@@ -37,6 +37,7 @@ namespace BeforeItWasYou.EditorTools
             CreatePolyHavenMaterials();
             AssetDatabase.SaveAssets();
             ConfigureModels();
+            CharacterImport.Run();
             AssetDatabase.SaveAssets();
         }
 
@@ -203,7 +204,7 @@ namespace BeforeItWasYou.EditorTools
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
                 var importer = AssetImporter.GetAtPath(path) as ModelImporter;
-                if (importer == null) continue;
+                if (importer == null || path.Contains("/Characters/")) continue;
                 // Solo se reimporta si algo cambió: cada reimportación de un FBX grande cuesta minutos en la CI.
                 var changed = importer.importCameras || importer.importLights || importer.importBlendShapes || importer.importAnimation
                     || importer.animationType != ModelImporterAnimationType.None || importer.importTangents != ModelImporterTangents.CalculateMikk

@@ -1,0 +1,65 @@
+{
+  "id": "long_life_food",
+  "materials": [
+    {
+      "name": "PH_long_life_food_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_long_life_food_0_BaseColor.jpg",
+      "normal": "PH_long_life_food_0_Normal.jpg",
+      "mask": "PH_long_life_food_0_Mask.png"
+    }
+  ],
+  "triangles": 4712,
+  "trianglesOriginal": 4712,
+  "size": [
+    0.5237634181976318,
+    0.23757457733154297,
+    0.11355656385421753
+  ],
+  "variants": [
+    {
+      "name": "long_life_food_A",
+      "size": [
+        0.13128751516342163,
+        0.027514878660440445,
+        0.07959220558404922
+      ],
+      "triangles": 1572
+    },
+    {
+      "name": "long_life_food_B",
+      "size": [
+        0.11360546946525574,
+        0.11859987676143646,
+        0.11355656385421753
+      ],
+      "triangles": 1512
+    },
+    {
+      "name": "long_life_food_C",
+      "size": [
+        0.08825420588254929,
+        0.1475292593240738,
+        0.08813569694757462
+      ],
+      "triangles": 1512
+    },
+    {
+      "name": "long_life_food_D",
+      "size": [
+        0.10006466507911682,
+        0.23757457733154297,
+        0.07156907021999359
+      ],
+      "triangles": 116
+    }
+  ]
+}

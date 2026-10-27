@@ -92,7 +92,7 @@ namespace BeforeItWasYou.EditorTools
             return new Result
             {
                 Root = root,
-                ArrivalSpawn = Marker(markers, "Spawn_Arrival", new Vector3(0.45f, 0.05f, 5.9f), new Vector3(0f, 92f, 0f)),
+                ArrivalSpawn = Marker(markers, "Spawn_Arrival", new Vector3(0.55f, 0.05f, 7.9f), new Vector3(0f, 100f, 0f)),
                 MenuFrom = Marker(markers, "Menu_From", ArrivalSceneBuilder.MenuFrom, ArrivalSceneBuilder.MenuFromEuler),
                 MenuTo = Marker(markers, "Menu_To", ArrivalSceneBuilder.MenuTo, ArrivalSceneBuilder.MenuToEuler),
             };

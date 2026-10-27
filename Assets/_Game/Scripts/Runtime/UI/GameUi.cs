@@ -56,6 +56,7 @@ namespace BeforeItWasYou.UI
         private readonly MenuList _mainList = new MenuList();
         private readonly MenuList _pauseList = new MenuList(false);
         private readonly MenuList _modalList = new MenuList(true);
+        private readonly MenuList _failList = new MenuList(false);
         private OptionsScreen _options;
         private CreditsScreen _credits;
         private bool _skipRequested;
@@ -126,7 +127,8 @@ namespace BeforeItWasYou.UI
             var input = GameInput.Instance;
             var list = ActiveList();
             list?.Tick(input, Time.unscaledTime);
-            if (!_prologue.ClassListContains(Hidden) && (input.Submit.WasPressedThisFrame() || input.Cancel.WasPressedThisFrame()))
+            var cinematic = !_prologue.ClassListContains(Hidden) || !_root.Q("epilogue").ClassListContains(Hidden);
+            if (cinematic && (input.Submit.WasPressedThisFrame() || input.Cancel.WasPressedThisFrame()))
             {
                 _skipRequested = true;
             }
@@ -135,6 +137,7 @@ namespace BeforeItWasYou.UI
         private MenuList ActiveList()
         {
             if (IsModalOpen) return _modalList;
+            if (!_root.Q("fail").ClassListContains(Hidden)) return _failList;
             if (_options.IsOpen) return _options.List;
             if (_credits.IsOpen) return _credits.List;
             if (IsPauseOpen) return _pauseList;
@@ -347,6 +350,133 @@ namespace BeforeItWasYou.UI
 
         public static string Format(DialogueLine line) =>
             string.IsNullOrEmpty(line.Speaker) ? line.Text : "<color=#B9B2A6>" + line.Speaker + ":</color>  " + line.Text;
+
+        // ---------- Fallo ----------
+
+        public void ShowFail(string title, string text, Action onRetry, Action onMenu)
+        {
+            EnsureReady();
+            _hud.AddToClassList(Hidden);
+            var fail = _root.Q("fail");
+            fail.RemoveFromClassList(Hidden);
+            _root.Q<Label>("fail-title").text = title;
+            _root.Q<Label>("fail-text").text = text;
+            var container = _root.Q("fail-list");
+            container.Clear();
+            _failList.Clear();
+            var retry = MenuList.CreateItem("REINTENTAR DESDE EL ÚLTIMO PUNTO DE GUARDADO", "pause-item");
+            retry.style.width = 620;
+            container.Add(retry);
+            _failList.Add(retry, onRetry);
+            var menu = MenuList.CreateItem("MENÚ PRINCIPAL", "pause-item");
+            menu.style.width = 620;
+            container.Add(menu);
+            _failList.Add(menu, onMenu);
+            _failList.SelectFirst();
+        }
+
+        public void HideFail()
+        {
+            EnsureReady();
+            _root.Q("fail").AddToClassList(Hidden);
+        }
+
+        // ---------- Epílogo y créditos ----------
+
+        public IEnumerator PlayEpilogue(string card, IReadOnlyList<DialogueLine> lines, string closing)
+        {
+            EnsureReady();
+            _skipRequested = false;
+            _hud.AddToClassList(Hidden);
+            var layer = _root.Q("epilogue");
+            layer.RemoveFromClassList(Hidden);
+            var cardLabel = _root.Q<Label>("epilogue-card");
+            var subtitle = _root.Q<Label>("epilogue-subtitle");
+            var text = _root.Q<Label>("epilogue-text");
+            yield return Fade(false, 0.6f);
+            cardLabel.text = card;
+            cardLabel.AddToClassList("card--on");
+            yield return Wait(3f);
+            cardLabel.RemoveFromClassList("card--on");
+            yield return Wait(1.6f);
+            foreach (var line in lines)
+            {
+                if (_skipRequested) break;
+                subtitle.text = Format(line);
+                subtitle.AddToClassList("subtitle--on");
+                yield return Wait(line.Duration + 0.3f);
+                subtitle.RemoveFromClassList("subtitle--on");
+                yield return Wait(0.7f);
+            }
+            _skipRequested = false;
+            text.text = closing;
+            text.AddToClassList("epilogue__text--on");
+            yield return Wait(4f + closing.Length * 0.045f);
+            text.RemoveFromClassList("epilogue__text--on");
+            yield return Wait(1.6f);
+        }
+
+        public IEnumerator PlayCreditsRoll(IReadOnlyList<string[]> blocks)
+        {
+            EnsureReady();
+            _skipRequested = false;
+            var roll = _root.Q("credits-roll");
+            roll.Clear();
+            var title = new Label("BEFORE IT WAS YOU");
+            title.AddToClassList("credits-roll__title");
+            roll.Add(title);
+            var episode = new Label("EPISODIO 01 · ALGUIEN ESTUVO AQUÍ");
+            episode.AddToClassList("credits-roll__heading");
+            roll.Add(episode);
+            foreach (var block in blocks)
+            {
+                var heading = new Label(block[0]);
+                heading.AddToClassList("credits-roll__heading");
+                roll.Add(heading);
+                for (var i = 1; i < block.Length; i++)
+                {
+                    var line = new Label(block[i]);
+                    line.AddToClassList("credits-roll__line");
+                    roll.Add(line);
+                }
+            }
+            var thanks = new Label("Gracias por jugar.");
+            thanks.AddToClassList("credits-roll__heading");
+            thanks.style.marginTop = 120;
+            roll.Add(thanks);
+            var y = 1100f;
+            while (!_skipRequested)
+            {
+                y -= Time.unscaledDeltaTime * 55f;
+                roll.style.top = y;
+                if (roll.resolvedStyle.height > 0 && y < -roll.resolvedStyle.height - 80f) break;
+                yield return null;
+            }
+            yield return Fade(true, 1.2f);
+            _root.Q("epilogue").AddToClassList(Hidden);
+        }
+
+        public static IReadOnlyList<string[]> CreditBlocks() => CreditsScreen.AllBlocks();
+
+        // ---------- Escondite ----------
+
+        public void SetHiding(bool hiding)
+        {
+            EnsureReady();
+            _root.Q("hide-slit").EnableInClassList("hide-slit--on", hiding);
+            _crosshair.EnableInClassList(Hidden, hiding);
+        }
+
+        // ---------- Llamada ----------
+
+        public void SetCall(bool active, string name, string time)
+        {
+            EnsureReady();
+            var call = _root.Q("call");
+            call.EnableInClassList("call--on", active);
+            _root.Q<Label>("call-name").text = name;
+            _root.Q<Label>("call-time").text = time;
+        }
 
         // ---------- HUD ----------
 

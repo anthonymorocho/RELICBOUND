@@ -29,6 +29,7 @@ namespace BeforeItWasYou.EditorTools
             ConfigurePlayer();
             ConfigureInput();
             ConfigureLayers();
+            ConfigureNavigation();
             AssetDatabase.SaveAssets();
             Debug.Log("[BIWY] Proyecto configurado.");
         }
@@ -244,6 +245,22 @@ namespace BeforeItWasYou.EditorTools
                 handler.intValue = 1;
                 data.ApplyModifiedPropertiesWithoutUndo();
             }
+        }
+
+        /// <summary>Agente humano (Víctor): radio 0.25 para pasar por puertas de 0.80, escalón de 0.3.</summary>
+        private static void ConfigureNavigation()
+        {
+            var assets = AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/NavMeshAreas.asset");
+            if (assets.Length == 0) return;
+            var data = new SerializedObject(assets[0]);
+            var settings = data.FindProperty("m_Settings");
+            if (settings == null || settings.arraySize == 0) return;
+            var agent = settings.GetArrayElementAtIndex(0);
+            SetRelative(agent, "agentRadius", 0.25f);
+            SetRelative(agent, "agentHeight", 1.8f);
+            SetRelative(agent, "agentClimb", 0.3f);
+            SetRelative(agent, "agentSlope", 45f);
+            data.ApplyModifiedPropertiesWithoutUndo();
         }
 
         private static void ConfigureLayers()

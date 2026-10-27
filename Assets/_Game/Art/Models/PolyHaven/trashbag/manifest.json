@@ -1,0 +1,38 @@
+{
+  "id": "trashbag",
+  "materials": [
+    {
+      "name": "PH_trashbag_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_trashbag_0_BaseColor.jpg",
+      "normal": "PH_trashbag_0_Normal.jpg",
+      "mask": "PH_trashbag_0_Mask.png"
+    }
+  ],
+  "triangles": 4482,
+  "trianglesOriginal": 4482,
+  "size": [
+    0.5280700922012329,
+    0.5749993920326233,
+    0.462893009185791
+  ],
+  "variants": [
+    {
+      "name": "trashbag",
+      "size": [
+        0.5280700922012329,
+        0.5749993920326233,
+        0.462893009185791
+      ],
+      "triangles": 4482
+    }
+  ]
+}

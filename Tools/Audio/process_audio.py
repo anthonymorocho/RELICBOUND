@@ -55,6 +55,10 @@ def main():
     oneshot(os.path.join(SRC, "door-lock-sounds/DoorLockSounds/DoorLockSounds/UnlockDoor.wav"), os.path.join(OUT, "Doors", "DOOR_Unlock.ogg"))
     oneshot(os.path.join(SRC, "light-switch-turn-on-and-off-sfx-0/lightswitch_1/light_switch_turn_on.mp3"), os.path.join(OUT, "Props", "SWITCH_On.ogg"), -8)
     oneshot(os.path.join(SRC, "light-switch-turn-on-and-off-sfx-0/lightswitch_1/light_switch_turn_off.mp3"), os.path.join(OUT, "Props", "SWITCH_Off.ogg"), -8)
+    pack = os.path.join(SRC, "100-cc0-metal-and-wood-sfx/100-CC0-wood-metal-SFX")
+    oneshot(os.path.join(pack, "keys_03.ogg"), os.path.join(OUT, "Props", "KEYS_Jingle.ogg"), -8)
+    oneshot(os.path.join(pack, "misc_05.ogg"), os.path.join(OUT, "Props", "BOX_Fall.ogg"), -3)
+    oneshot(os.path.join(pack, "metal_hit_02.ogg"), os.path.join(OUT, "Props", "METAL_Clank.ogg"), -6)
     loop(os.path.join(SRC, "crickets-ambient-noise-loopable/crickets-oneloop.mp3"), os.path.join(OUT, "Ambience", "AMB_Night_Crickets.ogg"), 0.5, 20.0, -32, 2.0, 7000)
     loop(os.path.join(SRC, "mild-wind-background-noise/wind%20background%20noise%202.wav"), os.path.join(OUT, "Ambience", "AMB_Night_Wind.ogg"), 2.0, 38.0, -34, 3.0, 2500)
     # Sintetizados (propios): vibración del móvil y tono de cocina del prólogo (nevera y sala).

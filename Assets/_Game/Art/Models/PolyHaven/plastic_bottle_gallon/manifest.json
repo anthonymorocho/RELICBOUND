@@ -1,0 +1,38 @@
+{
+  "id": "plastic_bottle_gallon",
+  "materials": [
+    {
+      "name": "PH_plastic_bottle_gallon_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_plastic_bottle_gallon_0_BaseColor.jpg",
+      "normal": "PH_plastic_bottle_gallon_0_Normal.jpg",
+      "mask": "PH_plastic_bottle_gallon_0_Mask.png"
+    }
+  ],
+  "triangles": 13728,
+  "trianglesOriginal": 13728,
+  "size": [
+    0.16628038883209229,
+    0.2744927406311035,
+    0.1263512670993805
+  ],
+  "variants": [
+    {
+      "name": "plastic_bottle_gallon",
+      "size": [
+        0.16628038883209229,
+        0.2744927406311035,
+        0.1263512670993805
+      ],
+      "triangles": 13728
+    }
+  ]
+}

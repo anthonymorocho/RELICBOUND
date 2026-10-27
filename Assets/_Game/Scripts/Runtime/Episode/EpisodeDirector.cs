@@ -75,6 +75,16 @@ namespace BeforeItWasYou.Episode
                 // Recarga desde pausa o fallo: siempre se vuelve al menú con un estado limpio.
                 flow.TryEnter(GameState.Menu);
             }
+            if (ContinueOnLoad && GameServices.Saves.HasContinuableSave())
+            {
+                ContinueOnLoad = false;
+                SetPlayerActive(false);
+                ui.HideFrontEnd();
+                ui.SetBlack(true);
+                StartCoroutine(ContinueRoutine(GameServices.Saves.Load().Snapshot));
+                return;
+            }
+            ContinueOnLoad = false;
             EnterMenu(true);
         }
 
@@ -210,6 +220,63 @@ namespace BeforeItWasYou.Episode
             yield return ui.Fade(true, 0.8f);
             Time.timeScale = 1f;
             AudioListener.pause = false;
+            GameServices.Flow.TryEnter(GameState.Menu);
+            SceneManager.LoadScene(gameObject.scene.name, LoadSceneMode.Single);
+        }
+
+        // ---------- Fallo, reintento y final ----------
+
+        /// <summary>Muerte por contacto confirmado: breve corte, pantalla sobria y reintento rápido.</summary>
+        public void Fail(string title, string text)
+        {
+            if (_transitioning || !GameServices.Flow.TryEnter(GameState.Failed)) return;
+            StartCoroutine(FailRoutine(title, text));
+        }
+
+        private IEnumerator FailRoutine(string title, string text)
+        {
+            _transitioning = true;
+            player.Lock("fallo");
+            GameInput.Instance.UsePlayer(false);
+            yield return ui.Fade(true, 0.35f);
+            Time.timeScale = 0f;
+            SetCursor(true);
+            ui.SetBlack(false);
+            ui.ShowFail(title, text, Retry, () => StartCoroutine(ReturnToMenuRoutine()));
+            _transitioning = false;
+        }
+
+        /// <summary>Recarga la escena y continúa desde el último checkpoint sin pasar por el menú.</summary>
+        public void Retry()
+        {
+            ui.HideFail();
+            Time.timeScale = 1f;
+            ContinueOnLoad = true;
+            GameServices.Flow.TryEnter(GameState.Menu);
+            SceneManager.LoadScene(gameObject.scene.name, LoadSceneMode.Single);
+        }
+
+        /// <summary>Al recargar tras un fallo se entra directo a la partida guardada.</summary>
+        public static bool ContinueOnLoad;
+
+        public void Ending(IEnumerator epilogue)
+        {
+            if (_transitioning || !GameServices.Flow.TryEnter(GameState.Epilogue)) return;
+            StartCoroutine(EndingRoutine(epilogue));
+        }
+
+        private IEnumerator EndingRoutine(IEnumerator epilogue)
+        {
+            _transitioning = true;
+            player.Lock("final");
+            GameInput.Instance.UsePlayer(false);
+            yield return ui.Fade(true, 1.6f);
+            ui.ShowHud(false);
+            yield return epilogue;
+            GameServices.Flow.TryEnter(GameState.Credits);
+            yield return ui.PlayCreditsRoll(GameUi.CreditBlocks());
+            // El episodio terminado ya no se puede continuar.
+            GameServices.Saves.DeleteAll();
             GameServices.Flow.TryEnter(GameState.Menu);
             SceneManager.LoadScene(gameObject.scene.name, LoadSceneMode.Single);
         }

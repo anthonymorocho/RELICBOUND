@@ -88,6 +88,12 @@ namespace BeforeItWasYou.Episode
                 Kind = Kind.Incoming, Id = "lucia_07", Delay = 2.6f,
                 Dynamic = n => n._log.Has("daniel_07b") ? "Esa. Dice que no engancha bien." : "Bueno. Avísame.",
             },
+            // A3 — Si Daniel comprueba que la puerta de servicio no engancha, puede preguntar (opcional).
+            new Step { Kind = Kind.Wait, Until = n => EpisodeState.Current != null && EpisodeState.Current.Flag(StoryDirector.FlagLatch), Delay = 1.5f },
+            new Step { Kind = Kind.Replies, Replies = new[] { new PhoneReply("daniel_08", "¿Mamá dejó a alguien revisando la puerta de atrás?") } },
+            new Step { Kind = Kind.Incoming, Id = "lucia_08", Text = "Que yo sepa, no. ¿Por?", Delay = 2.8f },
+            new Step { Kind = Kind.Replies, Replies = new[] { new PhoneReply("daniel_09", "Nada. Está abierta otra vez.") } },
+            new Step { Kind = Kind.Incoming, Id = "lucia_09", Text = "Cierra bien antes de irte.", Delay = 2.2f },
         };
 
         [SerializeField] private EpisodeDirector director;

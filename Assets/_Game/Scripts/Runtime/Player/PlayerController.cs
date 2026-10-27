@@ -38,6 +38,8 @@ namespace BeforeItWasYou.Player
         private float _bobPhase;
         private float _stepDistance;
         private bool _crouched;
+        private Vector3 _impulse;
+        private float _shake;
 
         public event Action<Surface, float> Footstep;
 
@@ -47,6 +49,9 @@ namespace BeforeItWasYou.Player
         public bool IsRunning { get; private set; }
         public float Speed => _planarVelocity.magnitude;
         public bool HasControl => _locks.Count == 0;
+
+        /// <summary>Dentro de un escondite (armario): Víctor no le ve salvo que le viera entrar.</summary>
+        public bool Hidden { get; set; }
         public float Yaw => _yaw;
         public float Pitch => _pitch;
 
@@ -73,8 +78,11 @@ namespace BeforeItWasYou.Player
 
         public void Unlock(string reason) => _locks.Remove(reason);
 
+        private float _hideYaw;
+
         public void Teleport(Vector3 position, float yaw, float pitch = 0f)
         {
+            _hideYaw = yaw;
             _body.enabled = false;
             transform.position = position;
             _body.enabled = true;
@@ -84,6 +92,18 @@ namespace BeforeItWasYou.Player
             _verticalVelocity = 0f;
             ApplyRotation();
         }
+
+        /// <summary>Empujón: desplaza a Daniel y sacude la cámara (escalado por la opción Movimiento de cámara).</summary>
+        public void Knockback(Vector3 impulse)
+        {
+            _impulse = impulse;
+            _shake = 1f;
+            Lock("empujon");
+            CancelInvoke(nameof(EndKnockback));
+            Invoke(nameof(EndKnockback), 0.7f);
+        }
+
+        private void EndKnockback() => Unlock("empujon");
 
         public void SetCrouched(bool crouched)
         {
@@ -97,17 +117,24 @@ namespace BeforeItWasYou.Player
         {
             var input = GameInput.Instance;
             var control = HasControl && GameServices.Flow != null && GameServices.Flow.IsSimulating;
+            var lookOnly = Hidden && _locks.Count == 1 && GameServices.Flow != null && GameServices.Flow.IsSimulating;
             var settings = GameServices.Settings;
 
-            if (control)
+            if (control || lookOnly)
             {
                 var look = input.Look.ReadValue<Vector2>() * (lookScale * (settings?.MouseSensitivity ?? 1f));
                 _yaw += look.x;
                 _pitch += (settings != null && settings.InvertY ? 1f : -1f) * look.y;
                 _pitch = Mathf.Clamp(_pitch, -84f, 84f);
-                if (input.Crouch.WasPressedThisFrame()) SetCrouched(!_crouched);
+                if (lookOnly) _yaw = Mathf.Clamp(Mathf.DeltaAngle(0f, _yaw - _hideYaw), -35f, 35f) + _hideYaw;
+                if (control && input.Crouch.WasPressedThisFrame()) SetCrouched(!_crouched);
             }
             ApplyRotation();
+            if (Hidden)
+            {
+                UpdateCamera(0f, 0f);
+                return;
+            }
 
             var move = control ? Vector2.ClampMagnitude(input.Move.ReadValue<Vector2>(), 1f) : Vector2.zero;
             IsRunning = control && input.Run.IsPressed() && !_crouched && move.y > 0.1f;
@@ -120,7 +147,8 @@ namespace BeforeItWasYou.Player
             if (_body.isGrounded && _verticalVelocity < 0f) _verticalVelocity = -2f;
             _verticalVelocity += gravity * Time.deltaTime;
             var before = transform.position;
-            _body.Move((_planarVelocity + Vector3.up * _verticalVelocity) * Time.deltaTime);
+            _body.Move((_planarVelocity + _impulse + Vector3.up * _verticalVelocity) * Time.deltaTime);
+            _impulse = Vector3.MoveTowards(_impulse, Vector3.zero, 6f * Time.deltaTime);
             var travelled = Vector3.ProjectOnPlane(transform.position - before, Vector3.up).magnitude;
 
             UpdateCamera(travelled, settings?.CameraShake ?? 1f);
@@ -140,7 +168,9 @@ namespace BeforeItWasYou.Player
             _bobPhase += travelled * (IsRunning ? 2.1f : 2.6f);
             var amount = Mathf.Clamp01(Speed / walkSpeed) * shake * (IsRunning ? 0.032f : 0.018f);
             var bob = new Vector3(Mathf.Cos(_bobPhase * 0.5f) * amount * 0.6f, Mathf.Abs(Mathf.Sin(_bobPhase * 0.5f)) * amount, 0f);
-            if (cameraPivot != null) cameraPivot.localPosition = new Vector3(0f, _eyeHeight, 0f) + bob;
+            _shake = Mathf.MoveTowards(_shake, 0f, Time.deltaTime * 1.8f);
+            var jolt = _shake > 0f ? UnityEngine.Random.insideUnitSphere * (0.05f * _shake * shake) : Vector3.zero;
+            if (cameraPivot != null) cameraPivot.localPosition = new Vector3(0f, _eyeHeight, 0f) + bob + jolt;
         }
 
         private void UpdateFootsteps(float travelled)

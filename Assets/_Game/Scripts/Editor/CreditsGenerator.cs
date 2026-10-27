@@ -37,6 +37,9 @@ namespace BeforeItWasYou.EditorTools
             text.Append("Pasos: congusbongus (OpenGameArt) a partir de swuing, ceberation y Eelke (freesound) · CC BY 3.0\n");
             text.Append("Ambiente, puertas e interruptores: wolfgang, bashar3a, cough-e, starninjas, wforster1, funnydude (OpenGameArt) · CC0\n");
             text.Append("Interfaz: Kenney (kenney.nl) · CC0\n\n");
+            text.Append("PERSONAJES Y ANIMACIÓN\n");
+            text.Append("Víctor creado con MakeHuman / MPFB (assets CC0 de la comunidad MakeHuman)\n");
+            text.Append("Animaciones: Universal Animation Library, Quaternius · CC0\n\n");
             text.Append("COCHE DE DANIEL\n");
             text.Append("Sedán por TopoSphere (sloyd.ai) · CC BY 4.0 · modificado\n\n");
             File.WriteAllText(OutputPath, text.ToString());

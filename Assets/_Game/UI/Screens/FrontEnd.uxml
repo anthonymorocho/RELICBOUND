@@ -4,6 +4,11 @@
 
         <!-- HUD de juego: casi invisible (DIRECCION_ARTISTICA §UI). -->
         <ui:VisualElement name="hud" class="hud hidden" picking-mode="Ignore">
+            <ui:VisualElement name="hide-slit" class="hide-slit" picking-mode="Ignore">
+                <ui:VisualElement class="hide-slit__side hide-slit__side--left" picking-mode="Ignore" />
+                <ui:VisualElement class="hide-slit__side hide-slit__side--right" picking-mode="Ignore" />
+                <ui:Label text="E  Salir" class="hide-slit__hint" />
+            </ui:VisualElement>
             <ui:VisualElement name="crosshair" class="crosshair" picking-mode="Ignore" />
             <ui:VisualElement name="prompt" class="prompt" picking-mode="Ignore">
                 <ui:Label name="prompt-key" text="E" class="key" />
@@ -40,6 +45,11 @@
                         <ui:Label name="phone-composer" text="Mensaje" class="phone__composer-text" />
                     </ui:VisualElement>
                 </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="call" class="call" picking-mode="Ignore">
+                <ui:VisualElement class="call__dot" />
+                <ui:Label name="call-name" text="Emergencias" class="call__name" />
+                <ui:Label name="call-time" text="00:00" class="call__time" />
             </ui:VisualElement>
             <ui:VisualElement name="hud-subtitles" class="subtitles" picking-mode="Ignore">
                 <ui:Label name="hud-subtitle" text="" class="subtitle" />
@@ -106,6 +116,27 @@
                 <ui:Label text="Enter" class="key" />
                 <ui:Label text="Saltar" class="key-label" />
             </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Fallo: sobrio, reintento primero (SISTEMAS §Muerte). -->
+        <ui:VisualElement name="fail" class="layer fail hidden">
+            <ui:VisualElement class="layer grain" picking-mode="Ignore" />
+            <ui:VisualElement class="fail__box">
+                <ui:Label name="fail-title" text="" class="fail__title" />
+                <ui:Label name="fail-text" text="" class="fail__text" />
+                <ui:VisualElement name="fail-list" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Epílogo y créditos finales. -->
+        <ui:VisualElement name="epilogue" class="layer prologue hidden" picking-mode="Ignore">
+            <ui:VisualElement class="layer grain" picking-mode="Ignore" />
+            <ui:Label name="epilogue-card" text="" class="card" />
+            <ui:Label name="epilogue-text" text="" class="epilogue__text" />
+            <ui:VisualElement class="subtitles" picking-mode="Ignore">
+                <ui:Label name="epilogue-subtitle" text="" class="subtitle" />
+            </ui:VisualElement>
+            <ui:VisualElement name="credits-roll" class="credits-roll" picking-mode="Ignore" />
         </ui:VisualElement>
 
         <ui:VisualElement name="modal" class="modal hidden">

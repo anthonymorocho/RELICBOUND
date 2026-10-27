@@ -32,6 +32,13 @@ namespace BeforeItWasYou.UI
 
         public bool IsOpen { get; private set; }
 
+        public static string[][] AllBlocks()
+        {
+            var all = new System.Collections.Generic.List<string[]>(Blocks);
+            all.AddRange(_extra);
+            return all.ToArray();
+        }
+
         /// <summary>Bloques adicionales (assets CC0 y otros) generados desde el registro de assets.</summary>
         public static void SetExtraBlocks(string[][] blocks) => _extra = blocks ?? new string[0][];
 
