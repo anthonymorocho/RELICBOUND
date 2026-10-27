@@ -4,6 +4,12 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Relicbound/Scenes/Boot.unity
+    guid: a6fcaec73104bd59b84d4234eda5fa20
+  - enabled: 1
+    path: Assets/Relicbound/Scenes/Castle.unity
+    guid: f69835ecdb9fb611a88f8baa87462981
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

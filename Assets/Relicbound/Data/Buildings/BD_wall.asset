@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49b807c27c7af9c29ab6d5f1a9ba097b, type: 3}
+  m_Name: BD_wall
+  m_EditorClassIdentifier: 
+  id: wall
+  displayName: "Muralla de siller\xEDa"
+  role: Defensa
+  description: "Lienzo de piedra con adarve y almenas. Cada secci\xF3n resiste por
+    separado: una brecha abre el paso al enemigo."
+  stats:
+  - label: "Resistencia por secci\xF3n"
+    value: 900
+  - label: Altura
+    value: 5 m
+  - label: Grosor
+    value: 2 m
+  focusDistance: 30
