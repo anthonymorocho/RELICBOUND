@@ -1,0 +1,68 @@
+{
+  "id": "jacaranda_tree",
+  "materials": [
+    {
+      "name": "PH_jacaranda_tree_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_jacaranda_tree_0_BaseColor.jpg",
+      "normal": "PH_jacaranda_tree_0_Normal.jpg",
+      "mask": "PH_jacaranda_tree_0_Mask.png"
+    },
+    {
+      "name": "PH_jacaranda_tree_1",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_jacaranda_tree_1_BaseColor.jpg",
+      "normal": "PH_jacaranda_tree_1_Normal.jpg",
+      "mask": "PH_jacaranda_tree_1_Mask.png"
+    },
+    {
+      "name": "PH_jacaranda_tree_2",
+      "alpha": "BLEND",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_jacaranda_tree_2_BaseColor.jpg",
+      "normal": "PH_jacaranda_tree_2_Normal.jpg",
+      "mask": "PH_jacaranda_tree_2_Mask.png"
+    }
+  ],
+  "triangles": 140000,
+  "trianglesOriginal": 3863832,
+  "size": [
+    24.382770538330078,
+    19.43918800354004,
+    19.188549041748047
+  ],
+  "variants": [
+    {
+      "name": "jacaranda_tree",
+      "size": [
+        24.382770538330078,
+        19.43918800354004,
+        19.188549041748047
+      ],
+      "triangles": 140000
+    }
+  ]
+}

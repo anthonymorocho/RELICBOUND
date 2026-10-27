@@ -97,6 +97,7 @@ namespace BeforeItWasYou.EditorTools
             document.panelSettings = panel;
             document.visualTreeAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(UiAssets.FrontEndPath);
             var ui = uiGo.AddComponent<GameUi>();
+            EditorUtil.Set(ui, "credits", CreditsGenerator.Generate());
             var uiSource = uiGo.AddComponent<AudioSource>();
             uiSource.playOnAwake = false;
             uiSource.ignoreListenerPause = true;

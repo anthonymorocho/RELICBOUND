@@ -1,0 +1,13 @@
+{
+  "id": "dark_wood",
+  "name": "Dark Wood",
+  "dimensions_mm": [
+    2000,
+    2000
+  ],
+  "authors": [
+    "Dario Barresi",
+    "Dimitrios Savva",
+    "Rico Cilliers"
+  ]
+}

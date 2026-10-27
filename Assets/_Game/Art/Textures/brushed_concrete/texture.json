@@ -1,0 +1,12 @@
+{
+  "id": "brushed_concrete",
+  "name": "Brushed Concrete ",
+  "dimensions_mm": [
+    2500,
+    2500
+  ],
+  "authors": [
+    "Dario Barresi",
+    "Dimitrios Savva"
+  ]
+}

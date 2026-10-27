@@ -1,0 +1,11 @@
+{
+  "id": "rusty_metal_02",
+  "name": "Rusty Metal 02",
+  "dimensions_mm": [
+    1000,
+    1000
+  ],
+  "authors": [
+    "Rob Tuytel"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "grey_roof_01",
+  "name": "Grey Roof 01",
+  "dimensions_mm": [
+    8000,
+    8000
+  ],
+  "authors": [
+    "Rob Tuytel"
+  ]
+}

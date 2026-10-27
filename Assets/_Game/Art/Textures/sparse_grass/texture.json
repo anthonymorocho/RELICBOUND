@@ -1,0 +1,11 @@
+{
+  "id": "sparse_grass",
+  "name": "Sparse Grass",
+  "dimensions_mm": [
+    2000,
+    2000
+  ],
+  "authors": [
+    "Amal Kumar"
+  ]
+}

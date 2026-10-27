@@ -1,0 +1,11 @@
+{
+  "id": "painted_plaster_wall",
+  "name": "Painted Plaster Wall",
+  "dimensions_mm": [
+    2000,
+    2000
+  ],
+  "authors": [
+    "Amal Kumar"
+  ]
+}

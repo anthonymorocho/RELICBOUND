@@ -1,0 +1,62 @@
+{
+  "id": "fire_hydrant",
+  "materials": [
+    {
+      "name": "PH_fire_hydrant_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_fire_hydrant_0_BaseColor.jpg",
+      "normal": "PH_fire_hydrant_0_Normal.jpg",
+      "mask": "PH_fire_hydrant_0_Mask.png"
+    },
+    {
+      "name": "PH_fire_hydrant_1",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_fire_hydrant_1_BaseColor.jpg",
+      "normal": "PH_fire_hydrant_1_Normal.jpg",
+      "mask": "PH_fire_hydrant_1_Mask.png"
+    }
+  ],
+  "triangles": 86316,
+  "trianglesOriginal": 86316,
+  "size": [
+    0.8746235370635986,
+    0.799456000328064,
+    0.31774356961250305
+  ],
+  "variants": [
+    {
+      "name": "fire_hydrant_A",
+      "size": [
+        0.2746235430240631,
+        0.799456000328064,
+        0.31774356961250305
+      ],
+      "triangles": 43158
+    },
+    {
+      "name": "fire_hydrant_B",
+      "size": [
+        0.2746235430240631,
+        0.799456000328064,
+        0.31774356961250305
+      ],
+      "triangles": 43158
+    }
+  ]
+}

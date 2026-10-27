@@ -1,0 +1,68 @@
+{
+  "id": "security_light",
+  "materials": [
+    {
+      "name": "PH_security_light_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_security_light_0_BaseColor.jpg",
+      "normal": "PH_security_light_0_Normal.jpg",
+      "mask": "PH_security_light_0_Mask.png"
+    },
+    {
+      "name": "PH_security_light_1",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_security_light_1_BaseColor.jpg",
+      "normal": "PH_security_light_1_Normal.jpg",
+      "mask": "PH_security_light_1_Mask.png"
+    },
+    {
+      "name": "PH_security_light_2",
+      "alpha": "BLEND",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_security_light_2_BaseColor.jpg",
+      "normal": "PH_security_light_2_Normal.jpg",
+      "mask": "PH_security_light_2_Mask.png"
+    }
+  ],
+  "triangles": 4668,
+  "trianglesOriginal": 4668,
+  "size": [
+    0.32314473390579224,
+    0.5309766530990601,
+    0.4172230362892151
+  ],
+  "variants": [
+    {
+      "name": "security_light",
+      "size": [
+        0.32314473390579224,
+        0.5309766530990601,
+        0.4172230362892151
+      ],
+      "triangles": 4668
+    }
+  ]
+}

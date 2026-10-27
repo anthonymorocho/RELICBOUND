@@ -1,0 +1,38 @@
+{
+  "id": "planter_pot_clay",
+  "materials": [
+    {
+      "name": "PH_planter_pot_clay_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_planter_pot_clay_0_BaseColor.jpg",
+      "normal": "PH_planter_pot_clay_0_Normal.jpg",
+      "mask": "PH_planter_pot_clay_0_Mask.png"
+    }
+  ],
+  "triangles": 3080,
+  "trianglesOriginal": 3080,
+  "size": [
+    0.2659967243671417,
+    0.22187034785747528,
+    0.2634630501270294
+  ],
+  "variants": [
+    {
+      "name": "planter_pot_clay",
+      "size": [
+        0.2659967243671417,
+        0.22187034785747528,
+        0.2634630501270294
+      ],
+      "triangles": 3080
+    }
+  ]
+}

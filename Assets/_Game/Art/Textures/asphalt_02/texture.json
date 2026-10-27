@@ -1,0 +1,11 @@
+{
+  "id": "asphalt_02",
+  "name": "Asphalt 02",
+  "dimensions_mm": [
+    3000.000238418579,
+    3000
+  ],
+  "authors": [
+    "Rob Tuytel"
+  ]
+}

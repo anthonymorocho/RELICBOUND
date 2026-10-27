@@ -1,0 +1,65 @@
+{
+  "id": "shrub_02",
+  "materials": [
+    {
+      "name": "PH_shrub_02_0",
+      "alpha": "MASK",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_shrub_02_0_BaseColor.jpg",
+      "normal": "PH_shrub_02_0_Normal.jpg",
+      "mask": "PH_shrub_02_0_Mask.png"
+    }
+  ],
+  "triangles": 27254,
+  "trianglesOriginal": 27254,
+  "size": [
+    6.053877830505371,
+    1.70254647731781,
+    2.285062313079834
+  ],
+  "variants": [
+    {
+      "name": "shrub_02_A",
+      "size": [
+        1.3120052814483643,
+        1.6889771223068237,
+        1.6410069465637207
+      ],
+      "triangles": 7590
+    },
+    {
+      "name": "shrub_02_B",
+      "size": [
+        1.1102343797683716,
+        1.506312608718872,
+        1.279916763305664
+      ],
+      "triangles": 5242
+    },
+    {
+      "name": "shrub_02_C",
+      "size": [
+        1.766778826713562,
+        1.3147666454315186,
+        2.285062313079834
+      ],
+      "triangles": 9234
+    },
+    {
+      "name": "shrub_02_D",
+      "size": [
+        1.080237865447998,
+        1.2292377948760986,
+        1.09800386428833
+      ],
+      "triangles": 5188
+    }
+  ]
+}

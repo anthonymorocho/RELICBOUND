@@ -32,6 +32,8 @@ namespace BeforeItWasYou.UI
     {
         private const string Hidden = "hidden";
 
+        [SerializeField] private TextAsset credits;
+
         private UIDocument _document;
         private VisualElement _root;
         private VisualElement _frontEnd;
@@ -96,6 +98,7 @@ namespace BeforeItWasYou.UI
             _hudSubtitle = _root.Q<Label>("hud-subtitle");
             _options = new OptionsScreen(_root.Q("options"));
             _credits = new CreditsScreen(_root.Q("credits"));
+            if (credits != null) CreditsScreen.SetExtraBlocks(CreditsScreen.Parse(credits.text));
             _options.List.SelectionChanged += entry => SetAdjustHint(entry.Adjust != null);
             _root.Q<Label>("version").text = "v" + Application.version + "  ·  Episodio 01";
             SettingsApplier.Applied += ApplySubtitleScale;

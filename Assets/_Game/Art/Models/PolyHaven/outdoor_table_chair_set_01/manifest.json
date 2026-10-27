@@ -1,0 +1,53 @@
+{
+  "id": "outdoor_table_chair_set_01",
+  "materials": [
+    {
+      "name": "PH_outdoor_table_chair_set_01_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_outdoor_table_chair_set_01_0_BaseColor.jpg",
+      "normal": "PH_outdoor_table_chair_set_01_0_Normal.jpg",
+      "mask": "PH_outdoor_table_chair_set_01_0_Mask.png"
+    },
+    {
+      "name": "PH_outdoor_table_chair_set_01_1",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_outdoor_table_chair_set_01_1_BaseColor.jpg",
+      "normal": "PH_outdoor_table_chair_set_01_1_Normal.jpg",
+      "mask": "PH_outdoor_table_chair_set_01_1_Mask.png"
+    }
+  ],
+  "triangles": 9828,
+  "trianglesOriginal": 9828,
+  "size": [
+    0.7416651248931885,
+    0.8585816025733948,
+    1.7173197269439697
+  ],
+  "variants": [
+    {
+      "name": "outdoor_table_chair_set_01",
+      "size": [
+        0.7416651248931885,
+        0.8585816025733948,
+        1.7173197269439697
+      ],
+      "triangles": 9828
+    }
+  ]
+}

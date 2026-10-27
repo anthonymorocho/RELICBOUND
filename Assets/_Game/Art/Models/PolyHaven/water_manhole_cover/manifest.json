@@ -1,0 +1,38 @@
+{
+  "id": "water_manhole_cover",
+  "materials": [
+    {
+      "name": "PH_water_manhole_cover_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_water_manhole_cover_0_BaseColor.jpg",
+      "normal": "PH_water_manhole_cover_0_Normal.jpg",
+      "mask": "PH_water_manhole_cover_0_Mask.png"
+    }
+  ],
+  "triangles": 6301,
+  "trianglesOriginal": 6301,
+  "size": [
+    0.6907604932785034,
+    0.06761780381202698,
+    0.6907604932785034
+  ],
+  "variants": [
+    {
+      "name": "water_manhole_cover",
+      "size": [
+        0.6907604932785034,
+        0.06761780381202698,
+        0.6907604932785034
+      ],
+      "triangles": 6301
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "id": "exterior_aircon_unit",
+  "materials": [
+    {
+      "name": "PH_exterior_aircon_unit_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_exterior_aircon_unit_0_BaseColor.jpg",
+      "normal": "PH_exterior_aircon_unit_0_Normal.jpg",
+      "mask": "PH_exterior_aircon_unit_0_Mask.png"
+    },
+    {
+      "name": "PH_exterior_aircon_unit_1",
+      "alpha": "BLEND",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_exterior_aircon_unit_1_BaseColor.jpg",
+      "normal": "PH_exterior_aircon_unit_1_Normal.jpg",
+      "mask": "PH_exterior_aircon_unit_1_Mask.png"
+    },
+    {
+      "name": "PH_exterior_aircon_unit_2",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_exterior_aircon_unit_2_BaseColor.jpg",
+      "normal": "PH_exterior_aircon_unit_2_Normal.jpg",
+      "mask": "PH_exterior_aircon_unit_2_Mask.png"
+    },
+    {
+      "name": "PH_exterior_aircon_unit_3",
+      "alpha": "BLEND",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_exterior_aircon_unit_3_BaseColor.jpg",
+      "normal": "PH_exterior_aircon_unit_3_Normal.jpg",
+      "mask": "PH_exterior_aircon_unit_3_Mask.png"
+    }
+  ],
+  "triangles": 18986,
+  "trianglesOriginal": 18986,
+  "size": [
+    1.799971342086792,
+    0.9278970956802368,
+    0.37415921688079834
+  ],
+  "variants": [
+    {
+      "name": "exterior_aircon_unit_A",
+      "size": [
+        0.799971342086792,
+        0.9278970956802368,
+        0.37415921688079834
+      ],
+      "triangles": 9493
+    },
+    {
+      "name": "exterior_aircon_unit_B",
+      "size": [
+        0.799971342086792,
+        0.9278970956802368,
+        0.37415921688079834
+      ],
+      "triangles": 9493
+    }
+  ]
+}

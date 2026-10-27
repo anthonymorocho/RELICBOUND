@@ -1,0 +1,38 @@
+{
+  "id": "garden_hose_wall_mounted_01",
+  "materials": [
+    {
+      "name": "PH_garden_hose_wall_mounted_01_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_garden_hose_wall_mounted_01_0_BaseColor.jpg",
+      "normal": "PH_garden_hose_wall_mounted_01_0_Normal.jpg",
+      "mask": "PH_garden_hose_wall_mounted_01_0_Mask.png"
+    }
+  ],
+  "triangles": 11684,
+  "trianglesOriginal": 11684,
+  "size": [
+    0.4667283892631531,
+    0.5570019483566284,
+    0.25030913949012756
+  ],
+  "variants": [
+    {
+      "name": "garden_hose_wall_mounted_01",
+      "size": [
+        0.4667283892631531,
+        0.5570019483566284,
+        0.25030913949012756
+      ],
+      "triangles": 11684
+    }
+  ]
+}

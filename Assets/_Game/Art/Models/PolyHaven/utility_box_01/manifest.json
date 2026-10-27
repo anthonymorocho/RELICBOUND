@@ -1,0 +1,38 @@
+{
+  "id": "utility_box_01",
+  "materials": [
+    {
+      "name": "PH_utility_box_01_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_utility_box_01_0_BaseColor.jpg",
+      "normal": "PH_utility_box_01_0_Normal.jpg",
+      "mask": "PH_utility_box_01_0_Mask.png"
+    }
+  ],
+  "triangles": 4404,
+  "trianglesOriginal": 4404,
+  "size": [
+    0.5200002193450928,
+    1.1203334331512451,
+    0.43199998140335083
+  ],
+  "variants": [
+    {
+      "name": "utility_box_01",
+      "size": [
+        0.5200002193450928,
+        1.1203334331512451,
+        0.43199998140335083
+      ],
+      "triangles": 4404
+    }
+  ]
+}

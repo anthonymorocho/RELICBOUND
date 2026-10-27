@@ -1,0 +1,77 @@
+{
+  "id": "metal_trash_can",
+  "materials": [
+    {
+      "name": "PH_metal_trash_can_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_metal_trash_can_0_BaseColor.jpg",
+      "normal": "PH_metal_trash_can_0_Normal.jpg",
+      "mask": "PH_metal_trash_can_0_Mask.png"
+    },
+    {
+      "name": "PH_metal_trash_can_1",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_metal_trash_can_1_BaseColor.jpg",
+      "normal": "PH_metal_trash_can_1_Normal.jpg",
+      "mask": "PH_metal_trash_can_1_Mask.png"
+    },
+    {
+      "name": "PH_metal_trash_can_2",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_metal_trash_can_2_BaseColor.jpg",
+      "normal": "PH_metal_trash_can_2_Normal.jpg",
+      "mask": "PH_metal_trash_can_2_Mask.png"
+    }
+  ],
+  "triangles": 13960,
+  "trianglesOriginal": 13960,
+  "size": [
+    1.7780096530914307,
+    0.9061697125434875,
+    0.556289792060852
+  ],
+  "variants": [
+    {
+      "name": "metal_trash_can_A",
+      "size": [
+        0.7732658386230469,
+        0.906157374382019,
+        0.5490131974220276
+      ],
+      "triangles": 7532
+    },
+    {
+      "name": "metal_trash_can_B",
+      "size": [
+        0.7780095338821411,
+        0.9061599373817444,
+        0.556289792060852
+      ],
+      "triangles": 6428
+    }
+  ]
+}

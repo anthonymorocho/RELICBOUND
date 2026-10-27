@@ -35,6 +35,18 @@ namespace BeforeItWasYou.UI
         /// <summary>Bloques adicionales (assets CC0 y otros) generados desde el registro de assets.</summary>
         public static void SetExtraBlocks(string[][] blocks) => _extra = blocks ?? new string[0][];
 
+        /// <summary>Bloques separados por una línea en blanco; la primera línea de cada bloque es el título.</summary>
+        public static string[][] Parse(string text)
+        {
+            var blocks = new System.Collections.Generic.List<string[]>();
+            foreach (var chunk in text.Replace("\r", string.Empty).Split(new[] { "\n\n" }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                var lines = chunk.Trim().Split('\n');
+                if (lines.Length > 1) blocks.Add(lines);
+            }
+            return blocks.ToArray();
+        }
+
         public void Open(Action onClose)
         {
             _onClose = onClose;
