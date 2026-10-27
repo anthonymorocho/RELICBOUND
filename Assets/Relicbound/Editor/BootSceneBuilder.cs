@@ -33,10 +33,10 @@ namespace Relicbound.EditorTools
             var serialized = new SerializedObject(director);
             serialized.FindProperty("document").objectReferenceValue = document;
             serialized.ApplyModifiedPropertiesWithoutUndo();
-            var documentData = new SerializedObject(document);
-            documentData.FindProperty("m_PanelSettings").objectReferenceValue = panelSettings;
-            documentData.ApplyModifiedPropertiesWithoutUndo();
-            if (document.panelSettings == null) throw new System.InvalidOperationException("Boot: UIDocument sin PanelSettings.");
+            if (document.panelSettings == null)
+            {
+                throw new System.InvalidOperationException($"Boot: UIDocument sin PanelSettings (asset cargado: {panelSettings != null}).");
+            }
 
             EditorSceneManager.SaveScene(scene, ScenePath);
         }
