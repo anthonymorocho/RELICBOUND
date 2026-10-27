@@ -1,8 +1,14 @@
+using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json.Linq;
+using Relicbound.Game.CameraControl;
+using Relicbound.Game.Castle;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UIElements;
 
 namespace Relicbound.EditorTools
 {
@@ -14,6 +20,8 @@ namespace Relicbound.EditorTools
     public static class CastleSceneBuilder
     {
         public const string ScenePath = "Assets/Relicbound/Scenes/Castle.unity";
+        private const string BuildingsData = "Assets/Relicbound/Data/buildings_p1.json";
+        private const string DefinitionsFolder = "Assets/Relicbound/Data/Buildings";
         private const string EnvironmentFolder = "Assets/Relicbound/Art/Environment";
         private const float TowerOffset = 11f;
         private const float Section = 2f;
@@ -26,17 +34,25 @@ namespace Relicbound.EditorTools
             ArtImportSetup.EnsureFolder(EnvironmentFolder);
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
+            var panelSettings = UiSetup.Run();
+            var definitions = ImportBuildingDefinitions();
             var terrain = BuildTerrain();
             var castle = new GameObject("Castle");
             BuildCastleLayout(castle.transform);
+            AttachBuildingViews(castle.transform, definitions);
             ScatterNature(terrain, new GameObject("Nature").transform);
             var sun = BuildLighting();
             BuildPostProcessing();
-            BuildCamera();
+            var camera = BuildCamera();
             RenderSettings.sun = sun;
+            BuildDirector(camera, panelSettings);
 
             EditorSceneManager.SaveScene(scene, ScenePath);
-            EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(ScenePath, true) };
+            EditorBuildSettings.scenes = new[]
+            {
+                new EditorBuildSettingsScene(BootSceneBuilder.ScenePath, true),
+                new EditorBuildSettingsScene(ScenePath, true),
+            };
             AssetDatabase.SaveAssets();
             Debug.Log("[Relicbound] Escena Castle generada.");
         }
@@ -292,7 +308,83 @@ namespace Relicbound.EditorTools
             volume.sharedProfile = profile;
         }
 
-        private static void BuildCamera()
+        /// <summary>Convierte el JSON de datos en BuildingDefinition (las cifras viven en datos, no en código).</summary>
+        private static Dictionary<string, BuildingDefinition> ImportBuildingDefinitions()
+        {
+            ArtImportSetup.EnsureFolder(DefinitionsFolder);
+            var result = new Dictionary<string, BuildingDefinition>();
+            var json = JObject.Parse(File.ReadAllText(BuildingsData));
+            foreach (var entry in json["buildings"])
+            {
+                var id = (string)entry["id"];
+                var path = $"{DefinitionsFolder}/BD_{id}.asset";
+                var definition = AssetDatabase.LoadAssetAtPath<BuildingDefinition>(path);
+                if (definition == null)
+                {
+                    definition = ScriptableObject.CreateInstance<BuildingDefinition>();
+                    AssetDatabase.CreateAsset(definition, path);
+                }
+                definition.id = id;
+                definition.displayName = (string)entry["displayName"];
+                definition.role = (string)entry["role"];
+                definition.description = (string)entry["description"];
+                definition.focusDistance = (float)entry["focusDistance"];
+                definition.stats.Clear();
+                foreach (var stat in entry["stats"])
+                {
+                    definition.stats.Add(new BuildingStat { label = (string)stat["label"], value = (string)stat["value"] });
+                }
+                EditorUtility.SetDirty(definition);
+                result[(string)entry["model"]] = definition;
+            }
+            AssetDatabase.SaveAssets();
+            return result;
+        }
+
+        private static void AttachBuildingViews(Transform castle, Dictionary<string, BuildingDefinition> definitions)
+        {
+            foreach (Transform piece in castle)
+            {
+                var source = PrefabUtility.GetCorrespondingObjectFromSource(piece.gameObject);
+                if (source == null || !definitions.TryGetValue(source.name, out var definition)) continue;
+                piece.gameObject.AddComponent<BuildingView>().Configure(definition, 1);
+            }
+        }
+
+        private static void BuildDirector(Camera camera, PanelSettings panelSettings)
+        {
+            var rig = camera.gameObject.AddComponent<CastleCameraRig>();
+
+            var selectionGo = new GameObject("Selection");
+            var selection = selectionGo.AddComponent<SelectionController>();
+            var ringPath = "Assets/Relicbound/Art/Materials/M_SelectionRing.mat";
+            var ring = AssetDatabase.LoadAssetAtPath<Material>(ringPath);
+            if (ring == null)
+            {
+                ring = new Material(Shader.Find("Relicbound/SelectionRing"));
+                AssetDatabase.CreateAsset(ring, ringPath);
+            }
+            var selectionData = new SerializedObject(selection);
+            selectionData.FindProperty("ringMaterial").objectReferenceValue = ring;
+            selectionData.ApplyModifiedPropertiesWithoutUndo();
+
+            var directorGo = new GameObject("CastleDirector");
+            var document = directorGo.AddComponent<UIDocument>();
+            document.panelSettings = panelSettings;
+            document.visualTreeAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(UiSetup.UiFolder + "/CastleUI.uxml");
+            var director = directorGo.AddComponent<CastleDirector>();
+            var data = new SerializedObject(director);
+            data.FindProperty("document").objectReferenceValue = document;
+            data.FindProperty("cameraRig").objectReferenceValue = rig;
+            data.FindProperty("selection").objectReferenceValue = selection;
+            foreach (var (field, icon) in new[] { ("goldIcon", "Gold"), ("woodIcon", "Wood"), ("stoneIcon", "Stone"), ("ironIcon", "Iron"), ("gemsIcon", "Gems") })
+            {
+                data.FindProperty(field).objectReferenceValue = AssetDatabase.LoadAssetAtPath<Texture2D>($"{UiSetup.UiFolder}/Icons/ICO_{icon}.png");
+            }
+            data.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        private static Camera BuildCamera()
         {
             var cameraGo = new GameObject("Main Camera") { tag = "MainCamera" };
             var camera = cameraGo.AddComponent<Camera>();
@@ -313,6 +405,7 @@ namespace Relicbound.EditorTools
             var offset = new Vector3(Mathf.Sin(yaw) * Mathf.Cos(pitch), Mathf.Sin(pitch), -Mathf.Cos(yaw) * Mathf.Cos(pitch)) * distance;
             cameraGo.transform.position = target + offset;
             cameraGo.transform.LookAt(target);
+            return camera;
         }
     }
 }

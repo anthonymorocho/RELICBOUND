@@ -1,0 +1,81 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="Theme.uss" />
+    <ui:VisualElement name="root" class="screen" picking-mode="Ignore">
+
+        <ui:VisualElement name="hud" class="hud fade hidden" picking-mode="Ignore">
+            <ui:VisualElement class="hud-top" picking-mode="Ignore">
+                <ui:VisualElement name="profile-badge" class="profile-badge">
+                    <ui:VisualElement name="badge-shield" class="badge-shield">
+                        <ui:Label name="level-label" class="level-label" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="badge-text">
+                        <ui:Label name="player-name" class="badge-name" />
+                        <ui:Label name="castle-name" class="badge-castle" />
+                        <ui:VisualElement class="xp-bar">
+                            <ui:VisualElement name="xp-fill" class="xp-fill" />
+                            <ui:Label name="xp-label" class="xp-label number" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="resources" class="resources" picking-mode="Ignore" />
+                <ui:VisualElement class="hud-actions" picking-mode="Ignore">
+                    <ui:Button name="settings-button" class="round-button" tooltip="Ajustes" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="building-panel" class="panel building-panel hidden">
+                <ui:VisualElement class="building-header">
+                    <ui:VisualElement style="flex-direction: row; align-items: center;">
+                        <ui:Label name="building-name" class="building-name" />
+                        <ui:Label name="building-level" class="level-chip number" />
+                    </ui:VisualElement>
+                    <ui:Button name="building-close" class="icon-button" tooltip="Cerrar" />
+                </ui:VisualElement>
+                <ui:Label name="building-role" class="building-role" />
+                <ui:Label name="building-description" class="building-description" />
+                <ui:VisualElement name="building-stats" class="building-stats" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="profile-screen" class="overlay fade hidden">
+            <ui:VisualElement class="vignette" picking-mode="Ignore" />
+            <ui:VisualElement class="panel profile-card">
+                <ui:Label text="Funda tu fortaleza" class="title" />
+                <ui:VisualElement class="divider" />
+                <ui:Label text="Elige tu estandarte" class="field-label" />
+                <ui:VisualElement name="banner-choices" class="banner-choices" />
+                <ui:Label text="Nombre del señor" class="field-label" />
+                <ui:TextField name="player-name-field" max-length="16" class="field" />
+                <ui:Label name="player-name-hint" class="hint" />
+                <ui:Label text="Nombre de la fortaleza" class="field-label" />
+                <ui:TextField name="castle-name-field" max-length="24" class="field" />
+                <ui:Label name="castle-name-hint" class="hint" />
+                <ui:Button name="found-button" text="Fundar fortaleza" class="primary-button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="intro-screen" class="overlay hidden" picking-mode="Ignore">
+            <ui:VisualElement class="letterbox letterbox--top" picking-mode="Ignore" />
+            <ui:VisualElement class="letterbox letterbox--bottom" picking-mode="Ignore" />
+            <ui:VisualElement name="intro-card" class="intro-card fade transparent" picking-mode="Ignore">
+                <ui:Label name="intro-title" class="intro-title" />
+                <ui:VisualElement class="divider" />
+                <ui:Label name="intro-text" class="intro-text" />
+            </ui:VisualElement>
+            <ui:Button name="skip-button" text="Saltar  ›" class="secondary-button skip-button" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="settings-screen" class="overlay modal hidden">
+            <ui:VisualElement class="panel settings-card">
+                <ui:VisualElement class="settings-header">
+                    <ui:Label text="Ajustes" class="title" />
+                    <ui:Button name="settings-close" class="icon-button" tooltip="Cerrar" />
+                </ui:VisualElement>
+                <ui:VisualElement class="divider" />
+                <ui:VisualElement name="settings-body" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:Label name="notice" class="notice fade hidden" picking-mode="Ignore" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -19,6 +19,10 @@
 | 2026-10-27 | Kit del castillo inicial: SM_Wall_Straight, SM_Tower_Round, SM_Gatehouse, SM_Keep_L1 | **Propios**, generados con `Tools/Blender/rb_castle_kit.py` | Propiedad del proyecto | No | `Assets/Relicbound/Art/Castle/` |
 | 2026-10-27 | Texturas Grass y Dirt (terreno) | **Propias**, `Tools/Blender/rb_textures.py` | Propiedad del proyecto | No | `Assets/Relicbound/Art/Textures/` |
 | 2026-10-27 | Vegetación y rocas: 3 frondosos, 2 pinos, 2 arbustos, 3 rocas | **Propios**, `Tools/Blender/rb_nature.py` | Propiedad del proyecto | No | `Assets/Relicbound/Art/Nature/` |
+| 2026-10-27 | Fuente Cinzel Bold (instancia estática de la variable) | https://github.com/google/fonts/tree/main/ofl/cinzel | SIL OFL 1.1 (texto incluido) | Mención en créditos recomendada | `Assets/Relicbound/UI/Fonts/` |
+| 2026-10-27 | Fuente Nunito Sans SemiBold y ExtraBold (instancias estáticas) | https://github.com/google/fonts/tree/main/ofl/nunitosans | SIL OFL 1.1 (texto incluido) | Mención en créditos recomendada | `Assets/Relicbound/UI/Fonts/` |
+| 2026-10-27 | Iconos de recursos (oro, madera, piedra, hierro, gemas) | **Propios**, `Tools/Blender/rb_icons.py` | Propiedad del proyecto | No | `Assets/Relicbound/UI/Icons/` |
+| 2026-10-27 | Texturas 9-slice de interfaz (paneles, botones, campos, barras) | **Propias**, `Tools/UI/make_ui_textures.py` | Propiedad del proyecto | No | `Assets/Relicbound/UI/Textures/` |
 
 ## Código de terceros
 | Paquete | Licencia |

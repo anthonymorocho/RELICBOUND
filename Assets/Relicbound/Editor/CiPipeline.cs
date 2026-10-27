@@ -16,6 +16,7 @@ namespace Relicbound.EditorTools
             {
                 ProjectBootstrap.Run();
                 ArtImportSetup.Run();
+                BootSceneBuilder.Build();
                 CastleSceneBuilder.Build();
                 EvidenceCapture.CaptureCastle();
                 EditorApplication.Exit(0);

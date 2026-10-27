@@ -106,6 +106,10 @@ namespace Relicbound.EditorTools
             material.EnableKeyword("_NORMALMAP");
             material.SetFloat("_Smoothness", smoothness);
             material.SetFloat("_Metallic", metallic);
+            // Emisión activa (negra) para el resaltado de selección por MaterialPropertyBlock.
+            material.EnableKeyword("_EMISSION");
+            material.SetColor("_EmissionColor", Color.black);
+            material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.None;
             EditorUtility.SetDirty(material);
             return material;
         }

@@ -1,0 +1,41 @@
+{
+  "_comment": "Datos de edificios del castillo inicial (P1, solo información). Valores de balance: hipótesis de docs/06 y docs/12.",
+  "buildings": [
+    {
+      "id": "keep",
+      "model": "SM_Keep_L1",
+      "displayName": "Torreón",
+      "role": "Castillo central",
+      "description": "Corazón de tu fortaleza. Su nivel marca el máximo que pueden alcanzar el resto de edificios.",
+      "focusDistance": 46,
+      "stats": [ { "label": "Resistencia", "value": "4.000" }, { "label": "Altura", "value": "18 m" }, { "label": "Nivel máx. edificios", "value": "1" } ]
+    },
+    {
+      "id": "tower_round",
+      "model": "SM_Tower_Round",
+      "displayName": "Torre de flanqueo",
+      "role": "Defensa",
+      "description": "Protege los lienzos de muralla. En cuanto haya arqueros, disparará contra los asaltantes que se acerquen.",
+      "focusDistance": 34,
+      "stats": [ { "label": "Resistencia", "value": "1.600" }, { "label": "Altura", "value": "14 m" } ]
+    },
+    {
+      "id": "wall",
+      "model": "SM_Wall_Straight",
+      "displayName": "Muralla de sillería",
+      "role": "Defensa",
+      "description": "Lienzo de piedra con adarve y almenas. Cada sección resiste por separado: una brecha abre el paso al enemigo.",
+      "focusDistance": 30,
+      "stats": [ { "label": "Resistencia por sección", "value": "900" }, { "label": "Altura", "value": "5 m" }, { "label": "Grosor", "value": "2 m" } ]
+    },
+    {
+      "id": "gatehouse",
+      "model": "SM_Gatehouse",
+      "displayName": "Puerta principal",
+      "role": "Acceso",
+      "description": "Única entrada a la fortaleza. Portones de roble reforzado y rastrillo de hierro.",
+      "focusDistance": 32,
+      "stats": [ { "label": "Resistencia", "value": "1.400" }, { "label": "Rastrillo", "value": "Sí" } ]
+    }
+  ]
+}

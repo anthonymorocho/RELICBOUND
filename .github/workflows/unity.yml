@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   setup-and-test:
-    name: Configurar y testear (EditMode)
+    name: Configurar, generar escenas y testear
     runs-on: ubuntu-latest
     environment: UNITY_LICENSE
     permissions:
@@ -42,13 +42,13 @@ jobs:
           allowDirtyBuild: true
           versioning: None
 
-      - name: Tests EditMode
+      - name: Tests EditMode y PlayMode (recorrido del jugador)
         uses: game-ci/unity-test-runner@v4
         with:
-          testMode: EditMode
+          testMode: all
           artifactsPath: test-results
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          checkName: Tests EditMode
+          checkName: Tests Unity
 
       - name: Empaquetar archivos generados por Unity
         if: always()
