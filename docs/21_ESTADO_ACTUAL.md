@@ -11,25 +11,25 @@ _Última actualización: 2026-10-27 (sesión de Claude Code en la nube)._
 - CI `Core tests`: `dotnet test` del núcleo sin Unity.
 - Arte: `Tools/Blender/*.py` (headless) y `Tools/UI/make_ui_textures.py`.
 
-## Hecho en P1 (PROPUESTO, sin PASS)
-| Tarea | Estado | Evidencia |
+## Hecho en P1 (PROPUESTO, a la espera de revisión del usuario)
+| Tarea | Estado | Evidencia (artefacto `evidence` de la CI) |
 |---|---|---|
-| 1.1 Núcleo (perfil, guardado, recursos, nivel, arranque, cámara) | PROPUESTO | 40/40 tests en dotnet y en Unity |
-| 1.2 Proyecto Unity 6 + URP + CI | PROPUESTO | CI en verde |
-| 1.3 Escena Boot con splash y carga real | IMPLEMENTADO, verificándose | Captura `01_splash` |
-| 1.4 Pantalla de perfil (estandarte, nombres, validación en vivo) | IMPLEMENTADO, verificándose | Capturas `02`–`04` |
-| 1.5 Escena Castle: kit propio, terreno pintado, vegetación, luz, postproceso | PROPUESTO | `docs/evidencias/P1` |
-| 1.6 Cámara (ratón, táctil, teclado; toque ≠ arrastre) | IMPLEMENTADO, sin prueba en dispositivo | Código + tests de Core |
-| 1.7 HUD del castillo (insignia, nivel, XP, recursos) | IMPLEMENTADO, verificándose | Captura `07` |
-| 1.8 Selección de edificio con panel de información | IMPLEMENTADO, verificándose | Captura `08` |
-| 1.9 Ajustes (volúmenes, calidad, vibración) | IMPLEMENTADO, verificándose | Captura `09` |
-| 1.10 Evidencias PC 1920×1080 y Android 2400×1080 | Automatizadas en CI | Artefacto `evidence` |
+| 1.1 Núcleo (perfil, guardado, recursos, nivel, arranque, cámara) | PROPUESTO | 40/40 tests (dotnet y Unity) |
+| 1.2 Proyecto Unity 6 + URP + CI | PROPUESTO | CI en verde; escenas y assets versionados |
+| 1.3 Escena Boot con splash y carga real | PROPUESTO | `01a_splash_inicio` |
+| 1.4 Perfil (estandarte, nombres, validación en vivo, error) | PROPUESTO | `02`–`04` |
+| 1.5 Castillo: kit propio con detalle, desgaste (shader StylizedLit), terreno pintado, pradera con flores, vegetación facetada con AO, estandartes con la heráldica del jugador, objetos de patio, SSAO, luz de tarde, gradación | PROPUESTO | `07`, `10` |
+| 1.6 Cámara (ratón, táctil, teclado; toque ≠ arrastre) | PROPUESTO, **sin prueba en dispositivo** | Código + tests de Core |
+| 1.7 HUD (insignia con medallón de nivel, XP, recursos con iconos 3D) | PROPUESTO | `07`, `10` |
+| 1.8 Selección de edificio con panel, brillo y anillo | PROPUESTO | `08` |
+| 1.9 Ajustes y audio (ambiente, música, interfaz; volumen por categoría) | PROPUESTO, audio **no verificable en capturas** | `09` + test del recorrido |
+| 1.10 Evidencias PC 1920×1080 y Android 2400×1080 | Automatizadas | `11_android_2400x1080` |
 
-## Defectos conocidos (a corregir dentro de P1)
-- El patio del castillo está vacío: faltan estandartes, antorchas y objetos de vida.
-- La piedra se ve demasiado limpia; falta suciedad en la base y oclusión ambiental.
-- Audio: no hay sonidos ni música todavía (lista de P1 en `docs/14`).
-- Sin prueba en hardware real: rendimiento **NO VERIFICADO**.
+## Pendiente / defectos conocidos
+- Rendimiento **NO VERIFICADO**: no hay hardware. La hierba instanciada (~1 M triángulos en Alta) y el torreón (28 k triángulos, sobre el presupuesto de 25 k) necesitan medición y LOD en Android de gama media.
+- Prueba en dispositivo Android y en PC reales (controles táctiles, zonas seguras, audio).
+- El patio queda en sombra a la hora del sol actual; revisar al añadir edificios en P3.
+- Las mejoras de edificio (botón Mejorar) son P3: el panel solo informa.
 
 ## No iniciar todavía
 - P3 Construcción y mejoras (el panel de edificio solo informa).
