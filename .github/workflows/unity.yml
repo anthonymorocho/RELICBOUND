@@ -3,7 +3,7 @@ name: Unity
 on:
   push:
     branches: [main, "claude/**"]
-    paths-ignore: ["docs/**", "**/*.md"]
+    paths-ignore: ["Docs/**", "**/*.md"]
   workflow_dispatch:
 
 concurrency:
@@ -11,14 +11,24 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  setup-and-test:
-    name: Configurar, generar escenas y testear
+  core-tests:
+    name: Tests del núcleo (.NET)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - run: dotnet test Tests/BeforeItWasYou.Core.Tests --logger "console;verbosity=normal"
+
+  unity:
+    name: Configurar, generar escenas, testear y capturar
     runs-on: ubuntu-latest
     environment: UNITY_LICENSE
     permissions:
       contents: read
       checks: write
-    timeout-minutes: 60
+    timeout-minutes: 75
     env:
       UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
       UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
@@ -26,7 +36,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          lfs: true
+          lfs: false
 
       - uses: actions/cache@v4
         with:
@@ -34,11 +44,11 @@ jobs:
           key: Library-linux-${{ hashFiles('Packages/manifest.json', 'ProjectSettings/ProjectVersion.txt') }}
           restore-keys: Library-linux-
 
-      - name: Configurar proyecto, generar escena Castle y capturar evidencias
+      - name: Configurar proyecto, generar escenas y capturar evidencias
         uses: game-ci/unity-builder@v4
         with:
           targetPlatform: StandaloneLinux64
-          buildMethod: Relicbound.EditorTools.CiPipeline.RunFromCommandLine
+          buildMethod: BeforeItWasYou.EditorTools.CiPipeline.RunFromCommandLine
           allowDirtyBuild: true
           versioning: None
 
@@ -54,7 +64,6 @@ jobs:
         if: always()
         run: |
           sudo chown -R "$(id -u):$(id -g)" . || true
-          # Todo lo que Unity haya creado o modificado (metas, ProjectSettings, assets de URP...).
           git status --porcelain --untracked-files=all -- Assets Packages ProjectSettings | cut -c4- > generated-files.txt
           cat generated-files.txt
           if [ -s generated-files.txt ]; then tar czf unity-generated.tgz --ignore-failed-read -T generated-files.txt; else tar czf unity-generated.tgz --files-from /dev/null; fi

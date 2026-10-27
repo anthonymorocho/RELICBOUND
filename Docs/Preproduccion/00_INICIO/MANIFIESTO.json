@@ -1,0 +1,70 @@
+{
+  "project": "BEFORE IT WAS YOU EP01",
+  "version": "0.1",
+  "files": [
+    {
+      "path": "08_PROMPT_FINAL/PEGAR_EN_CLAUDE_O_CODEX.md",
+      "sha256": "90852690216a17c9797bba4f6ad3d6f91c86d94e53d0cfe8ea8aea5aa47329cf"
+    },
+    {
+      "path": "03_NIVELES/CASA_Y_FLUJOS.md",
+      "sha256": "03cc7cd26e1c6c83cb55c14787413e449da73d24bc649be5bab5b28f287ab6b1"
+    },
+    {
+      "path": "IMAGENES/03_flujo_y_checkpoints.png",
+      "sha256": "df761884876a1cee14531e9fc4d353369efce4789b853e66ad0abd3d6be39769"
+    },
+    {
+      "path": "IMAGENES/04_guia_interfaz.png",
+      "sha256": "bfcfbfb1a50a665bc2bc2367176920da66c4a23416f40d6f8c08af0fd90d303d"
+    },
+    {
+      "path": "IMAGENES/02_planta_propuesta.png",
+      "sha256": "3834ff4b2b079254aebf763d9ef86ca97d13c21c757bde98e21a544e04e4bc44"
+    },
+    {
+      "path": "IMAGENES/01_moodboard_original.png",
+      "sha256": "710cd6c3cd417c6b1c98b91952c6262fd836d2d2e4b598395e9435f45d578ce5"
+    },
+    {
+      "path": "07_PRODUCCION/ROADMAP_QA.md",
+      "sha256": "f484c4cc74f0082ab1803c071b8143b32e58d62032d6ac2d27ae92be95548c4b"
+    },
+    {
+      "path": "06_TECNICO/ARQUITECTURA_UNITY.md",
+      "sha256": "6e5e100d9822e5fef2f277075dcd7d0bcb16dfa6087fda6beffa6512b1ab2227"
+    },
+    {
+      "path": "04_GAMEPLAY/SISTEMAS_Y_CHECKPOINTS.md",
+      "sha256": "21d38aa47917920e6be29dff31f532d934097de46c3883f2c173f6ec13ce53e1"
+    },
+    {
+      "path": "REFERENCIAS_EXTERNAS/asset_register.csv",
+      "sha256": "716e77417ce407891b03e85d379e2f91d08a2ea2e08703b20688b569a2247197"
+    },
+    {
+      "path": "REFERENCIAS_EXTERNAS/FUENTES_Y_LICENCIAS.md",
+      "sha256": "7a28906b65599c5e9e3714b4f9d8cb3f1254b9322354185a98e3043eb7536442"
+    },
+    {
+      "path": "02_NARRATIVA/CRONOLOGIA_VICTOR.md",
+      "sha256": "7e75c7f72fcc41205d4ab335993f2b590e3705fb1be5889f3d0fba0f7fd8a6b5"
+    },
+    {
+      "path": "02_NARRATIVA/GUION_Y_DIALOGOS.md",
+      "sha256": "6252f47e83b8e4b4eaea29e250627dad38a7fe9418d6b801ae59980e9903d891"
+    },
+    {
+      "path": "05_ARTE_REFERENCIAS/DIRECCION_ARTISTICA.md",
+      "sha256": "6c9ed32c2a6c78bf32ee4b108099fe107daf33ea0c1948944f4fa1b3b053363f"
+    },
+    {
+      "path": "00_INICIO/LEEME_PRIMERO.md",
+      "sha256": "16bdd281e5f3b9021bc7d9f8ab9feb58b7ed1e34153d63b19fab785caa8ab219"
+    },
+    {
+      "path": "01_GDD/GDD_MAESTRO.md",
+      "sha256": "425eadf994180e04993b27356f0f00b0302760bf8d3b77d4ae122cad1765d290"
+    }
+  ]
+}

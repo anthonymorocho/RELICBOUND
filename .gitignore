@@ -8,7 +8,7 @@
 /[Uu]ser[Ss]ettings/
 /[Mm]emoryCaptures/
 /[Rr]ecordings/
-/Assets/Plugins/Editor/JetBrains*
+/Evidence/
 .vs/
 .vscode/
 .idea/
@@ -19,13 +19,10 @@
 *.pidb
 *.booproj
 *.unityproj
-*.svd
 *.pdb
 *.mdb
 *.opendb
 *.VC.db
-*.apk
-*.aab
 *.unitypackage
 crashlytics-buildid.txt
 sysinfo.txt
@@ -34,14 +31,12 @@ sysinfo.txt
 *.blend1
 *.blend2
 
-# .NET tests fuera de Unity (el .csproj de Tests/ sí se versiona)
+# Python
+__pycache__/
+*.pyc
+
+# Tests .NET fuera de Unity (el .csproj de Tests/ sí se versiona)
 !/Tests/**/*.csproj
 /Tests/**/bin/
 /Tests/**/obj/
 /Tests/**/TestResults/
-
-# Python
-__pycache__/
-*.pyc
-/Evidence/
-/Builds/

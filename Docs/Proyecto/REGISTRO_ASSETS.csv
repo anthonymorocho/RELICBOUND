@@ -1,0 +1,5 @@
+asset_id,nombre,fuente_url,autor,licencia_exacta,fecha_revision,evidencia,atribucion,ubicacion_proyecto,estado
+FONT-001,Bebas Neue Regular,https://github.com/google/fonts/tree/main/ofl/bebasneue,Dharma Type,SIL Open Font License 1.1,2026-10-27,Assets/_Game/UI/Fonts/BebasNeue-OFL.txt,Créditos del juego,Assets/_Game/UI/Fonts/BebasNeue-Regular.ttf,integrado
+FONT-002,Oswald (instancias Light/Regular/Medium),https://github.com/google/fonts/tree/main/ofl/oswald,Vernon Adams; Kalapi Gajjar; Cyreal,SIL Open Font License 1.1,2026-10-27,Assets/_Game/UI/Fonts/Oswald-OFL.txt,Créditos del juego,Assets/_Game/UI/Fonts/Oswald-*.ttf,integrado (instancias estáticas generadas con fontTools)
+FONT-003,Inter (instancias Regular/Medium/SemiBold),https://github.com/google/fonts/tree/main/ofl/inter,Rasmus Andersson,SIL Open Font License 1.1,2026-10-27,Assets/_Game/UI/Fonts/Inter-OFL.txt,Créditos del juego,Assets/_Game/UI/Fonts/Inter-*.ttf,integrado (instancias estáticas generadas con fontTools)
+UI-001,Texturas de interfaz (degradados viñeta grano),propio,BEFORE IT WAS YOU,propio,2026-10-27,Tools/UI/make_ui_textures.py,—,Assets/_Game/UI/Textures,integrado

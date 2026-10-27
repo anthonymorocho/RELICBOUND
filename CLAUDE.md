@@ -1,10 +1,10 @@
-# RELICBOUND: Siege Kingdoms — instrucciones para agentes
+# BEFORE IT WAS YOU — guía para agentes
 
-- Antes de trabajar, lee `docs/00_EMPIEZA_AQUI.md` y `docs/21_ESTADO_ACTUAL.md`. Solo se trabaja en la fase autorizada que indica ese archivo.
-- Nunca te concedas PASS: usa PENDIENTE / PROPUESTO / FAIL / NO VERIFICADO (`docs/18_QA.md`).
-- `Assets/Relicbound/Scripts/Core` no puede usar UnityEngine ni C# > 9. Verifícalo con `dotnet test Tests/Relicbound.Core.Tests`.
-- Cifras de balance solo en datos, nunca en scripts.
-- Todo asset nuevo se registra con su licencia en `docs/19_LICENCIAS_Y_ASSETS.md` antes de entrar en el repo.
-- Al terminar una tarea, actualiza `docs/21_ESTADO_ACTUAL.md`, `docs/18_QA.md` y `docs/23_HANDOFF.md`.
-- Blender headless (sesiones en la nube): `blender -b --factory-startup --python script.py`. Renderiza con Cycles en CPU; EEVEE no funciona sin GPU.
-- Documentación y textos de juego en español; identificadores de código en inglés.
+- Leer `Docs/Proyecto/ESTADO.md`, `Docs/Proyecto/DECISIONES.md` y el paquete `Docs/Preproduccion` (orden en `00_INICIO/LEEME_PRIMERO.md`) antes de tocar nada.
+- Unity 6000.3.27f1 + URP. Las escenas se generan con scripts de editor (`Assets/_Game/Scripts/Editor`); no editar escenas a mano en el repositorio.
+- La verificación con Unity real se hace en GitHub Actions (`.github/workflows/unity.yml`). Descargar evidencias con `gh run download <id> -n evidence`.
+- Núcleo sin Unity: `dotnet test Tests/BeforeItWasYou.Core.Tests`.
+- Textos del juego en español natural, sin comillas angulares ni frases teatrales (GUION §Escritura prohibida).
+- Cada asset de terceros se registra en `Docs/Proyecto/REGISTRO_ASSETS.csv` con URL, autor y licencia exacta antes de integrarlo.
+- QA en cuatro dimensiones separadas (TECH / VISUAL / GAMEPLAY / NARRATIVE). No marcar aprobación humana por cuenta propia.
+- Las builds de Windows solo se generan cuando hay bastante para jugar (`build-windows.yml`, manual).

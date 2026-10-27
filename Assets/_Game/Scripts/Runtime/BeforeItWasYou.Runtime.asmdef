@@ -1,0 +1,22 @@
+{
+    "name": "BeforeItWasYou.Runtime",
+    "rootNamespace": "BeforeItWasYou",
+    "references": [
+        "BeforeItWasYou.Core",
+        "Unity.InputSystem",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime",
+        "Unity.AI.Navigation"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Newtonsoft.Json.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,98 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="project://database/Assets/_Game/UI/Screens/FrontEnd.uss" />
+    <ui:VisualElement name="root" class="root" picking-mode="Ignore">
+
+        <!-- HUD de juego: casi invisible (DIRECCION_ARTISTICA §UI). -->
+        <ui:VisualElement name="hud" class="hud hidden" picking-mode="Ignore">
+            <ui:VisualElement name="crosshair" class="crosshair" picking-mode="Ignore" />
+            <ui:VisualElement name="prompt" class="prompt" picking-mode="Ignore">
+                <ui:Label name="prompt-key" text="E" class="key" />
+                <ui:Label name="prompt-text" text="Abrir" class="prompt__text" />
+            </ui:VisualElement>
+            <ui:VisualElement name="objective" class="objective" picking-mode="Ignore">
+                <ui:Label text="OBJETIVO" class="objective__label" />
+                <ui:Label name="objective-text" text="" class="objective__text" />
+            </ui:VisualElement>
+            <ui:VisualElement name="toast" class="toast" picking-mode="Ignore">
+                <ui:VisualElement class="toast__dot" />
+                <ui:Label name="toast-text" text="" class="toast__text" />
+                <ui:Label text="Tab" class="key" />
+            </ui:VisualElement>
+            <ui:VisualElement name="hud-subtitles" class="subtitles" picking-mode="Ignore">
+                <ui:Label name="hud-subtitle" text="" class="subtitle" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Menú principal sobre la escena real de la casa. -->
+        <ui:VisualElement name="frontend" class="layer" picking-mode="Ignore">
+            <ui:VisualElement class="layer vignette" picking-mode="Ignore" />
+            <ui:VisualElement class="scrim-left" picking-mode="Ignore" />
+            <ui:VisualElement class="scrim-bottom" picking-mode="Ignore" />
+
+            <ui:VisualElement name="main" class="menu">
+                <ui:Label text="BEFORE" class="title" />
+                <ui:Label text="IT WAS YOU" class="title title--second" />
+                <ui:VisualElement class="accent-line" />
+                <ui:Label text="EPISODIO 01" class="episode" />
+                <ui:Label text="ALGUIEN ESTUVO AQUÍ" class="episode episode--name" />
+                <ui:VisualElement name="main-list" class="menu-list" />
+            </ui:VisualElement>
+
+            <ui:VisualElement name="options" class="panel hidden">
+                <ui:Label text="OPCIONES" class="panel-title" />
+                <ui:Label text="Los cambios se aplican al momento y se guardan al volver." class="panel-subtitle" />
+                <ui:ScrollView name="options-scroll" class="options-scroll" vertical-scroller-visibility="Hidden" horizontal-scroller-visibility="Hidden" />
+                <ui:Label name="options-description" text="" class="description" />
+            </ui:VisualElement>
+
+            <ui:VisualElement name="credits" class="panel hidden">
+                <ui:Label text="CRÉDITOS" class="panel-title" />
+                <ui:Label text="Episodio 01 · Alguien estuvo aquí" class="panel-subtitle" />
+                <ui:ScrollView name="credits-scroll" class="options-scroll" vertical-scroller-visibility="Hidden" horizontal-scroller-visibility="Hidden" />
+            </ui:VisualElement>
+
+            <ui:VisualElement name="footer" class="footer" picking-mode="Ignore">
+                <ui:Label name="version" text="v0.1.0" class="footer__text" />
+                <ui:VisualElement class="keys" picking-mode="Ignore">
+                    <ui:Label text="↑ ↓" class="key" />
+                    <ui:Label text="Navegar" class="key-label" />
+                    <ui:Label name="footer-adjust-key" text="← →" class="key hidden" />
+                    <ui:Label name="footer-adjust" text="Ajustar" class="key-label hidden" />
+                    <ui:Label text="Enter" class="key" />
+                    <ui:Label text="Aceptar" class="key-label" />
+                    <ui:Label text="Esc" class="key" />
+                    <ui:Label text="Volver" class="key-label" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Pausa: escena atenuada detrás, botones centrados. -->
+        <ui:VisualElement name="pause" class="layer pause hidden">
+            <ui:Label text="EN PAUSA" class="pause__title" />
+            <ui:VisualElement name="pause-list" />
+        </ui:VisualElement>
+
+        <!-- Prólogo: pantalla negra, sonido y subtítulos. -->
+        <ui:VisualElement name="prologue" class="layer prologue hidden" picking-mode="Ignore">
+            <ui:VisualElement class="layer grain" picking-mode="Ignore" />
+            <ui:Label name="prologue-card" text="" class="card" />
+            <ui:VisualElement class="subtitles" picking-mode="Ignore">
+                <ui:Label name="prologue-subtitle" text="" class="subtitle" />
+            </ui:VisualElement>
+            <ui:VisualElement name="skip-hint" class="skip-hint" picking-mode="Ignore">
+                <ui:Label text="Enter" class="key" />
+                <ui:Label text="Saltar" class="key-label" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="modal" class="modal hidden">
+            <ui:VisualElement class="modal__box">
+                <ui:Label name="modal-title" text="" class="modal__title" />
+                <ui:Label name="modal-text" text="" class="modal__text" />
+                <ui:VisualElement name="modal-list" class="modal__buttons" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="fade" class="layer fade" picking-mode="Ignore" />
+    </ui:VisualElement>
+</ui:UXML>

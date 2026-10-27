@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="project://database/Assets/_Game/UI/Screens/FrontEnd.uss" />
+    <ui:VisualElement name="root" class="root startup" picking-mode="Ignore">
+        <ui:VisualElement class="layer grain" picking-mode="Ignore" />
+        <ui:VisualElement name="notice" class="notice" picking-mode="Ignore">
+            <ui:Label text="AVISO" class="notice__title" />
+            <ui:Label text="Este episodio contiene allanamiento de morada, tensión prolongada, una lesión por caída y momentos de violencia física breve." class="notice__text" />
+            <ui:Label text="Se recomienda jugar con auriculares." class="notice__text notice__text--soft" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

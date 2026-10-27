@@ -1,8 +1,7 @@
-# RELICBOUND: Siege Kingdoms
+# BEFORE IT WAS YOU
 
-Estrategia, construcción de fortalezas y asedios con destrucción, para Windows PC y Android (Unity 6 + URP).
+**Episodio 01: Alguien estuvo aquí** — terror narrativo en primera persona. Unity 6 URP · PC · español.
 
-**Estado:** P0 (consolidación) y núcleo lógico de P1. Consulta [`docs/21_ESTADO_ACTUAL.md`](docs/21_ESTADO_ACTUAL.md).
+Daniel vuelve de noche a la casa de su madre, hospitalizada tras una caída, para recoger unas cosas. Algunas no están donde deberían.
 
-- Documentación: [`docs/00_EMPIEZA_AQUI.md`](docs/00_EMPIEZA_AQUI.md)
-- Tests del núcleo (sin Unity): `dotnet test Tests/Relicbound.Core.Tests`
+Documentación: [`Docs/Proyecto/LEEME.md`](Docs/Proyecto/LEEME.md) · Preproducción: [`Docs/Preproduccion`](Docs/Preproduccion/00_INICIO/LEEME_PRIMERO.md)

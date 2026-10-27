@@ -1,0 +1,37 @@
+name: Build Windows
+
+# Solo manual: las compilaciones se generan cuando hay bastante para jugar.
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Windows (DirectX 12)
+    runs-on: ubuntu-latest
+    environment: UNITY_LICENSE
+    permissions:
+      contents: read
+    timeout-minutes: 90
+    env:
+      UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+      UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+      - uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-windows-${{ hashFiles('Packages/manifest.json', 'ProjectSettings/ProjectVersion.txt') }}
+          restore-keys: Library-windows-
+      - uses: game-ci/unity-builder@v4
+        with:
+          targetPlatform: StandaloneWindows64
+          buildMethod: BeforeItWasYou.EditorTools.CiPipeline.BuildFromCommandLine
+          allowDirtyBuild: true
+          versioning: None
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BeforeItWasYou-Windows
+          path: Builds/StandaloneWindows64

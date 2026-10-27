@@ -1,6 +1,6 @@
 #!/bin/bash
-# Prepara las herramientas de RELICBOUND en las sesiones de Claude Code en la nube:
-# .NET 8 (tests de Relicbound.Core) y Blender 4.2 LTS headless (modelado y renders).
+# Herramientas de BEFORE IT WAS YOU en sesiones de Claude Code en la nube:
+# .NET 8 (tests del núcleo) y Blender 4.2 LTS headless (modelado y texturas).
 set -euo pipefail
 
 if [ "${CLAUDE_CODE_REMOTE:-}" != "true" ]; then
@@ -32,5 +32,4 @@ if [ -n "${CLAUDE_ENV_FILE:-}" ]; then
   } >> "$CLAUDE_ENV_FILE"
 fi
 
-# Restaura paquetes NuGet para que `dotnet test` funcione sin red lenta después.
-"$DOTNET_DIR/dotnet" restore "$CLAUDE_PROJECT_DIR/Tests/Relicbound.Core.Tests" > /dev/null
+"$DOTNET_DIR/dotnet" restore "$CLAUDE_PROJECT_DIR/Tests/BeforeItWasYou.Core.Tests" > /dev/null
