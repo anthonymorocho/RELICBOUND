@@ -1,0 +1,67 @@
+name: Builds jugables
+
+on:
+  push:
+    branches: [main, "claude/**"]
+    paths-ignore: ["docs/**", "**/*.md"]
+  workflow_dispatch:
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build ${{ matrix.targetPlatform }}
+    runs-on: ubuntu-latest
+    environment: UNITY_LICENSE
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform: [StandaloneWindows64, Android]
+    env:
+      UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+      UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+    steps:
+      - name: Liberar espacio en disco (imagen Android de Unity)
+        uses: jlumbroso/free-disk-space@v1.3.1
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: false
+          docker-images: false
+          swap-storage: true
+
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-${{ matrix.targetPlatform }}-${{ hashFiles('Packages/manifest.json', 'ProjectSettings/ProjectVersion.txt') }}
+          restore-keys: Library-${{ matrix.targetPlatform }}-
+
+      - name: Compilar
+        uses: game-ci/unity-builder@v4
+        with:
+          targetPlatform: ${{ matrix.targetPlatform }}
+          buildMethod: Relicbound.EditorTools.CiPipeline.BuildFromCommandLine
+          allowDirtyBuild: true
+          versioning: None
+
+      - name: Empaquetar
+        run: |
+          sudo chown -R "$(id -u):$(id -g)" Builds
+          cd Builds/${{ matrix.targetPlatform }}
+          if [ "${{ matrix.targetPlatform }}" = "Android" ]; then cp RELICBOUND.apk ../../RELICBOUND-Android.apk; else zip -qr ../../RELICBOUND-Windows.zip . -x "*_BurstDebugInformation_DoNotShip*" "*_BackUpThisFolder_ButDontShipItWithYourGame*"; fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RELICBOUND-${{ matrix.targetPlatform == 'Android' && 'Android' || 'Windows' }}
+          path: RELICBOUND-*.*
+          retention-days: 30
