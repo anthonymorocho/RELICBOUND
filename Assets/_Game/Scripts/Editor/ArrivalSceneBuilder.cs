@@ -132,7 +132,7 @@ namespace BeforeItWasYou.EditorTools
             // Ambiente nocturno: grillos y viento, amortiguados dentro de la casa.
             var ambienceGo = new GameObject("Ambience");
             var ambience = new List<AudioSource>();
-            foreach (var (clip, volume) in new[] { ("Ambience/AMB_Night_Crickets", 0.55f), ("Ambience/AMB_Night_Wind", 0.7f) })
+            foreach (var (clip, level) in new[] { ("Ambience/AMB_Night_Crickets", 0.55f), ("Ambience/AMB_Night_Wind", 0.7f) })
             {
                 var child = new GameObject(clip.Substring(clip.LastIndexOf('/') + 1));
                 child.transform.SetParent(ambienceGo.transform, false);
@@ -142,7 +142,7 @@ namespace BeforeItWasYou.EditorTools
                 src.playOnAwake = true;
                 src.spatialBlend = 0f;
                 child.AddComponent<AudioLowPassFilter>().cutoffFrequency = 22000f;
-                child.AddComponent<BusVolume>().Configure(AudioBus.Ambience, volume);
+                child.AddComponent<BusVolume>().Configure(AudioBus.Ambience, level);
                 ambience.Add(src);
             }
             ambienceGo.AddComponent<AmbienceZone>().Configure(ambience.ToArray(), new Bounds(new Vector3(9.5f, 1.6f, 12f), new Vector3(10f, 3.4f, 12f)));
