@@ -25,6 +25,10 @@
 | 2026-10-27 | Texturas 9-slice de interfaz (paneles, botones, campos, barras) | **Propias**, `Tools/UI/make_ui_textures.py` | Propiedad del proyecto | No | `Assets/Relicbound/UI/Textures/` |
 | 2026-10-27 | Objetos de patio (barril, caja, bala de paja, carro, pozo) y textura Hay | **Propios**, `Tools/Blender/rb_props.py` | Propiedad del proyecto | No | `Assets/Relicbound/Art/Props/` |
 | 2026-10-27 | Máscaras heráldicas de estandartes | **Propias**, `Tools/UI/make_banner_masks.py` | Propiedad del proyecto | No | `Assets/Relicbound/Art/Textures/T_BannerMasks.png` |
+| 2026-10-27 | Efectos de interfaz: click_002, confirmation_002, error_006, tick_002, select_003 (Interface Sounds 1.0, Kenney) | https://kenney.nl/assets/interface-sounds | CC0 1.0 (License.txt del pack verificado) | No | `Assets/Relicbound/Audio/UI/` |
+| 2026-10-27 | Efectos: bookOpen, bookClose, cloth1, handleCoins (RPG Audio, Kenney) | https://kenney.nl/assets/rpg-audio | CC0 1.0 (License.txt del pack verificado) | No | `Assets/Relicbound/Audio/UI/` |
+| 2026-10-27 | Ambiente: park_ambience_birds.wav, park_ambience_wind.wav (Park ambiences, autor thimras) | https://opengameart.org/content/park-ambiences | CC0 (verificado en la página) | No | `Assets/Relicbound/Audio/Ambience/` (bucles editados) |
+| 2026-10-27 | Música: «Medieval: Exploration» y «Medieval: Harvest Season» (autor RandomMind) | https://opengameart.org/content/medieval-exploration · https://opengameart.org/content/medieval-harvest-season | CC0 (verificado en la página) | No (se acredita igualmente) | `Assets/Relicbound/Audio/Music/` (normalizada a -20 LUFS) |
 
 ## Código de terceros
 | Paquete | Licencia |

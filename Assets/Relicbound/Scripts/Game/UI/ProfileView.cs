@@ -57,6 +57,9 @@ namespace Relicbound.Game.UI
 
         public event Action<string, string, string> Submitted;
 
+        /// <summary>Intento de fundar con datos no válidos.</summary>
+        public event Action Rejected;
+
         /// <summary>Al elegir estandarte, el castillo del fondo se viste con él al instante.</summary>
         public event Action<string> BannerChanged;
 
@@ -90,7 +93,11 @@ namespace Relicbound.Game.UI
         public bool Submit()
         {
             _playerTouched = _castleTouched = true;
-            if (!Validate()) return false;
+            if (!Validate())
+            {
+                Rejected?.Invoke();
+                return false;
+            }
             Submitted?.Invoke(_playerField.value, _castleField.value, SelectedBanner);
             return true;
         }

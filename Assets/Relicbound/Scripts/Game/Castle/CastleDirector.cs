@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Relicbound.Core.Boot;
 using Relicbound.Core.Economy;
 using Relicbound.Core.Save;
+using Relicbound.Game.Audio;
 using Relicbound.Game.Boot;
 using Relicbound.Game.CameraControl;
 using Relicbound.Game.UI;
@@ -21,6 +22,7 @@ namespace Relicbound.Game.Castle
         [SerializeField] private UIDocument document;
         [SerializeField] private CastleCameraRig cameraRig;
         [SerializeField] private SelectionController selection;
+        [SerializeField] private CastleAudio audioPlayer;
         [SerializeField] private Texture2D goldIcon;
         [SerializeField] private Texture2D woodIcon;
         [SerializeField] private Texture2D stoneIcon;
@@ -82,6 +84,15 @@ namespace Relicbound.Game.Castle
 
             _profile.Submitted += OnProfileSubmitted;
             _profile.BannerChanged += BannerCloth.DressAll;
+            _profile.BannerChanged += _ => audioPlayer.Play(UiSound.Banner);
+            _profile.Rejected += () => audioPlayer.Play(UiSound.Error);
+            _settings.Changed += audioPlayer.ApplyVolumes;
+            _settings.Changed += _ => audioPlayer.Play(UiSound.Tick);
+            // Clic genérico para cualquier botón de la interfaz.
+            ui.RegisterCallback<ClickEvent>(evt =>
+            {
+                if (evt.target is Button) audioPlayer.Play(UiSound.Click);
+            }, TrickleDown.TrickleDown);
             _intro.SkipRequested += () => _skipIntro = true;
             _hud.SettingsRequested += OpenSettings;
             _settings.Changed += QualityApplier.Apply;
@@ -91,7 +102,11 @@ namespace Relicbound.Game.Castle
             cameraRig.Tapped += OnTapped;
             cameraRig.IsPointerOverUi = screen => UiUtil.IsOverInteractive(ui, screen);
 
-            if (_root.Session != null) QualityApplier.Apply(_root.Session.Settings);
+            if (_root.Session != null)
+            {
+                QualityApplier.Apply(_root.Session.Settings);
+                audioPlayer.ApplyVolumes(_root.Session.Settings);
+            }
             ReportLoadIssues(_root.Flow.LastLoad);
             EnterStage(_root.Flow.Stage);
         }
@@ -129,6 +144,9 @@ namespace Relicbound.Game.Castle
             _root.CreateProfile(playerName, castleName, bannerId);
             BannerCloth.DressAll(bannerId);
             QualityApplier.Apply(_root.Session.Settings);
+            audioPlayer.ApplyVolumes(_root.Session.Settings);
+            audioPlayer.Play(UiSound.Confirm);
+            audioPlayer.Play(UiSound.Coins);
             EnterStage(_root.Flow.Stage);
         }
 
@@ -176,6 +194,7 @@ namespace Relicbound.Game.Castle
         {
             _buildingPanel.Show(view);
             if (view == null) return;
+            audioPlayer.Play(UiSound.Select);
             var bounds = view.WorldBounds;
             var distance = view.Definition != null ? view.Definition.focusDistance : 40f;
             // El edificio queda en el tercio superior: el panel inferior no lo tapa.
@@ -187,11 +206,13 @@ namespace Relicbound.Game.Castle
             if (_root.Session == null) return;
             selection.Select(null);
             _settings.Open(_root.Session.Settings);
+            audioPlayer.Play(UiSound.PanelOpen);
         }
 
         private void CloseSettings()
         {
             _settings.Close();
+            audioPlayer.Play(UiSound.PanelClose);
             _root.Save();
         }
 

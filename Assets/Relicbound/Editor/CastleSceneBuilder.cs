@@ -429,6 +429,12 @@ namespace Relicbound.EditorTools
             selectionData.FindProperty("ringMaterial").objectReferenceValue = ring;
             selectionData.ApplyModifiedPropertiesWithoutUndo();
 
+            var audioGo = new GameObject("CastleAudio");
+            var audio = audioGo.AddComponent<Relicbound.Game.Audio.CastleAudio>();
+            var audioData = new SerializedObject(audio);
+            audioData.FindProperty("library").objectReferenceValue = ArtImportSetup.CastleAudioLibrary();
+            audioData.ApplyModifiedPropertiesWithoutUndo();
+
             var directorGo = new GameObject("CastleDirector");
             var document = directorGo.AddComponent<UIDocument>();
             document.panelSettings = panelSettings;
@@ -438,6 +444,7 @@ namespace Relicbound.EditorTools
             data.FindProperty("document").objectReferenceValue = document;
             data.FindProperty("cameraRig").objectReferenceValue = rig;
             data.FindProperty("selection").objectReferenceValue = selection;
+            data.FindProperty("audioPlayer").objectReferenceValue = audio;
             foreach (var (field, icon) in new[] { ("goldIcon", "Gold"), ("woodIcon", "Wood"), ("stoneIcon", "Stone"), ("ironIcon", "Iron"), ("gemsIcon", "Gems") })
             {
                 data.FindProperty(field).objectReferenceValue = AssetDatabase.LoadAssetAtPath<Texture2D>($"{UiSetup.UiFolder}/Icons/ICO_{icon}.png");

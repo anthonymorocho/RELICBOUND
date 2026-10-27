@@ -16,9 +16,12 @@ namespace Relicbound.EditorTools
         public const string NatureFolder = "Assets/Relicbound/Art/Nature";
         public const string PropsFolder = "Assets/Relicbound/Art/Props";
 
+        public const string AudioFolder = "Assets/Relicbound/Audio";
+
         [MenuItem("Relicbound/Configurar importación de arte")]
         public static void Run()
         {
+            ConfigureAudio();
             ConfigureTextures();
             CreateMaterials();
             ConfigureModels();
@@ -53,6 +56,62 @@ namespace Relicbound.EditorTools
                 });
                 importer.SaveAndReimport();
             }
+        }
+
+        /// <summary>docs/14: interfaz descomprimida al cargar, ambiente comprimido en memoria, música en streaming.</summary>
+        private static void ConfigureAudio()
+        {
+            foreach (var guid in AssetDatabase.FindAssets("t:AudioClip", new[] { AudioFolder }))
+            {
+                var path = AssetDatabase.GUIDToAssetPath(guid);
+                var importer = (AudioImporter)AssetImporter.GetAtPath(path);
+                var settings = importer.defaultSampleSettings;
+                settings.compressionFormat = AudioCompressionFormat.Vorbis;
+                if (path.Contains("/UI/"))
+                {
+                    settings.loadType = AudioClipLoadType.DecompressOnLoad;
+                    settings.quality = 0.7f;
+                }
+                else if (path.Contains("/Music/"))
+                {
+                    settings.loadType = AudioClipLoadType.Streaming;
+                    settings.quality = 0.6f;
+                }
+                else
+                {
+                    settings.loadType = AudioClipLoadType.CompressedInMemory;
+                    settings.quality = 0.5f;
+                }
+                importer.defaultSampleSettings = settings;
+                importer.loadInBackground = !path.Contains("/UI/");
+                importer.SaveAndReimport();
+            }
+        }
+
+        public static Relicbound.Game.Audio.AudioLibrary CastleAudioLibrary()
+        {
+            var path = $"{AudioFolder}/AL_Castle.asset";
+            var library = AssetDatabase.LoadAssetAtPath<Relicbound.Game.Audio.AudioLibrary>(path);
+            if (library == null)
+            {
+                library = ScriptableObject.CreateInstance<Relicbound.Game.Audio.AudioLibrary>();
+                AssetDatabase.CreateAsset(library, path);
+            }
+            AudioClip Clip(string folder, string name) => AssetDatabase.LoadAssetAtPath<AudioClip>($"{AudioFolder}/{folder}/{name}.ogg");
+            library.click = Clip("UI", "UI_Click");
+            library.panelOpen = Clip("UI", "UI_PanelOpen");
+            library.panelClose = Clip("UI", "UI_PanelClose");
+            library.confirm = Clip("UI", "UI_Confirm");
+            library.error = Clip("UI", "UI_Error");
+            library.tick = Clip("UI", "UI_Tick");
+            library.banner = Clip("UI", "UI_Banner");
+            library.coins = Clip("UI", "UI_Coins");
+            library.select = Clip("UI", "UI_Select");
+            library.ambience = new[] { Clip("Ambience", "AMB_Birds"), Clip("Ambience", "AMB_Wind") };
+            library.castleMusic = new[] { Clip("Music", "MUS_Castle_Exploration"), Clip("Music", "MUS_Castle_Harvest") };
+            EditorUtility.SetDirty(library);
+            AssetDatabase.SaveAssets();
+            return library;
         }
 
         private static void ConfigureMask(string path)
