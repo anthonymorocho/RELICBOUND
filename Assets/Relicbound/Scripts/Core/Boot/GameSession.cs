@@ -22,7 +22,17 @@ namespace Relicbound.Core.Boot
             Tutorial = tutorial;
         }
 
-        public PlayerProfile Profile { get; }
+        public PlayerProfile Profile { get; private set; }
+
+        public event Action<PlayerProfile> ProfileChanged;
+
+        public void UpdateProfile(PlayerProfile profile)
+        {
+            if (profile == null) throw new ArgumentNullException(nameof(profile));
+            if (profile.ProfileId != Profile.ProfileId) throw new ArgumentException("No se puede cambiar de perfil en la misma sesión.");
+            Profile = profile;
+            ProfileChanged?.Invoke(profile);
+        }
 
         public PlayerProgress Progress { get; }
 

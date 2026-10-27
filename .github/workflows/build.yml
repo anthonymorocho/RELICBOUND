@@ -1,9 +1,7 @@
 name: Builds jugables
 
+# Solo a mano: las builds jugables se generan cuando haya suficiente juego (instrucción del usuario).
 on:
-  push:
-    branches: [main, "claude/**"]
-    paths-ignore: ["docs/**", "**/*.md"]
   workflow_dispatch:
 
 concurrency:

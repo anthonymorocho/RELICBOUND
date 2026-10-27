@@ -56,6 +56,14 @@ namespace Relicbound.Game.CameraControl
         /// <summary>Se dispara con la posición de pantalla cuando el gesto termina siendo un toque/clic.</summary>
         public event Action<Vector2> Tapped;
 
+        /// <summary>El jugador ha desplazado la cámara (acumulado &gt; 6 m) o ha cambiado el zoom (&gt; 10 %).</summary>
+        public event Action Panned;
+
+        public event Action Zoomed;
+
+        private float _panAccumulated;
+        private float _zoomAccumulated;
+
         /// <summary>El director lo asigna para ignorar punteros sobre la interfaz.</summary>
         public Func<Vector2, bool> IsPointerOverUi { get; set; } = _ => false;
 
@@ -145,6 +153,7 @@ namespace Relicbound.Game.CameraControl
             if (Mathf.Abs(scroll) > 0.01f && !IsPointerOverUi(position))
             {
                 _targetDistance = _limits.ClampDistance(_targetDistance * (1f - Mathf.Sign(scroll) * 0.12f));
+                ReportZoom(0.12f);
             }
         }
 
@@ -205,6 +214,7 @@ namespace Relicbound.Game.CameraControl
             if (_lastPinchDistance > 1f)
             {
                 _targetDistance = _limits.ClampDistance(_targetDistance * (_lastPinchDistance / Mathf.Max(1f, pinch)));
+                ReportZoom(Mathf.Abs(1f - _lastPinchDistance / Mathf.Max(1f, pinch)));
             }
             _targetYaw -= Mathf.DeltaAngle(_lastTwistAngle, twist);
             _lastPinchDistance = pinch;
@@ -227,10 +237,27 @@ namespace Relicbound.Game.CameraControl
                 var right = Quaternion.Euler(0f, _yaw, 0f) * Vector3.right;
                 var speed = keyboardPanSpeed * (_distance / 70f) * Time.unscaledDeltaTime;
                 _targetPivot += (forward * input.y + right * input.x) * speed;
+                ReportPan(speed);
             }
             if (keyboard.qKey.wasPressedThisFrame) _targetYaw -= 45f;
             if (keyboard.eKey.wasPressedThisFrame) _targetYaw += 45f;
             if (keyboard.fKey.wasPressedThisFrame) FrameCastle();
+        }
+
+        private void ReportPan(float meters)
+        {
+            _panAccumulated += meters;
+            if (_panAccumulated < 6f) return;
+            _panAccumulated = 0f;
+            Panned?.Invoke();
+        }
+
+        private void ReportZoom(float fraction)
+        {
+            _zoomAccumulated += fraction;
+            if (_zoomAccumulated < 0.1f) return;
+            _zoomAccumulated = 0f;
+            Zoomed?.Invoke();
         }
 
         /// <summary>Mantiene el punto del suelo agarrado bajo el puntero.</summary>
@@ -238,6 +265,7 @@ namespace Relicbound.Game.CameraControl
         {
             if (!GroundPoint(screen, out var current)) return;
             var delta = _grabWorld - current;
+            ReportPan(new Vector2(delta.x, delta.z).magnitude);
             _targetPivot += new Vector3(delta.x, 0f, delta.z);
             _pivot += new Vector3(delta.x, 0f, delta.z);
             ClampPivot(ref _pivot);

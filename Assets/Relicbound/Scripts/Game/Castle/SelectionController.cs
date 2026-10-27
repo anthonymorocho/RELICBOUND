@@ -44,6 +44,27 @@ namespace Relicbound.Game.Castle
             return view;
         }
 
+        /// <summary>Muestra el anillo sobre un edificio como indicación (tutorial) sin seleccionarlo.</summary>
+        public void Hint(BuildingView view)
+        {
+            if (Selected != null) return;
+            if (view == null)
+            {
+                _ring.SetActive(false);
+                return;
+            }
+            PlaceRing(view);
+        }
+
+        private void PlaceRing(BuildingView view)
+        {
+            var bounds = view.WorldBounds;
+            var radius = Mathf.Max(bounds.extents.x, bounds.extents.z) + 0.8f;
+            _ring.transform.position = new Vector3(bounds.center.x, 0.06f, bounds.center.z);
+            _ring.transform.localScale = new Vector3(radius, 1f, radius);
+            _ring.SetActive(true);
+        }
+
         public void Select(BuildingView view)
         {
             if (view == Selected) return;
@@ -51,11 +72,7 @@ namespace Relicbound.Game.Castle
             Selected = view;
             if (view != null)
             {
-                var bounds = view.WorldBounds;
-                var radius = Mathf.Max(bounds.extents.x, bounds.extents.z) + 0.8f;
-                _ring.transform.position = new Vector3(bounds.center.x, 0.06f, bounds.center.z);
-                _ring.transform.localScale = new Vector3(radius, 1f, radius);
-                _ring.SetActive(true);
+                PlaceRing(view);
             }
             else
             {

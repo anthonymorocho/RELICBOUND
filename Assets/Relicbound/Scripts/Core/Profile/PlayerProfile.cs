@@ -27,6 +27,13 @@ namespace Relicbound.Core.Profile
 
         public DateTime CreatedUtc { get; }
 
+        /// <summary>Copia con otro nombre de fortaleza (validado igual que al crearla).</summary>
+        public PlayerProfile WithCastleName(string castleName) =>
+            new PlayerProfile(ProfileId, PlayerName, castleName, BannerId, CreatedUtc);
+
+        public PlayerProfile WithBanner(string bannerId) =>
+            new PlayerProfile(ProfileId, PlayerName, CastleName, bannerId, CreatedUtc);
+
         public static PlayerProfile CreateNew(string playerName, string castleName, string bannerId, DateTime nowUtc) =>
             new PlayerProfile(Guid.NewGuid().ToString("N"), playerName, castleName, bannerId, nowUtc);
 

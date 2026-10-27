@@ -37,6 +37,10 @@ namespace Relicbound.Game.Castle
         private BuildingPanelView _buildingPanel;
         private SettingsView _settings;
         private NoticeView _notice;
+        private TutorialView _tutorialView;
+        private ProfilePanelView _profilePanel;
+        private TutorialFlow _tutorial;
+        private BuildingView _keep;
         private bool _skipIntro;
 
         public static CastleDirector Instance { get; private set; }
@@ -81,6 +85,22 @@ namespace Relicbound.Game.Castle
             _buildingPanel = new BuildingPanelView(ui);
             _settings = new SettingsView(ui);
             _notice = new NoticeView(ui);
+            _tutorialView = new TutorialView(ui);
+            _profilePanel = new ProfilePanelView(ui);
+            foreach (var view in FindObjectsByType<BuildingView>(FindObjectsSortMode.None))
+            {
+                if (view.Definition != null && view.Definition.id == "keep") _keep = view;
+            }
+            ui.Q("profile-badge").RegisterCallback<ClickEvent>(_ => OpenProfilePanel());
+            _profilePanel.Closed += CloseProfilePanel;
+            _profilePanel.BannerPreviewed += id =>
+            {
+                BannerCloth.DressAll(id);
+                audioPlayer.Play(UiSound.Banner);
+            };
+            _profilePanel.Saved += OnProfileEdited;
+            cameraRig.Panned += () => AdvanceTutorial(TutorialSignal.CameraPanned);
+            cameraRig.Zoomed += () => AdvanceTutorial(TutorialSignal.CameraZoomed);
 
             _profile.Submitted += OnProfileSubmitted;
             _profile.BannerChanged += BannerCloth.DressAll;
@@ -132,6 +152,7 @@ namespace Relicbound.Game.Castle
                     cameraRig.FrameCastle();
                     _hud.Bind(_root.Session);
                     _hud.Show(true);
+                    StartTutorial();
                     break;
                 case BootStage.UpdateRequired:
                     _notice.Show("Esta partida es de una versión más nueva del juego. Actualiza RELICBOUND para continuar.", 600000);
@@ -184,9 +205,66 @@ namespace Relicbound.Game.Castle
             EnterStage(_root.Flow.Stage);
         }
 
+        private void StartTutorial()
+        {
+            _tutorial = new TutorialFlow(_root.Session.Tutorial);
+            if (_tutorial.IsDone) return;
+            ShowTutorialStep();
+        }
+
+        private void ShowTutorialStep()
+        {
+            _tutorialView.Show(_tutorial.Current, _tutorial.CompletedCount);
+            selection.Hint(_tutorial.Current == TutorialStep.SelectKeep ? _keep : null);
+        }
+
+        /// <summary>Notifica una acción del jugador al tutorial (cámara, selección).</summary>
+        public void AdvanceTutorial(TutorialSignal signal)
+        {
+            if (_tutorial == null || _tutorial.IsDone) return;
+            var finished = _tutorial.Notify(signal);
+            if (!finished)
+            {
+                ShowTutorialStep();
+                _root.Save();
+                return;
+            }
+            _tutorialView.Hide();
+            foreach (var reward in _root.Rules.TutorialReward) _root.Session.Wallet.Add(reward.Key, reward.Value);
+            _notice.Show($"¡Bien hecho! Recompensa: +{UiUtil.FormatAmount(_root.Rules.TutorialReward[ResourceType.Gold])} oro y +{UiUtil.FormatAmount(_root.Rules.TutorialReward[ResourceType.Wood])} madera.");
+            audioPlayer.Play(UiSound.Coins);
+            _root.Save();
+        }
+
+        public void OpenProfilePanel()
+        {
+            if (_root.Session == null || _root.Flow.Stage != BootStage.Castle) return;
+            selection.Select(null);
+            _profilePanel.Open(_root.Session);
+            audioPlayer.Play(UiSound.PanelOpen);
+        }
+
+        private void CloseProfilePanel()
+        {
+            _profilePanel.Close();
+            BannerCloth.DressAll(_root.Session.Profile.BannerId);
+            audioPlayer.Play(UiSound.PanelClose);
+        }
+
+        private void OnProfileEdited(string castleName, string bannerId)
+        {
+            _root.Session.UpdateProfile(_root.Session.Profile.WithCastleName(castleName).WithBanner(bannerId));
+            _root.Save();
+            _hud.Bind(_root.Session);
+            _profilePanel.Close();
+            BannerCloth.DressAll(bannerId);
+            audioPlayer.Play(UiSound.Confirm);
+            _notice.Show("Cambios guardados.", 2500);
+        }
+
         private void OnTapped(Vector2 screen)
         {
-            if (_root.Flow.Stage != BootStage.Castle || _settings.IsOpen) return;
+            if (_root.Flow.Stage != BootStage.Castle || _settings.IsOpen || _profilePanel.IsOpen) return;
             selection.PickAt(cameraRig.Camera, screen);
         }
 
@@ -195,6 +273,7 @@ namespace Relicbound.Game.Castle
             _buildingPanel.Show(view);
             if (view == null) return;
             audioPlayer.Play(UiSound.Select);
+            if (view == _keep) AdvanceTutorial(TutorialSignal.KeepSelected);
             var bounds = view.WorldBounds;
             var distance = view.Definition != null ? view.Definition.focusDistance : 40f;
             // El edificio queda en el tercio superior: el panel inferior no lo tapa.
@@ -221,6 +300,7 @@ namespace Relicbound.Game.Castle
             var keyboard = Keyboard.current;
             if (keyboard == null || !keyboard.escapeKey.wasPressedThisFrame) return;
             if (_settings.IsOpen) CloseSettings();
+            else if (_profilePanel.IsOpen) CloseProfilePanel();
             else if (selection.Selected != null) selection.Select(null);
         }
 

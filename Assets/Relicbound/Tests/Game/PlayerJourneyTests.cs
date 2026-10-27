@@ -69,18 +69,32 @@ namespace Relicbound.Game.Tests
             yield return JourneyCapture.Capture("06_intro_plano2");
             yield return WaitUntil(() => director.Stage == BootStage.Castle, 20f, "castillo");
             yield return new WaitForSeconds(1.5f);
-            yield return JourneyCapture.Capture("07_castillo_hud");
+            yield return JourneyCapture.Capture("07_castillo_tutorial_mover");
+
+            // Tutorial contextual (P2): mismas notificaciones que envían la cámara y la selección.
+            director.AdvanceTutorial(TutorialSignal.CameraPanned);
+            director.AdvanceTutorial(TutorialSignal.CameraZoomed);
+            yield return new WaitForSeconds(0.8f);
+            yield return JourneyCapture.Capture("07b_tutorial_torreon");
+            var goldBefore = GameRoot.Instance.Session.Wallet.Get(Core.Economy.ResourceType.Gold);
 
             var keep = FindBuilding("keep");
             Assert.That(keep, Is.Not.Null, "El torreón debe ser seleccionable.");
             director.Selection.Select(keep);
             yield return new WaitForSeconds(1.2f);
             yield return JourneyCapture.Capture("08_seleccion_torreon");
+            Assert.That(GameRoot.Instance.Session.Wallet.Get(Core.Economy.ResourceType.Gold), Is.GreaterThan(goldBefore),
+                "Completar el tutorial da la recompensa.");
+            Assert.That(new TutorialFlow(GameRoot.Instance.Session.Tutorial).IsDone, Is.True);
 
             director.Selection.Select(null);
             director.OpenSettings();
             yield return new WaitForSeconds(0.6f);
             yield return JourneyCapture.Capture("09_ajustes");
+            director.Settings.Close();
+            director.OpenProfilePanel();
+            yield return new WaitForSeconds(0.6f);
+            yield return JourneyCapture.Capture("09b_perfil_fortaleza");
 
             var saved = new SaveService(_storage).Load();
             Assert.That(saved.Status, Is.EqualTo(LoadStatus.Loaded));

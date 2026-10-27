@@ -34,5 +34,16 @@ namespace Relicbound.Core.Tests
         {
             Assert.Throws<ArgumentException>(() => PlayerProfile.CreateNew("A", "Bastión", null, DateTime.UtcNow));
         }
+    
+        [Test]
+        public void Profile_CanChangeCastleNameAndBanner_KeepingIdentity()
+        {
+            var profile = PlayerProfile.CreateNew("Patricia", "Bastión", "banner_azure", DateTime.UtcNow);
+            var renamed = profile.WithCastleName("  Fortaleza  Gris ").WithBanner("banner_verdant");
+            Assert.That(renamed.ProfileId, Is.EqualTo(profile.ProfileId));
+            Assert.That(renamed.CastleName, Is.EqualTo("Fortaleza Gris"));
+            Assert.That(renamed.BannerId, Is.EqualTo("banner_verdant"));
+            Assert.Throws<ArgumentException>(() => profile.WithCastleName("X"));
+        }
     }
 }

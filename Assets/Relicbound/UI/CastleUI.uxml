@@ -39,6 +39,36 @@
             </ui:VisualElement>
         </ui:VisualElement>
 
+        <ui:VisualElement name="tutorial-card" class="panel tutorial-card fade transparent hidden" picking-mode="Ignore">
+            <ui:Label name="tutorial-title" class="tutorial-title" />
+            <ui:Label name="tutorial-text" class="tutorial-text" />
+            <ui:VisualElement name="tutorial-dots" class="tutorial-dots" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="profile-panel" class="overlay modal hidden">
+            <ui:VisualElement class="panel profile-panel-card">
+                <ui:VisualElement class="settings-header">
+                    <ui:Label text="Tu fortaleza" class="title" />
+                    <ui:Button name="profile-close" class="icon-button" tooltip="Cerrar" />
+                </ui:VisualElement>
+                <ui:VisualElement class="divider" />
+                <ui:VisualElement class="profile-summary">
+                    <ui:VisualElement name="profile-shield" class="profile-shield" />
+                    <ui:VisualElement>
+                        <ui:Label name="profile-player" class="building-name" />
+                        <ui:Label name="profile-level" class="building-role" />
+                        <ui:Label name="profile-since" class="hint" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:Label text="Estandarte" class="field-label" />
+                <ui:VisualElement name="profile-banners" class="banner-choices" />
+                <ui:Label text="Nombre de la fortaleza" class="field-label" />
+                <ui:TextField name="profile-castle-field" max-length="24" class="field" />
+                <ui:Label name="profile-castle-hint" class="hint" />
+                <ui:Button name="profile-save" text="Guardar cambios" class="primary-button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
         <ui:VisualElement name="profile-screen" class="overlay fade hidden">
             <ui:VisualElement class="vignette" picking-mode="Ignore" />
             <ui:VisualElement class="panel profile-card">

@@ -11,6 +11,7 @@ namespace Relicbound.Core.Boot
     {
         public long StartingCapacity = 5000;
         public Dictionary<ResourceType, long> StartingResources = new Dictionary<ResourceType, long>();
+        public Dictionary<ResourceType, long> TutorialReward = new Dictionary<ResourceType, long>();
 
         public static StartingRules CreateDefault()
         {
@@ -24,6 +25,11 @@ namespace Relicbound.Core.Boot
                     { ResourceType.Stone, 600 },
                     { ResourceType.Iron, 0 },
                     { ResourceType.Gems, 50 },
+                },
+                TutorialReward = new Dictionary<ResourceType, long>
+                {
+                    { ResourceType.Gold, 250 },
+                    { ResourceType.Wood, 150 },
                 },
             };
         }
