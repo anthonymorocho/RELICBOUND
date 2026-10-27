@@ -42,7 +42,9 @@ namespace Relicbound.EditorTools
             settings.clearColor = false;
             EditorUtility.SetDirty(settings);
             AssetDatabase.SaveAssets();
-            return settings;
+            // Al crearse por primera vez, Unity recarga el asset al guardar: la instancia anterior deja de ser válida
+            // y las escenas guardarían una referencia vacía. Se devuelve siempre la versión cargada de disco.
+            return AssetDatabase.LoadAssetAtPath<PanelSettings>(PanelSettingsPath);
         }
     }
 }

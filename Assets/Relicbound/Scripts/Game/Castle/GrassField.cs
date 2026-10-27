@@ -15,7 +15,7 @@ namespace Relicbound.Game.Castle
         [SerializeField] private Material grassMaterial;
         [SerializeField] private Material[] flowerMaterials;
         [SerializeField] private float radius = 72f;
-        [SerializeField] private float spacing = 0.75f;
+        [SerializeField] private float spacing = 0.5f;
         [SerializeField] private float keepOutHalfSize = 13.5f;
         [SerializeField] private int seed = 1871;
 
@@ -30,7 +30,7 @@ namespace Relicbound.Game.Castle
 
         private void OnEnable()
         {
-            _grassMesh = BuildTuft(7, 0.55f, false);
+            _grassMesh = BuildTuft(9, 0.6f, false);
             _flowerMesh = BuildTuft(3, 0.42f, true);
             Scatter();
             RenderPipelineManager.beginCameraRendering += Draw;

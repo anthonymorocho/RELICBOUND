@@ -146,7 +146,7 @@ namespace Relicbound.EditorTools
             EnsureFolder(MaterialsFolder);
             // Nombres iguales a los materiales de rb_castle_kit.py para que el FBX los remapee.
             // Kit del castillo: shader con desgaste (docs/02). Parámetros: suavidad, metálico, suciedad, musgo, variación.
-            EnsureStylized("M_StoneWall", "StoneWall", 0.12f, 0f, 0.7f, 0.55f, 0.16f);
+            EnsureStylized("M_StoneWall", "StoneWall", 0.12f, 0f, 0.85f, 0.6f, 0.18f);
             EnsureStylized("M_RoofBlue", "RoofBlue", 0.35f, 0f, 0.0f, 0.35f, 0.10f);
             EnsureStylized("M_RoofRed", "RoofRed", 0.35f, 0f, 0.0f, 0.35f, 0.10f);
             EnsureStylized("M_Wood", "Wood", 0.2f, 0f, 0.5f, 0.2f, 0.12f);
@@ -207,6 +207,10 @@ namespace Relicbound.EditorTools
             material.SetFloat("_GrimeStrength", grime);
             material.SetFloat("_MossAmount", moss);
             material.SetFloat("_Variation", variation);
+            material.SetColor("_GrimeColor", new Color(0.34f, 0.31f, 0.24f));
+            material.SetFloat("_GrimeHeight", 2.1f);
+            // Piedra algo más oscura que la textura base: el blanco puro se ve de maqueta.
+            if (family == "StoneWall") material.SetColor("_BaseColor", new Color(0.9f, 0.88f, 0.84f));
             material.enableInstancing = true;
             EditorUtility.SetDirty(material);
             return material;

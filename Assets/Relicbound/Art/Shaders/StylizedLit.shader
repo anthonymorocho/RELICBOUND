@@ -12,8 +12,8 @@ Shader "Relicbound/StylizedLit"
         _Metallic ("Metálico", Range(0, 1)) = 0
         [HDR] _EmissionColor ("Emisión", Color) = (0, 0, 0, 1)
 
-        _GrimeColor ("Suciedad", Color) = (0.42, 0.38, 0.30, 1)
-        _GrimeHeight ("Altura de la suciedad (m)", Float) = 1.6
+        _GrimeColor ("Suciedad", Color) = (0.34, 0.31, 0.24, 1)
+        _GrimeHeight ("Altura de la suciedad (m)", Float) = 2.1
         _GrimeStrength ("Intensidad suciedad", Range(0, 1)) = 0.65
         _MossColor ("Musgo", Color) = (0.36, 0.46, 0.20, 1)
         _MossAmount ("Cantidad de musgo", Range(0, 1)) = 0.55

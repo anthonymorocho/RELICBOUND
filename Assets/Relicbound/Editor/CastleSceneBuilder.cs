@@ -142,7 +142,7 @@ namespace Relicbound.EditorTools
                     // Variación a gran escala (no se repite): rompe el patrón del tile de césped.
                     var macro = Mathf.PerlinNoise(wx * 0.018f + 70f, wz * 0.018f + 40f) * 0.7f
                                 + Mathf.PerlinNoise(wx * 0.06f + 11f, wz * 0.06f + 5f) * 0.3f;
-                    var dryWeight = Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(0.42f, 0.7f, macro)) * 0.85f;
+                    var dryWeight = Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(0.48f, 0.75f, macro)) * 0.6f;
                     maps[y, x, 0] = (1f - d) * (1f - dryWeight);
                     maps[y, x, 1] = (1f - d) * dryWeight;
                     maps[y, x, 2] = d;
@@ -294,13 +294,14 @@ namespace Relicbound.EditorTools
             var sunGo = new GameObject("Sun");
             var sun = sunGo.AddComponent<Light>();
             sun.type = LightType.Directional;
-            sun.color = new Color(1f, 0.93f, 0.82f); // ~5200 K (docs/02)
-            sun.intensity = 1.75f;
+            sun.color = new Color(1f, 0.9f, 0.76f); // tarde cálida, ~4800 K
+            sun.intensity = 1.9f;
             sun.shadows = LightShadows.Soft;
             sun.shadowStrength = 0.9f;
             sun.shadowBias = 0.05f;
             sun.shadowNormalBias = 0.3f;
-            sunGo.transform.rotation = Quaternion.Euler(48f, -40f, 0f);
+            // Sol bajo (36°): sombras largas que dan volumen a almenas, torres y árboles.
+            sunGo.transform.rotation = Quaternion.Euler(36f, -48f, 0f);
 
             var sky = new Material(Shader.Find("Skybox/Procedural"));
             sky.SetFloat("_SunSize", 0.03f);
