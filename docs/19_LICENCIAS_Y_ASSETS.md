@@ -15,7 +15,8 @@
 ## Registro de assets integrados
 | Fecha | Asset | Origen (URL) | Licencia | Atribución requerida | Ruta en el proyecto |
 |---|---|---|---|---|---|
-| — | (ninguno todavía) | | | | |
+| 2026-10-27 | Texturas tileables StoneWall, Wood, RoofBlue, RoofRed, Iron (albedo + normal, 1024²) | **Propias**, generadas con `Tools/Blender/rb_textures.py` | Propiedad del proyecto | No | `Assets/Relicbound/Art/Textures/` |
+| 2026-10-27 | Kit del castillo inicial: SM_Wall_Straight, SM_Tower_Round, SM_Gatehouse, SM_Keep_L1 | **Propios**, generados con `Tools/Blender/rb_castle_kit.py` | Propiedad del proyecto | No | `Assets/Relicbound/Art/Castle/` |
 
 ## Código de terceros
 | Paquete | Licencia |
