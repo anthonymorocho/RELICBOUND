@@ -93,7 +93,10 @@ namespace Relicbound.Game.UI
         {
             var progress = _session.Progress;
             _levelLabel.text = progress.Level.ToString();
-            _xpFill.style.width = Length.Percent(Mathf.Clamp01(progress.LevelFraction) * 100f);
+            var fraction = Mathf.Clamp01(progress.LevelFraction);
+            _xpFill.style.width = Length.Percent(fraction * 100f);
+            // Por debajo de ~4 % el relleno redondeado se vería como un punto suelto.
+            _xpFill.style.display = fraction > 0.04f ? DisplayStyle.Flex : DisplayStyle.None;
             _xpLabel.text = progress.IsMaxLevel ? "Nivel máximo" : $"{UiUtil.FormatAmount(progress.XpIntoLevel)} / {UiUtil.FormatAmount(progress.XpToNext)} XP";
         }
 

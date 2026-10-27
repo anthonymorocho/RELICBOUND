@@ -6,7 +6,9 @@
             <ui:VisualElement class="hud-top" picking-mode="Ignore">
                 <ui:VisualElement name="profile-badge" class="profile-badge">
                     <ui:VisualElement name="badge-shield" class="badge-shield">
-                        <ui:Label name="level-label" class="level-label" picking-mode="Ignore" />
+                        <ui:VisualElement class="level-medal" picking-mode="Ignore">
+                            <ui:Label name="level-label" class="level-label number" picking-mode="Ignore" />
+                        </ui:VisualElement>
                     </ui:VisualElement>
                     <ui:VisualElement class="badge-text">
                         <ui:Label name="player-name" class="badge-name" />
@@ -55,6 +57,7 @@
         </ui:VisualElement>
 
         <ui:VisualElement name="intro-screen" class="overlay hidden" picking-mode="Ignore">
+            <ui:VisualElement class="intro-shade" picking-mode="Ignore" />
             <ui:VisualElement class="letterbox letterbox--top" picking-mode="Ignore" />
             <ui:VisualElement class="letterbox letterbox--bottom" picking-mode="Ignore" />
             <ui:VisualElement name="intro-card" class="intro-card fade transparent" picking-mode="Ignore">

@@ -35,7 +35,11 @@ namespace Relicbound.Game.UI
             {
                 var button = new Button { tooltip = banner.Name };
                 button.AddToClassList("banner-choice");
-                button.Add(new ShieldElement(banner));
+                var shield = new ShieldElement(banner);
+                shield.style.left = shield.style.right = 14;
+                shield.style.top = 12;
+                shield.style.bottom = 14;
+                button.Add(shield);
                 var id = banner.Id;
                 button.clicked += () => SelectBanner(id);
                 choices.Add(button);

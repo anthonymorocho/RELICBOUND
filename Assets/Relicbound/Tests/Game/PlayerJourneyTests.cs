@@ -38,7 +38,11 @@ namespace Relicbound.Game.Tests
         public IEnumerator FirstOpen_GoesFromSplashToCastleWithoutMainMenu()
         {
             SceneManager.LoadScene("Boot");
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(0.4f);
+            LogSplashState();
+            yield return JourneyCapture.Capture("01a_splash_inicio");
+            yield return new WaitForSeconds(0.8f);
+            LogSplashState();
             yield return JourneyCapture.Capture("01_splash");
 
             yield return WaitUntil(() => CastleDirector.Instance != null && CastleDirector.Instance.Stage == BootStage.ProfileCreation, 20f, "pantalla de perfil");
@@ -99,6 +103,15 @@ namespace Relicbound.Game.Tests
             yield return new WaitForSeconds(1.5f);
             yield return JourneyCapture.Capture("10_jugador_que_vuelve");
             yield return JourneyCapture.Capture("11_android_2400x1080", 2400, 1080);
+        }
+
+        private static void LogSplashState()
+        {
+            var document = UnityEngine.Object.FindFirstObjectByType<UnityEngine.UIElements.UIDocument>();
+            var logo = document != null ? document.rootVisualElement?.Q("logo") : null;
+            Debug.Log($"[Relicbound] Splash: documento={(document != null)} panel={(document?.rootVisualElement?.panel != null)} " +
+                      $"logo={(logo != null)} opacidad={(logo != null ? logo.resolvedStyle.opacity : -1f)} " +
+                      $"clases={(logo != null ? string.Join(",", logo.GetClasses()) : "-")} escena={SceneManager.GetActiveScene().name}");
         }
 
         private static BuildingView FindBuilding(string id)

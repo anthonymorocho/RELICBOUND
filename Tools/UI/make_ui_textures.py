@@ -132,6 +132,12 @@ def main():
     draw.polygon([(w / 2, h / 2 - d / 2), (w / 2 + d / 2, h / 2), (w / 2, h / 2 + d / 2), (w / 2 - d / 2, h / 2)],
                  fill=(*NIGHT, 255))
     save(divider, "ui_divider", (512, 24), 0)
+    # Sombra inferior: legibilidad del texto de la introducción sobre la escena.
+    shade = Image.new("RGBA", (8, 256), (0, 0, 0, 0))
+    sd = ImageDraw.Draw(shade)
+    for y in range(256):
+        sd.line([(0, y), (8, y)], fill=(5, 8, 15, int(215 * (y / 255) ** 1.8)))
+    save(shade, "ui_shade_bottom", (8, 256), 0)
     # Viñeta para pantallas de fondo (perfil, intro): oscurece bordes.
     w, h = 256, 256
     vignette = Image.new("RGBA", (w, h), (0, 0, 0, 0))

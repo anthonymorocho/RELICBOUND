@@ -367,7 +367,7 @@ namespace Relicbound.EditorTools
                 Banner("Banner_Keep", new Vector3(x, 11.55f, -2.12f), 0f, BannerShape.Hanging, 1.5f, 3.4f, 0.10f);
             }
             // Puerta: estandarte grande sobre el arco, en la cara exterior.
-            Banner("Banner_Gate", new Vector3(0f, 6.85f, -14.18f), 0f, BannerShape.Hanging, 1.5f, 2.3f, 0.08f);
+            Banner("Banner_Gate", new Vector3(0f, 6.45f, -14.12f), 0f, BannerShape.Hanging, 1.5f, 2.3f, 0.08f);
             // Gallardetes en el remate de cada torre (punta del tejado a ~15 m).
             foreach (var sx in new[] { -1f, 1f })
             {
