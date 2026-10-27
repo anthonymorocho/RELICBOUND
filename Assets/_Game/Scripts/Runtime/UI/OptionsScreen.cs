@@ -5,6 +5,8 @@ using BeforeItWasYou.Core.Settings;
 using BeforeItWasYou.Services;
 using UnityEngine;
 using UnityEngine.UIElements;
+using QualityLevel = BeforeItWasYou.Core.Settings.QualityLevel;
+using DisplayMode = BeforeItWasYou.Core.Settings.DisplayMode;
 
 namespace BeforeItWasYou.UI
 {

@@ -22,7 +22,7 @@ namespace BeforeItWasYou.Boot
         private IEnumerator Start()
         {
             GameServices.Initialize();
-            Cursor.visible = false;
+            UnityEngine.Cursor.visible = false;
             GameInput.Instance.UsePlayer(false);
             var notice = document != null ? document.rootVisualElement.Q("notice") : null;
             yield return null;
