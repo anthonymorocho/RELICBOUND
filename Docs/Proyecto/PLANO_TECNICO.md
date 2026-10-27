@@ -11,7 +11,7 @@ Unidades en metros. Mundo de Unity: **x** hacia el este, **z** hacia el norte, *
 | Acera | −30 → 48 | −2.0 → 0 | baldosa de hormigón, alcorques |
 | Parcela | 0 → 18 | 0 → 26 | |
 | Entrada de coches | 0.6 → 3.8 | 0 → 13 | hormigón ranurado |
-| Coche de Daniel | centro 2.2 | 2.6 → 7.0 | morro al norte |
+| Coche de Daniel | centro 2.15 | 2.4 → 7.1 | morro al norte, sedán 4.62 × 1.76 m |
 | Valla y **portón** | 0 → 4.5 | z = 13 | portón peatonal x 1.6 → 2.8, pestillo; ruta B |
 | Valla lateral este (cerrada) | 14.5 → 18 | z = 7 | sin salida, vecino |
 | Patio trasero | 0 → 18 | 18 → 26 | césped, losetas, tendedero |
@@ -29,7 +29,7 @@ Coordenadas locales de la casa: X = x − 4.5, Z = z − 6.
 | Pasillo | 4.0 → 5.2 | 4.5 → 12 | 1.2 de ancho | une sala, dormitorios, baño y cocina |
 | Segundo dormitorio | 0 → 4.0 | 4.5 → 8.3 | 4.0 × 3.8 | cuarto de costura / trastos |
 | Dormitorio de Elena | 0 → 4.0 | 8.3 → 12 | 4.0 × 3.7 | cómoda (carpeta azul), mesita (cargador), armario (ropa) |
-| Baño | 5.2 → 7.4 | 9.6 → 12 | 2.2 × 2.4 | |
+| Baño | 5.2 → 7.4 | 9.0 → 12 | 2.2 × 3.0 | ventana pequeña esmerilada al norte |
 | Cocina | 5.2 → 10 | 4.5 → 9.0 | 4.8 × 4.5 | nevera, fregadero, mesa, calendario |
 | Lavadero | 7.4 → 10 | 9.0 → 12 | 2.6 × 3.0 | **escalón de 0.18 hacia abajo** desde la cocina (caída de Elena); lavadora, estanterías; puerta de servicio al norte (cierre defectuoso) |
 

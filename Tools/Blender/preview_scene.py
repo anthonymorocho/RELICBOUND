@@ -18,6 +18,9 @@ for f in files:
     bpy.ops.import_scene.fbx(filepath=f, axis_forward="Z", axis_up="Y")
 
 COLORS = {
+    "CarPaint": (0.18, 0.2, 0.24), "CarGlass": (0.02, 0.02, 0.025), "CarTire": (0.02, 0.02, 0.02), "CarRim": (0.6, 0.6, 0.62),
+    "CarHeadlight": (0.9, 0.9, 0.85), "CarTaillight": (0.5, 0.02, 0.02), "CarGrille": (0.03, 0.03, 0.03), "CarPlate": (0.85, 0.85, 0.8),
+    "CarTrim": (0.03, 0.03, 0.03), "CarSeam": (0.01, 0.01, 0.01), "CarChrome": (0.8, 0.8, 0.8), "CarInterior": (0.05, 0.05, 0.05),
     "Siding": (0.62, 0.55, 0.45), "Trim": (0.85, 0.84, 0.8), "Roof": (0.12, 0.12, 0.13), "Foundation": (0.4, 0.4, 0.4),
     "Glass": (0.05, 0.07, 0.09), "Curtain": (0.5, 0.45, 0.4), "Lawn": (0.15, 0.25, 0.08), "Asphalt": (0.08, 0.08, 0.08),
     "Sidewalk": (0.45, 0.45, 0.43), "Driveway": (0.5, 0.5, 0.48), "Path": (0.5, 0.48, 0.45), "Fence": (0.35, 0.27, 0.2),

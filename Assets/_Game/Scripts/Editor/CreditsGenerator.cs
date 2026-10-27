@@ -33,6 +33,8 @@ namespace BeforeItWasYou.EditorTools
                 text.Append("Poly Haven (polyhaven.com) · CC0 1.0\n");
                 text.Append(string.Join(", ", authors) + "\n\n");
             }
+            text.Append("COCHE DE DANIEL\n");
+            text.Append("Sedán por TopoSphere (sloyd.ai) · CC BY 4.0 · modificado\n\n");
             File.WriteAllText(OutputPath, text.ToString());
             AssetDatabase.ImportAsset(OutputPath);
             return AssetDatabase.LoadAssetAtPath<TextAsset>(OutputPath);

@@ -45,6 +45,15 @@ namespace BeforeItWasYou.EditorTools
                 }
                 MeshCopy(exterior, "Mailbox", architecture, new Vector3(4.3f, 0f, -1.75f), 0f, 1f)?.AddComponent<MeshCollider>();
                 BuildDoors(root);
+                var car = AssetDatabase.LoadAssetAtPath<GameObject>(ArtImport.ModelsFolder + "/Vehicles/SM_Car_Daniel.fbx");
+                if (car != null)
+                {
+                    // Recién aparcado en la entrada, algo torcido, con el morro hacia el portón.
+                    var parked = MeshCopy(car, "Car_Daniel", architecture, new Vector3(2.15f, 0.02f, 4.75f), -2.5f, 1f);
+                    var collider = parked.AddComponent<BoxCollider>();
+                    collider.center = new Vector3(0f, 0.7f, 0f);
+                    collider.size = new Vector3(1.8f, 1.4f, 4.72f);
+                }
                 BuildStreetLights(exterior, root);
                 BuildVegetationAndProps(root);
                 BuildLights(root);
@@ -71,7 +80,7 @@ namespace BeforeItWasYou.EditorTools
             return new Result
             {
                 Root = root,
-                ArrivalSpawn = Marker(markers, "Spawn_Arrival", new Vector3(1.0f, 0.05f, 5.0f), new Vector3(0f, 55f, 0f)),
+                ArrivalSpawn = Marker(markers, "Spawn_Arrival", new Vector3(0.45f, 0.05f, 5.9f), new Vector3(0f, 92f, 0f)),
                 MenuFrom = Marker(markers, "Menu_From", ArrivalSceneBuilder.MenuFrom, ArrivalSceneBuilder.MenuFromEuler),
                 MenuTo = Marker(markers, "Menu_To", ArrivalSceneBuilder.MenuTo, ArrivalSceneBuilder.MenuToEuler),
             };

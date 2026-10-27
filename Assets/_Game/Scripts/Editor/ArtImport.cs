@@ -61,7 +61,7 @@ namespace BeforeItWasYou.EditorTools
                 Set(importer.mipmapEnabled, true, v => importer.mipmapEnabled = v);
                 Set(importer.anisoLevel, 8, v => importer.anisoLevel = v);
                 Set(importer.maxTextureSize, maxSize, v => importer.maxTextureSize = v);
-                Set(importer.textureCompression, TextureImporterCompression.CompressedHQ, v => importer.textureCompression = v);
+                Set(importer.textureCompression, TextureImporterCompression.Compressed, v => importer.textureCompression = v);
                 // Las hojas con alfa deben conservar el contorno al reducir mipmaps.
                 if (!isNormal && !isMask && importer.DoesSourceTextureHaveAlpha())
                 {
@@ -203,6 +203,10 @@ namespace BeforeItWasYou.EditorTools
                 var path = AssetDatabase.GUIDToAssetPath(guid);
                 var importer = AssetImporter.GetAtPath(path) as ModelImporter;
                 if (importer == null) continue;
+                // Solo se reimporta si algo cambió: cada reimportación de un FBX grande cuesta minutos en la CI.
+                var changed = importer.importCameras || importer.importLights || importer.importBlendShapes || importer.importAnimation
+                    || importer.animationType != ModelImporterAnimationType.None || importer.importTangents != ModelImporterTangents.CalculateMikk
+                    || importer.materialImportMode != ModelImporterMaterialImportMode.ImportViaMaterialDescription || importer.isReadable;
                 importer.globalScale = 1f;
                 importer.useFileScale = true;
                 importer.importCameras = false;
@@ -217,9 +221,8 @@ namespace BeforeItWasYou.EditorTools
                 importer.addCollider = false;
                 importer.materialImportMode = ModelImporterMaterialImportMode.ImportViaMaterialDescription;
                 importer.materialLocation = ModelImporterMaterialLocation.InPrefab;
-                importer.SaveAndReimport();
-                importer.SearchAndRemapMaterials(ModelImporterMaterialName.BasedOnMaterialName, ModelImporterMaterialSearch.Everywhere);
-                importer.SaveAndReimport();
+                if (importer.SearchAndRemapMaterials(ModelImporterMaterialName.BasedOnMaterialName, ModelImporterMaterialSearch.Everywhere)) changed = true;
+                if (changed) importer.SaveAndReimport();
             }
         }
 

@@ -93,6 +93,7 @@ namespace BeforeItWasYou.EditorTools
         public static void CreateAll()
         {
             EditorUtil.EnsureFolder(Folder);
+            CreateCar();
             foreach (var spec in Specs)
             {
                 Texture2D baseMap = null, normal = null, mask = null;
@@ -111,6 +112,14 @@ namespace BeforeItWasYou.EditorTools
                 if (spec.Emission.maxColorComponent > 0f) ArtImport.MakeEmissive(material, spec.Emission);
                 if (spec.DoubleSided) material.SetFloat("_Cull", 0f);
             }
+        }
+
+        /// <summary>Sedán de Daniel (CC BY 4.0): una sola textura de color; brillo de pintura algo envejecida.</summary>
+        private static void CreateCar()
+        {
+            var baseMap = ArtImport.Texture(ArtImport.ModelsFolder + "/Vehicles/M_CarSedan_BaseColor.png");
+            if (baseMap == null) return;
+            ArtImport.LitMaterial($"{Folder}/M_CarSedan.mat", baseMap, null, null, Color.white, Vector2.one, 0.62f, 0.35f);
         }
 
         public static Material Get(string name) => AssetDatabase.LoadAssetAtPath<Material>($"{Folder}/{name}.mat");

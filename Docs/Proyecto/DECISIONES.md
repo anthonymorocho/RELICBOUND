@@ -29,3 +29,9 @@ La planta conceptual del paquete es topológica. Se fija una distribución a esc
 
 ## ADR-010 · FOV vertical
 La opción Campo de visión es el FOV vertical de la cámara (55–85°, 64° por defecto), el mismo valor que muestra Unity. Un FOV moderado favorece la tensión en interiores sin marear.
+
+## ADR-011 · La casa de Elena está a oscuras al llegar
+El moodboard muestra ventanas cálidas, pero Elena está hospitalizada y Lucía en el hospital con ella: nadie ha dejado luces encendidas. Solo el farol del porche (fotocélula) está encendido. La calle conserva vida con farolas LED frías, cables y ventanas encendidas en las casas vecinas. La oscuridad de la casa es coherente con la historia y refuerza la entrada.
+
+## ADR-012 · Coche de Daniel: modelo CC BY 4.0
+Un primer coche modelado por script no alcanzó la calidad exigida (revisión del usuario: "muy feo"). Se sustituye por un sedán realista de los 90 con licencia CC BY 4.0 (TopoSphere, publicado en Sloyd), escalado a 4.75 m, repintado en gris azulado oscuro y acreditado en los créditos del juego. No hay sedanes realistas CC0 descargables sin cuenta (Poly Haven solo tiene un coche cubierto).
