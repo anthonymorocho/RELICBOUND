@@ -1,9 +1,7 @@
 name: Unity
 
+# Manual: se lanza solo cuando hay un bloque grande terminado (petición del usuario).
 on:
-  push:
-    branches: [main, "claude/**"]
-    paths-ignore: ["Docs/**", "**/*.md"]
   workflow_dispatch:
 
 concurrency:
