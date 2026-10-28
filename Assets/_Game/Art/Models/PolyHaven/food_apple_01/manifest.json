@@ -1,0 +1,38 @@
+{
+  "id": "food_apple_01",
+  "materials": [
+    {
+      "name": "PH_food_apple_01_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_food_apple_01_0_BaseColor.jpg",
+      "normal": "PH_food_apple_01_0_Normal.jpg",
+      "mask": "PH_food_apple_01_0_Mask.png"
+    }
+  ],
+  "triangles": 7012,
+  "trianglesOriginal": 7012,
+  "size": [
+    0.09756118059158325,
+    0.08538994193077087,
+    0.09590171277523041
+  ],
+  "variants": [
+    {
+      "name": "food_apple_01",
+      "size": [
+        0.09756118059158325,
+        0.08538994193077087,
+        0.09590171277523041
+      ],
+      "triangles": 7012
+    }
+  ]
+}

@@ -1,0 +1,712 @@
+{
+ "items": [
+  {
+   "model": "sofa_03",
+   "variant": "sofa_03",
+   "position": [
+    6.85,
+    0.45,
+    9.98
+   ],
+   "yaw": 180,
+   "scale": 0.85,
+   "collide": true
+  },
+  {
+   "model": "throw_pillows_01",
+   "variant": "throw_pillows_01",
+   "position": [
+    6.85,
+    0.87,
+    10.02
+   ],
+   "yaw": 180,
+   "scale": 0.8,
+   "collide": false
+  },
+  {
+   "model": "CoffeeTable_01",
+   "variant": "CoffeeTable_01",
+   "position": [
+    6.85,
+    0.45,
+    8.65
+   ],
+   "yaw": 0,
+   "scale": 0.72,
+   "collide": true
+  },
+  {
+   "model": "tea_set_01",
+   "variant": "tea_set_01_A",
+   "position": [
+    6.7,
+    0.825,
+    8.62
+   ],
+   "yaw": 20,
+   "scale": 0.9,
+   "collide": false
+  },
+  {
+   "model": "ceramic_vase_01",
+   "variant": "ceramic_vase_01",
+   "position": [
+    7.15,
+    0.825,
+    8.7
+   ],
+   "yaw": 0,
+   "scale": 0.8,
+   "collide": false
+  },
+  {
+   "model": "side_table_01",
+   "variant": "side_table_01",
+   "position": [
+    5.25,
+    0.45,
+    6.6
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "collide": true
+  },
+  {
+   "model": "television_02",
+   "variant": "television_02",
+   "position": [
+    5.25,
+    1.0,
+    6.62
+   ],
+   "yaw": 0,
+   "scale": 1.15,
+   "collide": false
+  },
+  {
+   "model": "standing_picture_frame_01",
+   "variant": "standing_picture_frame_01",
+   "position": [
+    5.02,
+    1.0,
+    6.5
+   ],
+   "yaw": 20,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "ArmChair_01",
+   "variant": "ArmChair_01",
+   "position": [
+    8.95,
+    0.45,
+    8.0
+   ],
+   "yaw": 250,
+   "scale": 0.95,
+   "collide": true
+  },
+  {
+   "model": "Rockingchair_01",
+   "variant": "Rockingchair_01",
+   "position": [
+    5.15,
+    0.45,
+    9.05
+   ],
+   "yaw": 110,
+   "scale": 1.0,
+   "collide": true
+  },
+  {
+   "model": "wicker_basket_02",
+   "variant": "wicker_basket_02",
+   "position": [
+    5.6,
+    0.45,
+    9.85
+   ],
+   "yaw": 30,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "wooden_bookshelf_worn",
+   "variant": "wooden_bookshelf_worn",
+   "position": [
+    8.9,
+    0.45,
+    10.12
+   ],
+   "yaw": 180,
+   "scale": 0.9,
+   "collide": true
+  },
+  {
+   "model": "mantel_clock_01",
+   "variant": "mantel_clock_01",
+   "position": [
+    8.9,
+    2.31,
+    10.05
+   ],
+   "yaw": 180,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "cassette_player",
+   "variant": "cassette_player",
+   "position": [
+    9.25,
+    2.31,
+    10.05
+   ],
+   "yaw": 200,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "fancy_picture_frame_02",
+   "variant": "fancy_picture_frame_02",
+   "position": [
+    6.85,
+    1.95,
+    10.42
+   ],
+   "yaw": 180,
+   "scale": 0.75,
+   "collide": false
+  },
+  {
+   "model": "book_encyclopedia_set_01",
+   "variant": "book_encyclopedia_set_01",
+   "position": [
+    8.9,
+    1.57,
+    10.15
+   ],
+   "yaw": 180,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "book_encyclopedia_set_01",
+   "variant": "book_encyclopedia_set_01",
+   "position": [
+    8.75,
+    1.17,
+    10.15
+   ],
+   "yaw": 180,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "ceramic_vase_01",
+   "variant": "ceramic_vase_01",
+   "position": [
+    9.3,
+    0.77,
+    10.12
+   ],
+   "yaw": 0,
+   "scale": 0.6,
+   "collide": false
+  },
+  {
+   "model": "fancy_picture_frame_01",
+   "variant": "fancy_picture_frame_01",
+   "position": [
+    4.71,
+    2.0500000000000003,
+    9.6
+   ],
+   "yaw": 90,
+   "scale": 0.7,
+   "collide": false
+  },
+  {
+   "model": "ornate_mirror_01",
+   "variant": "ornate_mirror_01",
+   "position": [
+    7.75,
+    1.8,
+    6.21
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "dining_table",
+   "variant": "dining_table",
+   "position": [
+    12.1,
+    0.45,
+    8.25
+   ],
+   "yaw": 0,
+   "scale": 0.8,
+   "collide": true
+  },
+  {
+   "model": "painted_wooden_chair_01",
+   "variant": "painted_wooden_chair_01",
+   "position": [
+    11.5,
+    0.45,
+    7.55
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "collide": true
+  },
+  {
+   "model": "painted_wooden_chair_01",
+   "variant": "painted_wooden_chair_01",
+   "position": [
+    12.7,
+    0.45,
+    7.6
+   ],
+   "yaw": 5,
+   "scale": 1.0,
+   "collide": true
+  },
+  {
+   "model": "painted_wooden_chair_01",
+   "variant": "painted_wooden_chair_01",
+   "position": [
+    11.5,
+    0.45,
+    8.95
+   ],
+   "yaw": 180,
+   "scale": 1.0,
+   "collide": true
+  },
+  {
+   "model": "painted_wooden_chair_01",
+   "variant": "painted_wooden_chair_01",
+   "position": [
+    12.75,
+    0.45,
+    9.1
+   ],
+   "yaw": 168,
+   "scale": 1.0,
+   "collide": true
+  },
+  {
+   "model": "wooden_bowl_01",
+   "variant": "wooden_bowl_01",
+   "position": [
+    12.0,
+    1.155,
+    8.3
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "food_apple_01",
+   "variant": "food_apple_01",
+   "position": [
+    11.96,
+    1.18,
+    8.27
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "food_apple_01",
+   "variant": "food_apple_01",
+   "position": [
+    12.06,
+    1.18,
+    8.33
+   ],
+   "yaw": 120,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "lemon",
+   "variant": "lemon",
+   "position": [
+    12.0,
+    1.18,
+    8.38
+   ],
+   "yaw": 40,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "jug_01",
+   "variant": "jug_01",
+   "position": [
+    12.45,
+    1.155,
+    8.15
+   ],
+   "yaw": 30,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "drawer_cabinet",
+   "variant": "drawer_cabinet",
+   "position": [
+    14.04,
+    0.45,
+    8.3
+   ],
+   "yaw": 270,
+   "scale": 0.95,
+   "collide": true
+  },
+  {
+   "model": "wall_clock",
+   "variant": "wall_clock",
+   "position": [
+    12.1,
+    2.4,
+    6.21
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "hanging_picture_frame_03",
+   "variant": "hanging_picture_frame_03",
+   "position": [
+    14.29,
+    2.0500000000000003,
+    7.0
+   ],
+   "yaw": 270,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "electric_stove",
+   "variant": "electric_stove",
+   "position": [
+    13.97,
+    0.45,
+    11.51
+   ],
+   "yaw": 270,
+   "scale": 1.02,
+   "collide": true
+  },
+  {
+   "model": "vintage_microwave",
+   "variant": "vintage_microwave",
+   "position": [
+    14.02,
+    1.35,
+    14.35
+   ],
+   "yaw": 270,
+   "scale": 0.48,
+   "collide": false
+  },
+  {
+   "model": "vintage_electric_kettle",
+   "variant": "vintage_electric_kettle",
+   "position": [
+    14.02,
+    1.35,
+    11.0
+   ],
+   "yaw": 250,
+   "scale": 0.75,
+   "collide": false
+  },
+  {
+   "model": "painted_wooden_cabinet",
+   "variant": "painted_wooden_cabinet",
+   "position": [
+    10.08,
+    0.45,
+    13.4
+   ],
+   "yaw": 90,
+   "scale": 1.0,
+   "collide": true
+  },
+  {
+   "model": "vintage_telephone_wall_clock",
+   "variant": "vintage_telephone_wall_clock",
+   "position": [
+    9.77,
+    2.0500000000000003,
+    14.3
+   ],
+   "yaw": 90,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "wicker_basket_01",
+   "variant": "wicker_basket_01",
+   "position": [
+    10.1,
+    1.63,
+    13.6
+   ],
+   "yaw": 70,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "steel_frame_shelves_01",
+   "variant": "steel_frame_shelves_01",
+   "position": [
+    12.22,
+    0.27,
+    16.65
+   ],
+   "yaw": 90,
+   "scale": 0.1,
+   "collide": true
+  },
+  {
+   "model": "multi_cleaner_bottle",
+   "variant": "multi_cleaner_bottle",
+   "position": [
+    12.18,
+    1.25,
+    16.4
+   ],
+   "yaw": 30,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "bleach_bottle",
+   "variant": "bleach_bottle",
+   "position": [
+    12.2,
+    1.25,
+    16.85
+   ],
+   "yaw": 200,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "cardboard_box_01",
+   "variant": "cardboard_box_01",
+   "position": [
+    12.55,
+    0.27,
+    17.55
+   ],
+   "yaw": 23,
+   "scale": 1.0,
+   "collide": true
+  },
+  {
+   "model": "wicker_basket_01",
+   "variant": "wicker_basket_01",
+   "position": [
+    14.03,
+    1.12,
+    15.42
+   ],
+   "yaw": 10,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "wooden_broom",
+   "variant": "wooden_broom",
+   "position": [
+    14.38,
+    0.27,
+    17.7
+   ],
+   "yaw": 270,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "rubber_boots",
+   "variant": "rubber_boots_A",
+   "position": [
+    13.95,
+    0.27,
+    17.75
+   ],
+   "yaw": 200,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "old_bed_frame",
+   "variant": "old_bed_frame",
+   "position": [
+    5.75,
+    0.45,
+    16.99
+   ],
+   "yaw": 90,
+   "scale": 1.0,
+   "collide": true
+  },
+  {
+   "model": "ClassicNightstand_01",
+   "variant": "ClassicNightstand_01",
+   "position": [
+    4.98,
+    0.45,
+    16.05
+   ],
+   "yaw": 90,
+   "scale": 0.9,
+   "collide": true
+  },
+  {
+   "model": "painted_wooden_cabinet",
+   "variant": "painted_wooden_cabinet",
+   "position": [
+    6.3,
+    0.45,
+    14.68
+   ],
+   "yaw": 0,
+   "scale": 0.95,
+   "collide": true
+  },
+  {
+   "model": "standing_picture_frame_02",
+   "variant": "standing_picture_frame_02",
+   "position": [
+    6.75,
+    1.57,
+    14.6
+   ],
+   "yaw": 340,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "potted_plant_04",
+   "variant": "potted_plant_04",
+   "position": [
+    5.85,
+    1.57,
+    14.6
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "hanging_picture_frame_03",
+   "variant": "hanging_picture_frame_03",
+   "position": [
+    4.71,
+    2.0,
+    17.0
+   ],
+   "yaw": 90,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "drawer_cabinet",
+   "variant": "drawer_cabinet",
+   "position": [
+    4.82,
+    0.45,
+    12.6
+   ],
+   "yaw": 90,
+   "scale": 0.95,
+   "collide": true
+  },
+  {
+   "model": "cardboard_box_01",
+   "variant": "cardboard_box_01",
+   "position": [
+    7.6,
+    0.45,
+    13.75
+   ],
+   "yaw": 8,
+   "scale": 1.1,
+   "collide": true
+  },
+  {
+   "model": "cardboard_box_01",
+   "variant": "cardboard_box_01",
+   "position": [
+    7.62,
+    0.79,
+    13.72
+   ],
+   "yaw": 352,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "book_encyclopedia_set_01",
+   "variant": "book_encyclopedia_set_01",
+   "position": [
+    4.85,
+    2.24,
+    12.6
+   ],
+   "yaw": 90,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "ArmChair_01",
+   "variant": "ArmChair_01",
+   "position": [
+    7.4,
+    0.45,
+    11.2
+   ],
+   "yaw": 220,
+   "scale": 0.9,
+   "collide": true
+  },
+  {
+   "model": "hanging_picture_frame_02",
+   "variant": "hanging_picture_frame_02",
+   "position": [
+    8.57,
+    1.95,
+    13.6
+   ],
+   "yaw": 90,
+   "scale": 0.8,
+   "collide": false
+  },
+  {
+   "model": "fancy_picture_frame_01",
+   "variant": "fancy_picture_frame_01",
+   "position": [
+    9.63,
+    1.95,
+    13.4
+   ],
+   "yaw": 270,
+   "scale": 0.6,
+   "collide": false
+  }
+ ]
+}

@@ -1,0 +1,38 @@
+{
+  "id": "wooden_bowl_01",
+  "materials": [
+    {
+      "name": "PH_wooden_bowl_01_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_wooden_bowl_01_0_BaseColor.jpg",
+      "normal": "PH_wooden_bowl_01_0_Normal.jpg",
+      "mask": "PH_wooden_bowl_01_0_Mask.png"
+    }
+  ],
+  "triangles": 14122,
+  "trianglesOriginal": 14122,
+  "size": [
+    0.31308162212371826,
+    0.09369255602359772,
+    0.3091423809528351
+  ],
+  "variants": [
+    {
+      "name": "wooden_bowl_01",
+      "size": [
+        0.31308162212371826,
+        0.09369255602359772,
+        0.3091423809528351
+      ],
+      "triangles": 14122
+    }
+  ]
+}

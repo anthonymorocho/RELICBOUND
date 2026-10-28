@@ -184,7 +184,12 @@ def house(name, x0, y0, width, depth, openings, porch=None, chimney=None, siding
                                               ("w", "y", x0 - 0.025, -1, y0 - 0.025, y1 + 0.025), ("e", "y", x1 + 0.025, 1, y0 - 0.025, y1 + 0.025)):
         low = [(o[0], o[1], o[2], o[3]) for o in openings.get(side, []) if o[2] < FLOOR]
         G.wall_with_openings(b, axis, face, a0, a1, 0.0, FLOOR, low, 0.03, outward, "M_Foundation", inner=False)
-    b.box(x0 - 0.035, y0 - 0.035, FLOOR - 0.04, x1 + 0.035, y1 + 0.035, FLOOR + 0.005, "M_Trim", faces="nsewt")
+    # Remate del zócalo: solo un borde alrededor del muro (no una tapa sobre toda la planta).
+    cap0, cap1 = FLOOR - 0.04, FLOOR + 0.005
+    b.box(x0 - 0.035, y0 - 0.035, cap0, x1 + 0.035, y0 + 0.01, cap1, "M_Trim", faces="nsewt")
+    b.box(x0 - 0.035, y1 - 0.01, cap0, x1 + 0.035, y1 + 0.035, cap1, "M_Trim", faces="nsewt")
+    b.box(x0 - 0.035, y0 + 0.01, cap0, x0 + 0.01, y1 - 0.01, cap1, "M_Trim", faces="ewt")
+    b.box(x1 - 0.01, y0 + 0.01, cap0, x1 + 0.035, y1 - 0.01, cap1, "M_Trim", faces="ewt")
 
     def ops(side):
         return [(o[0], o[1], o[2], o[3]) for o in openings.get(side, [])]

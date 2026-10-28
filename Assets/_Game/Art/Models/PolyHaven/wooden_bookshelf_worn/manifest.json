@@ -1,0 +1,38 @@
+{
+  "id": "wooden_bookshelf_worn",
+  "materials": [
+    {
+      "name": "PH_wooden_bookshelf_worn_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_wooden_bookshelf_worn_0_BaseColor.jpg",
+      "normal": "PH_wooden_bookshelf_worn_0_Normal.jpg",
+      "mask": "PH_wooden_bookshelf_worn_0_Mask.png"
+    }
+  ],
+  "triangles": 10106,
+  "trianglesOriginal": 10106,
+  "size": [
+    1.37395179271698,
+    2.0634419918060303,
+    0.5813020467758179
+  ],
+  "variants": [
+    {
+      "name": "wooden_bookshelf_worn",
+      "size": [
+        1.37395179271698,
+        2.0634419918060303,
+        0.5813020467758179
+      ],
+      "triangles": 10106
+    }
+  ]
+}

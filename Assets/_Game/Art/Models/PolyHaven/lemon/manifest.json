@@ -1,0 +1,38 @@
+{
+  "id": "lemon",
+  "materials": [
+    {
+      "name": "PH_lemon_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_lemon_0_BaseColor.jpg",
+      "normal": "PH_lemon_0_Normal.jpg",
+      "mask": "PH_lemon_0_Mask.png"
+    }
+  ],
+  "triangles": 4012,
+  "trianglesOriginal": 4012,
+  "size": [
+    0.06868193298578262,
+    0.09536930918693542,
+    0.0682600885629654
+  ],
+  "variants": [
+    {
+      "name": "lemon",
+      "size": [
+        0.06868193298578262,
+        0.09536930918693542,
+        0.0682600885629654
+      ],
+      "triangles": 4012
+    }
+  ]
+}

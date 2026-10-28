@@ -1,0 +1,53 @@
+{
+  "id": "mantel_clock_01",
+  "materials": [
+    {
+      "name": "PH_mantel_clock_01_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_mantel_clock_01_0_BaseColor.jpg",
+      "normal": "PH_mantel_clock_01_0_Normal.jpg",
+      "mask": "PH_mantel_clock_01_0_Mask.png"
+    },
+    {
+      "name": "PH_mantel_clock_01_1",
+      "alpha": "BLEND",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        0.30000001192092896
+      ],
+      "baseColor": "PH_mantel_clock_01_1_BaseColor.jpg",
+      "normal": "PH_mantel_clock_01_1_Normal.jpg",
+      "mask": "PH_mantel_clock_01_1_Mask.png"
+    }
+  ],
+  "triangles": 25721,
+  "trianglesOriginal": 25721,
+  "size": [
+    0.34234005212783813,
+    0.16047941148281097,
+    0.12616859376430511
+  ],
+  "variants": [
+    {
+      "name": "mantel_clock_01",
+      "size": [
+        0.34234005212783813,
+        0.16047941148281097,
+        0.12616859376430511
+      ],
+      "triangles": 25721
+    }
+  ]
+}

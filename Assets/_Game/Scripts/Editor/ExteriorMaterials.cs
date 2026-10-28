@@ -108,6 +108,9 @@ namespace BeforeItWasYou.EditorTools
             S("M_Concrete", "concrete_floor_02", 1f, C(0.72f, 0.71f, 0.68f)),
             S("M_ConcreteDark", "concrete_floor_02", 1f, C(0.45f, 0.44f, 0.42f)),
             S("M_ShelfWood", "kitchen_wood", 0.6f, C(0.75f, 0.65f, 0.55f)),
+            S("M_Rug", "floral_jacquard", 0.6f, C(0.62f, 0.32f, 0.28f), 0.2f),
+            S("M_RugRunner", "floral_jacquard", 0.5f, C(0.4f, 0.36f, 0.5f), 0.2f),
+            Plain("M_BathMat", C(0.55f, 0.66f, 0.62f), 0.1f),
             Plain("M_Mattress", C(0.82f, 0.8f, 0.74f), 0.15f),
             S("M_Quilt", "floral_jacquard", 0.38f, C(0.9f, 0.78f, 0.78f), 0.6f),
             Plain("M_Pillow", C(0.88f, 0.86f, 0.82f), 0.15f),
@@ -174,6 +177,12 @@ namespace BeforeItWasYou.EditorTools
             var baseMap = ArtImport.Texture(ArtImport.ModelsFolder + "/Vehicles/M_CarSedan_BaseColor.png");
             if (baseMap == null) return;
             ArtImport.LitMaterial($"{Folder}/M_CarSedan.mat", baseMap, null, null, Color.white, Vector2.one, 0.62f, 0.35f);
+            // Óleo de la sala: la textura cubre exactamente el lienzo (0.34 x 0.42 m).
+            var painting = ArtImport.Texture(ArtImport.TexturesFolder + "/Paintings/painting_meadow.jpg");
+            if (painting != null)
+            {
+                ArtImport.LitMaterial($"{Folder}/M_Painting.mat", painting, null, null, Color.white, new Vector2(1f / 0.34f, 1f / 0.42f), 0.35f);
+            }
         }
 
         public static Material Get(string name) => AssetDatabase.LoadAssetAtPath<Material>($"{Folder}/{name}.mat");

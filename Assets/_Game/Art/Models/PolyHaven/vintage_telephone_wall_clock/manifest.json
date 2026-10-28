@@ -1,0 +1,53 @@
+{
+  "id": "vintage_telephone_wall_clock",
+  "materials": [
+    {
+      "name": "PH_vintage_telephone_wall_clock_0",
+      "alpha": "BLEND",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_vintage_telephone_wall_clock_0_BaseColor.jpg",
+      "normal": "PH_vintage_telephone_wall_clock_0_Normal.jpg",
+      "mask": "PH_vintage_telephone_wall_clock_0_Mask.png"
+    },
+    {
+      "name": "PH_vintage_telephone_wall_clock_1",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_vintage_telephone_wall_clock_1_BaseColor.jpg",
+      "normal": "PH_vintage_telephone_wall_clock_1_Normal.jpg",
+      "mask": "PH_vintage_telephone_wall_clock_1_Mask.png"
+    }
+  ],
+  "triangles": 15864,
+  "trianglesOriginal": 15864,
+  "size": [
+    0.34280550479888916,
+    0.5012321472167969,
+    0.192562997341156
+  ],
+  "variants": [
+    {
+      "name": "vintage_telephone_wall_clock",
+      "size": [
+        0.34280550479888916,
+        0.5012321472167969,
+        0.192562997341156
+      ],
+      "triangles": 15864
+    }
+  ]
+}

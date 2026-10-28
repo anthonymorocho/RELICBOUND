@@ -1,0 +1,38 @@
+{
+  "id": "ceramic_vase_01",
+  "materials": [
+    {
+      "name": "PH_ceramic_vase_01_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_ceramic_vase_01_0_BaseColor.jpg",
+      "normal": "PH_ceramic_vase_01_0_Normal.jpg",
+      "mask": "PH_ceramic_vase_01_0_Mask.png"
+    }
+  ],
+  "triangles": 10296,
+  "trianglesOriginal": 10296,
+  "size": [
+    0.20363447070121765,
+    0.4002682864665985,
+    0.20363633334636688
+  ],
+  "variants": [
+    {
+      "name": "ceramic_vase_01",
+      "size": [
+        0.20363447070121765,
+        0.4002682864665985,
+        0.20363633334636688
+      ],
+      "triangles": 10296
+    }
+  ]
+}

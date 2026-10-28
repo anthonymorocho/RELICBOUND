@@ -1,0 +1,68 @@
+{
+  "id": "cassette_player",
+  "materials": [
+    {
+      "name": "PH_cassette_player_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_cassette_player_0_BaseColor.jpg",
+      "normal": "PH_cassette_player_0_Normal.jpg",
+      "mask": "PH_cassette_player_0_Mask.png"
+    },
+    {
+      "name": "PH_cassette_player_1",
+      "alpha": "BLEND",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_cassette_player_1_BaseColor.jpg",
+      "normal": "PH_cassette_player_1_Normal.jpg",
+      "mask": "PH_cassette_player_1_Mask.png"
+    },
+    {
+      "name": "PH_cassette_player_2",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_cassette_player_2_BaseColor.jpg",
+      "normal": "PH_cassette_player_2_Normal.jpg",
+      "mask": "PH_cassette_player_2_Mask.png"
+    }
+  ],
+  "triangles": 4830,
+  "trianglesOriginal": 4830,
+  "size": [
+    0.12946045398712158,
+    0.2368178516626358,
+    0.048879899084568024
+  ],
+  "variants": [
+    {
+      "name": "cassette_player",
+      "size": [
+        0.12946045398712158,
+        0.2368178516626358,
+        0.048879899084568024
+      ],
+      "triangles": 4830
+    }
+  ]
+}

@@ -113,50 +113,14 @@ namespace BeforeItWasYou.EditorTools
         {
             var f = new GameObject("Furniture").transform;
             f.SetParent(interior, false);
-            // Sala: sofá contra el dormitorio 2, televisor de tubo frente a él, butaca y mecedora.
-            Item(f, "sofa_03", new Vector3(6.85f, Floor, 9.98f), 180f, 0.85f, true);
-            Item(f, "throw_pillows_01", new Vector3(6.85f, Floor + 0.42f, 10.02f), 180f, 0.8f, false);
-            Item(f, "CoffeeTable_01", new Vector3(6.85f, Floor, 8.65f), 0f, 0.72f, true);
-            Item(f, "side_table_01", new Vector3(5.25f, Floor, 6.6f), 0f, 1f, true);
-            Item(f, "television_02", new Vector3(5.25f, Floor + 0.55f, 6.62f), 0f, 1.15f, false);
-            Item(f, "ArmChair_01", new Vector3(8.95f, Floor, 8.0f), 250f, 0.95f, true);
-            Item(f, "Rockingchair_01", new Vector3(5.15f, Floor, 9.05f), 110f, 1f, true);
-            Item(f, "hanging_picture_frame_01", new Vector3(6.85f, Floor + 1.45f, 10.43f), 180f, 0.8f, false);
-            Item(f, "ornate_mirror_01", new Vector3(7.75f, Floor + 1.35f, 6.21f), 0f, 1f, false);
-            Item(f, "standing_picture_frame_01", new Vector3(5.05f, Floor + 0.55f, 6.5f), 20f, 1f, false);
-            // Comedor.
-            Item(f, "dining_table", new Vector3(12.1f, Floor, 8.25f), 0f, 0.8f, true);
-            Item(f, "painted_wooden_chair_01", new Vector3(11.5f, Floor, 7.55f), 0f, 1f, true);
-            Item(f, "painted_wooden_chair_01", new Vector3(12.7f, Floor, 7.6f), 5f, 1f, true);
-            Item(f, "painted_wooden_chair_01", new Vector3(11.5f, Floor, 8.95f), 180f, 1f, true);
-            Item(f, "painted_wooden_chair_01", new Vector3(12.75f, Floor, 9.1f), 168f, 1f, true);
-            Item(f, "drawer_cabinet", new Vector3(14.04f, Floor, 8.3f), 270f, 0.95f, true);
-            Item(f, "wall_clock", new Vector3(12.1f, Floor + 1.95f, 6.21f), 0f, 1f, false);
-            Item(f, "jug_01", new Vector3(12.3f, Floor + 0.71f, 8.2f), 30f, 1f, false);
-            // Cocina.
-            Item(f, "electric_stove", new Vector3(13.97f, Floor, 11.51f), 270f, 1.02f, true);
-            Item(f, "vintage_microwave", new Vector3(14.02f, Floor + 0.9f, 14.35f), 270f, 0.48f, false);
-            Item(f, "vintage_electric_kettle", new Vector3(14.02f, Floor + 0.9f, 11.0f), 250f, 0.75f, false);
-            Item(f, "painted_wooden_cabinet", new Vector3(10.08f, Floor, 13.4f), 90f, 1f, true);
-            // Lavadero: estantería metálica, productos, caja apartada de su sitio, escoba y botas.
-            Item(f, "steel_frame_shelves_01", new Vector3(12.22f, Laundry, 16.65f), 90f, 0.1f, true);
-            Item(f, "multi_cleaner_bottle", new Vector3(12.18f, Laundry + 0.98f, 16.4f), 30f, 1f, false);
-            Item(f, "bleach_bottle", new Vector3(12.2f, Laundry + 0.98f, 16.85f), 200f, 1f, false);
-            Item(f, "cardboard_box_01", new Vector3(12.55f, Laundry, 17.55f), 23f, 1f, true);
-            Item(f, "wicker_basket_01", new Vector3(14.03f, Laundry + 0.85f, 15.42f), 10f, 1f, false);
-            Item(f, "wooden_broom", new Vector3(14.38f, Laundry, 17.7f), 270f, 1f, false);
-            Item(f, "rubber_boots", new Vector3(13.95f, Laundry, 17.75f), 200f, 1f, false, "rubber_boots_A");
-            // Dormitorio de Elena: cama de hierro, mesita (cargador), cómoda (carpeta azul).
-            Item(f, "old_bed_frame", new Vector3(5.75f, Floor, 16.99f), 90f, 1f, true);
-            Item(f, "ClassicNightstand_01", new Vector3(4.98f, Floor, 16.05f), 90f, 0.9f, true);
-            Item(f, "painted_wooden_cabinet", new Vector3(6.3f, Floor, 14.68f), 0f, 0.95f, true);
-            Item(f, "standing_picture_frame_02", new Vector3(6.75f, Floor + 1.12f, 14.6f), 340f, 1f, false);
-            Item(f, "potted_plant_04", new Vector3(5.85f, Floor + 1.12f, 14.6f), 0f, 1f, false);
-            // Dormitorio 2 (costura y trastos).
-            Item(f, "drawer_cabinet", new Vector3(4.82f, Floor, 12.6f), 90f, 0.95f, true);
-            Item(f, "cardboard_box_01", new Vector3(7.6f, Floor, 13.75f), 8f, 1.1f, true);
-            Item(f, "cardboard_box_01", new Vector3(7.62f, Floor + 0.34f, 13.72f), 352f, 1f, false);
-            Item(f, "book_encyclopedia_set_01", new Vector3(4.85f, Floor + 1.79f, 12.6f), 90f, 1f, false);
+            // Muebles y objetos CC0: misma disposición que los renders de comprobación (Tools/Art/interior_layout.py).
+            var layout = JsonUtility.FromJson<Layout>(System.IO.File.ReadAllText("Assets/_Game/Data/Layout_Interior.json"));
+            foreach (var item in layout.items)
+            {
+                var p = item.position;
+                Item(f, item.model, new Vector3(p[0], p[1], p[2]), item.yaw, item.scale, item.collide, item.variant);
+            }
+
             // Escondite: el armario de Elena (cabe una persona de pie).
             var hide = new GameObject("HideSpot_Armario") { layer = Layers.Interactable };
             hide.transform.SetParent(f, false);
@@ -175,8 +139,23 @@ namespace BeforeItWasYou.EditorTools
             MissionItem(f, "SM_Prop_BlueFolder", "carpeta_azul", "Coger la carpeta azul", new Vector3(6.02f, Floor + 1.123f, 14.72f), 12f);
             MissionItem(f, "SM_Prop_Charger", "cargador", "Coger el cargador", new Vector3(4.96f, Floor + 0.632f, 16.12f), 205f);
             MissionItem(f, "SM_Prop_ClothesBag", "ropa", "Llevar la bolsa de ropa", new Vector3(6.25f, Floor + 0.67f, 16.82f), 72f);
-            // Pasillo.
-            Item(f, "hanging_picture_frame_02", new Vector3(8.57f, Floor + 1.5f, 13.6f), 90f, 0.8f, false);
+        }
+
+        [System.Serializable]
+        private sealed class Layout
+        {
+            public LayoutItem[] items;
+        }
+
+        [System.Serializable]
+        private sealed class LayoutItem
+        {
+            public string model;
+            public string variant;
+            public float[] position;
+            public float yaw;
+            public float scale;
+            public bool collide;
         }
 
         private static void MissionItem(Transform parent, string model, string item, string prompt, Vector3 position, float yaw)

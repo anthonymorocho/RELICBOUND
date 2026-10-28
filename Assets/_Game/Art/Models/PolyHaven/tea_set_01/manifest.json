@@ -1,0 +1,65 @@
+{
+  "id": "tea_set_01",
+  "materials": [
+    {
+      "name": "PH_tea_set_01_0",
+      "alpha": "OPAQUE",
+      "cutoff": 0.5,
+      "doubleSided": true,
+      "baseColorFactor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseColor": "PH_tea_set_01_0_BaseColor.jpg",
+      "normal": "PH_tea_set_01_0_Normal.jpg",
+      "mask": "PH_tea_set_01_0_Mask.png"
+    }
+  ],
+  "triangles": 40296,
+  "trianglesOriginal": 40296,
+  "size": [
+    0.9184823036193848,
+    0.1649930477142334,
+    0.4838765859603882
+  ],
+  "variants": [
+    {
+      "name": "tea_set_01_A",
+      "size": [
+        0.18801218271255493,
+        0.1649930477142334,
+        0.4838765859603882
+      ],
+      "triangles": 15312
+    },
+    {
+      "name": "tea_set_01_B",
+      "size": [
+        0.1875191330909729,
+        0.10345441848039627,
+        0.4146766662597656
+      ],
+      "triangles": 10912
+    },
+    {
+      "name": "tea_set_01_C",
+      "size": [
+        0.14895236492156982,
+        0.07043672353029251,
+        0.37793540954589844
+      ],
+      "triangles": 7036
+    },
+    {
+      "name": "tea_set_01_D",
+      "size": [
+        0.1489523947238922,
+        0.07043672353029251,
+        0.37793540954589844
+      ],
+      "triangles": 7036
+    }
+  ]
+}

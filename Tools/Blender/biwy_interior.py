@@ -291,6 +291,26 @@ LAMPS = {"Sala": (7.1, 8.25), "Comedor": (12.1, 8.25), "Pasillo": (9.1, 14.2), "
              "DormitorioElena": (6.5, 16.15), "Bano": (10.8, 16.4), "Lavadero": (13.2, 16.5), "Cocina": (12.1, 12.75)}
 
 
+def rugs():
+    """Alfombras: sala bajo la mesa de centro, corredor del pasillo, junto a la cama de Elena y del baño."""
+    b = G.Builder("Rugs")
+    for (x0, z0, x1, z1, mat) in ((5.75, 7.75, 7.95, 9.55, "M_Rug"), (8.68, 11.0, 9.52, 17.4, "M_RugRunner"),
+                                  (5.0, 15.75, 6.7, 16.45, "M_Rug"), (10.2, 16.2, 10.85, 16.75, "M_BathMat")):
+        b.box(x0, z0, FLOOR, x1, z1, FLOOR + 0.008, mat, faces="nsewt")
+    return b.object()
+
+
+def painting():
+    """Lienzo del cuadro de la sala (dentro del marco CC0 fancy_picture_frame_02), con UV de 0 a 1."""
+    b = G.Builder("Painting_Sala")
+    x0, x1, z0, z1, y = 6.68, 7.02, FLOOR + 1.58, FLOOR + 2.0, 10.432
+    f = b.face([(x0, y, z0), (x1, y, z0), (x1, y, z1), (x0, y, z1)], "M_Painting", uv_origin=(x0, y, z0))
+    if f.normal.y > 0:
+        f.normal_flip()
+        b.apply_uv(f, "auto", __import__("mathutils").Vector((x0, y, z0)))
+    return b.object()
+
+
 def fixtures():
     """Un plafón por habitación (objeto propio: su interruptor solo enciende ese)."""
     objs = []
@@ -341,7 +361,7 @@ def interior_door():
 
 def main():
     G.clear_scene()
-    objs = floors_and_ceilings() + [walls(), trims(), kitchen(), bathroom(), laundry(), bedroom()] + fixtures()
+    objs = floors_and_ceilings() + [walls(), trims(), kitchen(), bathroom(), laundry(), bedroom(), rugs(), painting()] + fixtures()
     G.export_fbx(objs, os.path.join(OUT, "SM_Interior.fbx"))
     G.export_fbx([interior_door()], os.path.join(OUT, "SM_Door_Interior_Leaf.fbx"))
     G.export_fbx([switch_plate("Switch")], os.path.join(OUT, "SM_Switch.fbx"))
