@@ -10,3 +10,5 @@ Lecciones heredadas (aplicadas desde el inicio):
 
 | Fecha | Error | Estado |
 |---|---|---|
+| 2026-10-28 | CI (run 40605214764): escenas generadas y compiladas, pero el primer `Camera.Render` de evidencias quedó bloqueado 105 min. Sospecha: skinning por GPU de Víctor (primera malla con esqueleto) en el renderizador por software. Mitigación: Víctor congelado con `BakeMesh` durante las capturas, skinning en CPU solo en la CI de verificación, registro con hora por captura y límite del paso a 40 min. | Pendiente de verificar |
+| 2026-10-28 | `FSBTool ERROR: Failed decoding audio clip` en UI_Click/Confirm/PanelClose/Select: eran punteros Git LFS copiados de la rama archivada. Restaurado el audio real desde la caché LFS local. | Corregido |

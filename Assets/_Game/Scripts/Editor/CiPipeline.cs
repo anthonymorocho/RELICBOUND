@@ -16,6 +16,7 @@ namespace BeforeItWasYou.EditorTools
         {
             try
             {
+                UseCpuSkinning();
                 GenerateAll();
                 EvidenceCapture.CaptureEnvironment();
                 EditorApplication.Exit(0);
@@ -25,6 +26,31 @@ namespace BeforeItWasYou.EditorTools
                 Debug.LogException(exception);
                 EditorApplication.Exit(1);
             }
+        }
+
+        /// <summary>
+        /// Solo en la CI de verificación (renderizador por software): el skinning por GPU puede bloquear el render.
+        /// Por reflexión porque el nombre de la opción cambia entre versiones (meshDeformation / gpuSkinning).
+        /// Las builds de Windows mantienen el skinning por GPU.
+        /// </summary>
+        private static void UseCpuSkinning()
+        {
+            var type = typeof(PlayerSettings);
+            var deformation = type.GetProperty("meshDeformation", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+            if (deformation != null && deformation.CanWrite && deformation.PropertyType.IsEnum && Enum.IsDefined(deformation.PropertyType, "CPU"))
+            {
+                deformation.SetValue(null, Enum.Parse(deformation.PropertyType, "CPU"));
+                Debug.Log($"[BIWY] Skinning en CPU (meshDeformation = {deformation.GetValue(null)}).");
+                return;
+            }
+            var legacy = type.GetProperty("gpuSkinning", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+            if (legacy != null && legacy.CanWrite && legacy.PropertyType == typeof(bool))
+            {
+                legacy.SetValue(null, false);
+                Debug.Log("[BIWY] Skinning en CPU (gpuSkinning = false).");
+                return;
+            }
+            Debug.LogWarning("[BIWY] No se encontró la opción de skinning; se mantiene la del proyecto.");
         }
 
         [MenuItem("BEFORE IT WAS YOU/Generar todo")]
