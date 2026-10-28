@@ -236,36 +236,39 @@ namespace BeforeItWasYou.EditorTools
 
         private static void BuildVegetationAndProps(Transform root)
         {
-            var plants = Child(root, "Vegetation");
-            // Parterre de la fachada: arbustos variados, nunca en fila perfecta.
-            Prop(plants, "shrub_02", "shrub_02_A", new Vector3(8.65f, 0.04f, 5.4f), 20f, 0.62f);
-            Prop(plants, "shrub_02", "shrub_02_D", new Vector3(10.1f, 0.04f, 5.45f), 160f, 0.72f);
-            Prop(plants, "shrub_02", "shrub_02_B", new Vector3(12.3f, 0.04f, 5.45f), 75f, 0.66f);
-            Prop(plants, "shrub_02", "shrub_02_C", new Vector3(14.05f, 0.04f, 5.35f), 300f, 0.52f);
-            Prop(plants, "shrub_02", "shrub_02_D", new Vector3(5.1f, 0.04f, 5.35f), 10f, 0.55f);
-            Prop(plants, "shrub_03", "shrub_03_A", new Vector3(11.25f, 0.04f, 5.15f), 200f, 1.6f);
-            Prop(plants, "shrub_04", "shrub_04_C", new Vector3(9.35f, 0.04f, 5.2f), 40f, 2.2f);
-            Prop(plants, "shrub_03", "shrub_03_C", new Vector3(13.2f, 0.04f, 5.2f), 120f, 1.8f);
-            Prop(plants, "shrub_02", "shrub_02_A", new Vector3(-0.4f, 0f, 8.5f), 80f, 0.9f);
-            Prop(plants, "shrub_02", "shrub_02_C", new Vector3(-0.5f, 0f, 10.6f), 140f, 0.8f);
-            // Árbol grande del jardín delantero (lado este) y otro en el del vecino oeste.
-            Prop(plants, "jacaranda_tree", "jacaranda_tree", new Vector3(15.6f, 0f, 2.2f), 35f, 0.52f);
-            Prop(plants, "jacaranda_tree", "jacaranda_tree", new Vector3(-6.0f, 0f, 3.5f), 210f, 0.46f);
-            Prop(plants, "jacaranda_tree", "jacaranda_tree", new Vector3(9.0f, 0f, 30.5f), 120f, 0.6f);
-
+            // Misma disposición que los renders de comprobación (Tools/Art/exterior_layout.py).
             var props = Child(root, "Props");
-            Prop(props, "potted_plant_02", "potted_plant_02_A", new Vector3(5.45f, Floor, 4.85f), 30f, 1f);
-            Prop(props, "planter_pot_clay", "planter_pot_clay", new Vector3(7.75f, Floor, 4.8f), 0f, 1.2f);
-            Prop(props, "metal_trash_can", "metal_trash_can_A", new Vector3(4.05f, 0.02f, 10.2f), 95f, 1f);
-            Prop(props, "metal_trash_can", "metal_trash_can_B", new Vector3(4.0f, 0.02f, 11.0f), 260f, 1f);
-            Prop(props, "exterior_aircon_unit", "exterior_aircon_unit_A", new Vector3(14.92f, 0.03f, 13.2f), 270f, 1f);
-            Prop(props, "garden_hose_wall_mounted_01", "garden_hose_wall_mounted_01", new Vector3(4.47f, 0.55f, 9.2f), 270f, 1f);
-            Prop(props, "utility_box_01", "utility_box_01", new Vector3(-2.2f, 0f, -0.9f), 180f, 1f);
-            Prop(props, "fire_hydrant", "fire_hydrant_A", new Vector3(19.6f, 0f, -1.55f), 200f, 1f);
-            Prop(props, "water_manhole_cover", "water_manhole_cover", new Vector3(8.6f, -0.148f, -5.4f), 0f, 1f);
-            Prop(props, "outdoor_table_chair_set_01", "outdoor_table_chair_set_01_A", new Vector3(12.4f, 0.03f, 19.4f), 15f, 1f);
-            Prop(props, "outdoor_table_chair_set_01", "outdoor_table_chair_set_01_B", new Vector3(13.3f, 0.03f, 19.1f), 200f, 1f);
-            Prop(props, "security_light", "security_light", new Vector3(14.32f, 2.2f, 21.5f), 180f, 0.8f);
+            var layout = JsonUtility.FromJson<Layout>(System.IO.File.ReadAllText("Assets/_Game/Data/Layout_Exterior.json"));
+            foreach (var item in layout.items)
+            {
+                var p = item.position;
+                var go = Prop(props, item.model, item.variant, new Vector3(p[0], p[1], p[2]), item.yaw, item.scale);
+                if (go != null && item.collide)
+                {
+                    var box = go.AddComponent<BoxCollider>();
+                    var bounds = go.GetComponent<MeshFilter>().sharedMesh.bounds;
+                    box.center = bounds.center;
+                    // Los árboles solo bloquean por el tronco.
+                    box.size = item.model.Contains("tree") ? new Vector3(0.8f, bounds.size.y, 0.8f) : bounds.size;
+                }
+            }
+        }
+
+        [System.Serializable]
+        private sealed class Layout
+        {
+            public LayoutItem[] items;
+        }
+
+        [System.Serializable]
+        private sealed class LayoutItem
+        {
+            public string model;
+            public string variant;
+            public float[] position;
+            public float yaw;
+            public float scale;
+            public bool collide;
         }
 
         private static GameObject Prop(Transform parent, string model, string variant, Vector3 position, float yaw, float scale)

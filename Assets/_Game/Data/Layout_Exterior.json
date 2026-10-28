@@ -1,0 +1,316 @@
+{
+ "items": [
+  {
+   "model": "shrub_02",
+   "variant": "shrub_02_A",
+   "position": [
+    8.65,
+    0.04,
+    5.4
+   ],
+   "yaw": 20,
+   "scale": 0.62,
+   "collide": false
+  },
+  {
+   "model": "shrub_02",
+   "variant": "shrub_02_D",
+   "position": [
+    10.1,
+    0.04,
+    5.45
+   ],
+   "yaw": 160,
+   "scale": 0.72,
+   "collide": false
+  },
+  {
+   "model": "shrub_02",
+   "variant": "shrub_02_B",
+   "position": [
+    12.3,
+    0.04,
+    5.45
+   ],
+   "yaw": 75,
+   "scale": 0.66,
+   "collide": false
+  },
+  {
+   "model": "shrub_02",
+   "variant": "shrub_02_C",
+   "position": [
+    14.05,
+    0.04,
+    5.35
+   ],
+   "yaw": 300,
+   "scale": 0.52,
+   "collide": false
+  },
+  {
+   "model": "shrub_02",
+   "variant": "shrub_02_D",
+   "position": [
+    5.1,
+    0.04,
+    5.35
+   ],
+   "yaw": 10,
+   "scale": 0.55,
+   "collide": false
+  },
+  {
+   "model": "shrub_03",
+   "variant": "shrub_03_A",
+   "position": [
+    11.25,
+    0.04,
+    5.15
+   ],
+   "yaw": 200,
+   "scale": 1.6,
+   "collide": false
+  },
+  {
+   "model": "shrub_04",
+   "variant": "shrub_04_C",
+   "position": [
+    9.35,
+    0.04,
+    5.2
+   ],
+   "yaw": 40,
+   "scale": 2.2,
+   "collide": false
+  },
+  {
+   "model": "shrub_03",
+   "variant": "shrub_03_C",
+   "position": [
+    13.2,
+    0.04,
+    5.2
+   ],
+   "yaw": 120,
+   "scale": 1.8,
+   "collide": false
+  },
+  {
+   "model": "shrub_02",
+   "variant": "shrub_02_A",
+   "position": [
+    -0.4,
+    0.0,
+    8.5
+   ],
+   "yaw": 80,
+   "scale": 0.9,
+   "collide": false
+  },
+  {
+   "model": "shrub_02",
+   "variant": "shrub_02_C",
+   "position": [
+    -0.5,
+    0.0,
+    10.6
+   ],
+   "yaw": 140,
+   "scale": 0.8,
+   "collide": false
+  },
+  {
+   "model": "shrub_02",
+   "variant": "shrub_02_B",
+   "position": [
+    17.3,
+    0.0,
+    6.2
+   ],
+   "yaw": 30,
+   "scale": 0.85,
+   "collide": false
+  },
+  {
+   "model": "shrub_02",
+   "variant": "shrub_02_D",
+   "position": [
+    0.2,
+    0.0,
+    24.8
+   ],
+   "yaw": 200,
+   "scale": 0.9,
+   "collide": false
+  },
+  {
+   "model": "jacaranda_tree",
+   "variant": "jacaranda_tree",
+   "position": [
+    15.6,
+    0.0,
+    2.2
+   ],
+   "yaw": 35,
+   "scale": 0.52,
+   "collide": true
+  },
+  {
+   "model": "jacaranda_tree",
+   "variant": "jacaranda_tree",
+   "position": [
+    -6.0,
+    0.0,
+    3.5
+   ],
+   "yaw": 210,
+   "scale": 0.46,
+   "collide": true
+  },
+  {
+   "model": "jacaranda_tree",
+   "variant": "jacaranda_tree",
+   "position": [
+    9.0,
+    0.0,
+    30.5
+   ],
+   "yaw": 120,
+   "scale": 0.6,
+   "collide": false
+  },
+  {
+   "model": "potted_plant_02",
+   "variant": "potted_plant_02_A",
+   "position": [
+    5.45,
+    0.45,
+    4.85
+   ],
+   "yaw": 30,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "planter_pot_clay",
+   "variant": "planter_pot_clay",
+   "position": [
+    7.75,
+    0.45,
+    4.8
+   ],
+   "yaw": 0,
+   "scale": 1.2,
+   "collide": false
+  },
+  {
+   "model": "metal_trash_can",
+   "variant": "metal_trash_can_A",
+   "position": [
+    4.05,
+    0.02,
+    10.2
+   ],
+   "yaw": 95,
+   "scale": 1.0,
+   "collide": true
+  },
+  {
+   "model": "metal_trash_can",
+   "variant": "metal_trash_can_B",
+   "position": [
+    4.0,
+    0.02,
+    11.0
+   ],
+   "yaw": 260,
+   "scale": 1.0,
+   "collide": true
+  },
+  {
+   "model": "exterior_aircon_unit",
+   "variant": "exterior_aircon_unit_A",
+   "position": [
+    14.92,
+    0.03,
+    13.2
+   ],
+   "yaw": 270,
+   "scale": 1.0,
+   "collide": true
+  },
+  {
+   "model": "garden_hose_wall_mounted_01",
+   "variant": "garden_hose_wall_mounted_01",
+   "position": [
+    4.47,
+    0.55,
+    9.2
+   ],
+   "yaw": 270,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "utility_box_01",
+   "variant": "utility_box_01",
+   "position": [
+    -2.2,
+    0.0,
+    -0.9
+   ],
+   "yaw": 180,
+   "scale": 1.0,
+   "collide": true
+  },
+  {
+   "model": "fire_hydrant",
+   "variant": "fire_hydrant_A",
+   "position": [
+    19.6,
+    0.0,
+    -1.55
+   ],
+   "yaw": 200,
+   "scale": 1.0,
+   "collide": true
+  },
+  {
+   "model": "water_manhole_cover",
+   "variant": "water_manhole_cover",
+   "position": [
+    8.6,
+    -0.148,
+    -5.4
+   ],
+   "yaw": 0,
+   "scale": 1.0,
+   "collide": false
+  },
+  {
+   "model": "outdoor_table_chair_set_01",
+   "variant": "outdoor_table_chair_set_01",
+   "position": [
+    12.4,
+    0.03,
+    19.4
+   ],
+   "yaw": 15,
+   "scale": 1.0,
+   "collide": true
+  },
+  {
+   "model": "security_light",
+   "variant": "security_light",
+   "position": [
+    14.32,
+    2.2,
+    21.5
+   ],
+   "yaw": 180,
+   "scale": 0.8,
+   "collide": false
+  }
+ ]
+}

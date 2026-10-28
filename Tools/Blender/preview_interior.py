@@ -22,6 +22,14 @@ bpy.ops.wm.read_factory_settings(use_empty=True)
 for f in ("Models/Exterior/SM_Exterior.fbx", "Models/Interior/SM_Interior.fbx"):
     bpy.ops.import_scene.fbx(filepath=os.path.join(ART, f), axis_forward="Z", axis_up="Y")
 
+# Igual que EnvironmentBuilder: el buzón se coloca en la acera y los postes se instancian aparte.
+for o in list(bpy.data.objects):
+    if o.name.startswith("StreetLight"):
+        bpy.data.objects.remove(o, do_unlink=True)
+    elif o.name.startswith("Mailbox"):
+        o.location.x += 4.3
+        o.location.y -= 1.75
+
 # Materiales con textura (id, tamaño en metros, tinte) leídos de ExteriorMaterials.cs para no duplicar la tabla.
 spec_src = open(os.path.join(ROOT, "Assets/_Game/Scripts/Editor/ExteriorMaterials.cs"), encoding="utf-8").read()
 specs = {}
@@ -74,10 +82,12 @@ for mat in bpy.data.materials:
         bsdf.inputs["Emission Color"].default_value = (1, 0.78, 0.52, 1)
         bsdf.inputs["Emission Strength"].default_value = 4.0
 
-# Muebles CC0 según la disposición.
-layout = json.load(open(os.path.join(ROOT, "Assets/_Game/Data/Layout_Interior.json")))
+# Muebles y objetos CC0 según las disposiciones (interior y exterior).
+NIGHT = bool(os.environ.get("PREVIEW_NIGHT"))
+items = json.load(open(os.path.join(ROOT, "Assets/_Game/Data/Layout_Interior.json")))["items"]
+items += json.load(open(os.path.join(ROOT, "Assets/_Game/Data/Layout_Exterior.json")))["items"]
 loaded = {}
-for item in layout["items"]:
+for item in items:
     model, variant = item["model"], item["variant"]
     folder = os.path.join(ART, "Models", "PolyHaven", model)
     if model not in loaded:
@@ -109,8 +119,68 @@ for item in layout["items"]:
     inst.matrix_world = (Matrix.Translation((x, z, y)) @ Matrix.Rotation(math.radians(180 - item["yaw"]), 4, "Z")
                          @ Matrix.Scale(s, 4) @ src.matrix_world)
 
+from mathutils import Matrix as _M
+# Coche de Daniel (CC BY 4.0) con su textura repintada.
+before = set(bpy.data.objects)
+bpy.ops.import_scene.fbx(filepath=os.path.join(ART, "Models/Vehicles/SM_Car_Daniel.fbx"), axis_forward="Z", axis_up="Y")
+for o in set(bpy.data.objects) - before:
+    o.matrix_world = _M.Translation((2.15, 4.75, 0.02)) @ _M.Rotation(math.radians(2.5), 4, "Z") @ o.matrix_world
+    for m in o.data.materials:
+        m.use_nodes = True
+        t = m.node_tree.nodes.new("ShaderNodeTexImage")
+        t.image = bpy.data.images.load(os.path.join(ART, "Models/Vehicles/M_CarSedan_BaseColor.png"))
+        b = m.node_tree.nodes.get("Principled BSDF")
+        m.node_tree.links.new(t.outputs["Color"], b.inputs["Base Color"])
+        b.inputs["Roughness"].default_value = 0.35
+        b.inputs["Metallic"].default_value = 0.35
+
+if NIGHT:
+    # Noche: cielo HDRI tenue, luna fría, farol del porche y farola LED; la casa de Elena apagada.
+    world = bpy.data.worlds.new("Night")
+    world.use_nodes = True
+    nt = world.node_tree
+    env = nt.nodes.new("ShaderNodeTexEnvironment")
+    env.image = bpy.data.images.load(os.path.join(ART, "Sky/moonlit_golf_2k.hdr"))
+    nt.links.new(env.outputs["Color"], nt.nodes["Background"].inputs["Color"])
+    nt.nodes["Background"].inputs["Strength"].default_value = 0.6
+    bpy.context.scene.world = world
+    moon = bpy.data.objects.new("Moon", bpy.data.lights.new("Moon", "SUN"))
+    moon.data.energy = 0.08
+    moon.data.color = (0.62, 0.72, 0.98)
+    moon.rotation_euler = (math.radians(52), 0, math.radians(38))
+    bpy.context.scene.collection.objects.link(moon)
+    for (pos, color, energy, size) in (((7.33, 5.83, 2.07), (1, 0.7, 0.42), 60, 0.05), ((6.55, 5.1, 2.7), (1, 0.72, 0.48), 8, 0.2)):
+        l = bpy.data.objects.new("P", bpy.data.lights.new("P", "POINT"))
+        l.data.energy, l.data.color, l.data.shadow_soft_size = energy, color, size
+        l.location = pos
+        bpy.context.scene.collection.objects.link(l)
+    for x in (-7.5, 18.6, 44.5):
+        before = set(bpy.data.objects)
+        bpy.ops.import_scene.fbx(filepath=os.path.join(ART, "Models/Exterior/SM_Exterior.fbx"), axis_forward="Z", axis_up="Y")
+        for o in set(bpy.data.objects) - before:
+            if o.name.startswith("StreetLight"):
+                o.matrix_world = _M.Translation((x, -1.35, 0)) @ _M.Rotation(math.pi, 4, "Z") @ o.matrix_world
+            else:
+                bpy.data.objects.remove(o, do_unlink=True)
+        spot = bpy.data.objects.new("S", bpy.data.lights.new("S", "SPOT"))
+        spot.data.energy = 900
+        spot.data.spot_size = math.radians(128)
+        spot.data.color = (0.82, 0.88, 1.0)
+        spot.location = (x, -3.45, 6.82)
+        bpy.context.scene.collection.objects.link(spot)
+    for (pos, energy) in (((-10.45, 6.6, 2.3), 35), ((-7.8, 7.6, 2.0), 25), ((27.2, 7.1, 2.0), 25)):
+        l = bpy.data.objects.new("N", bpy.data.lights.new("N", "POINT"))
+        l.data.energy, l.data.color = energy, (1, 0.66, 0.38)
+        l.location = pos
+        bpy.context.scene.collection.objects.link(l)
+    for m in bpy.data.materials:
+        if m.name.startswith(("M_LampGlass", "M_LampLens", "M_CurtainLit")):
+            b = m.node_tree.nodes.get("Principled BSDF")
+            b.inputs["Emission Color"].default_value = (1, 0.7, 0.4, 1) if "Lens" not in m.name else (0.85, 0.9, 1, 1)
+            b.inputs["Emission Strength"].default_value = 3.0 if "Curtain" in m.name else 12.0
+
 # Luces de techo encendidas (como con los interruptores), cálidas.
-for (x, z) in ((7.1, 8.25), (12.1, 8.25), (9.1, 14.2), (6.5, 12.4), (6.5, 16.15), (12.1, 12.75), (10.8, 16.4), (13.2, 16.5)):
+for (x, z) in ([] if NIGHT else ((7.1, 8.25), (12.1, 8.25), (9.1, 14.2), (6.5, 12.4), (6.5, 16.15), (12.1, 12.75), (10.8, 16.4), (13.2, 16.5))):
     lamp = bpy.data.objects.new("L", bpy.data.lights.new("L", "POINT"))
     lamp.data.energy = 110
     lamp.data.color = (1.0, 0.76, 0.52)
@@ -125,10 +195,11 @@ scene.cycles.samples = 48
 scene.cycles.use_denoising = True
 scene.render.resolution_x, scene.render.resolution_y = 1280, 720
 scene.view_settings.view_transform = "AgX"
-world = bpy.data.worlds.new("W")
-world.use_nodes = True
-world.node_tree.nodes["Background"].inputs[0].default_value = (0.02, 0.025, 0.04, 1)
-scene.world = world
+if not NIGHT:
+    world = bpy.data.worlds.new("W")
+    world.use_nodes = True
+    world.node_tree.nodes["Background"].inputs[0].default_value = (0.02, 0.025, 0.04, 1)
+    scene.world = world
 cam = bpy.data.objects.new("Cam", bpy.data.cameras.new("Cam"))
 cam.data.sensor_fit = "VERTICAL"
 cam.data.angle = math.radians(fov)
