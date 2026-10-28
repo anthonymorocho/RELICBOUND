@@ -52,6 +52,7 @@ TEXTURES = [
     ("long_white_tiles", "1k"),
     ("kitchen_wood", "1k"),
     ("floral_jacquard", "1k"),
+    ("rough_linen", "1k"),
 ]
 
 # HDRI del cielo nocturno (id, resolución).

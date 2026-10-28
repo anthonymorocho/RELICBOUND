@@ -26,7 +26,7 @@ ITEMS = [
     ("wooden_bookshelf_worn", None, 8.9, F, 10.12, 180, 0.9, True),
     ("mantel_clock_01", None, 8.9, F + 1.86, 10.05, 180, 1.0, False),
     ("cassette_player", None, 9.25, F + 1.86, 10.05, 200, 1.0, False),
-    ("fancy_picture_frame_02", None, 6.85, F + 1.5, 10.42, 180, 0.75, False),
+    ("fancy_picture_frame_02", None, 6.85, F + 1.5, 10.40, 0, 0.75, False),
     ("book_encyclopedia_set_01", None, 8.9, F + 1.12, 10.15, 180, 1.0, False),
     ("book_encyclopedia_set_01", None, 8.75, F + 0.72, 10.15, 180, 1.0, False),
     ("ceramic_vase_01", None, 9.3, F + 0.32, 10.12, 0, 0.6, False),

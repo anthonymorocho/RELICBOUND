@@ -174,9 +174,9 @@
    "position": [
     6.85,
     1.95,
-    10.42
+    10.4
    ],
-   "yaw": 180,
+   "yaw": 0,
    "scale": 0.75,
    "collide": false
   },

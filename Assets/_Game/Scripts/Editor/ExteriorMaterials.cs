@@ -30,6 +30,12 @@ namespace BeforeItWasYou.EditorTools
         private static Spec S(string name, string texture, float size, Color tint, float smoothness = 1f) =>
             new Spec { Name = name, Texture = texture, SizeMeters = size, Tint = tint, Smoothness = smoothness };
 
+        private static Spec DoubleSided(Spec spec)
+        {
+            spec.DoubleSided = true;
+            return spec;
+        }
+
         private static Spec Plain(string name, Color color, float smoothness, float metallic = 0f) =>
             new Spec { Name = name, Tint = color, Smoothness = smoothness, Metallic = metallic };
 
@@ -141,7 +147,8 @@ namespace BeforeItWasYou.EditorTools
             new Spec { Name = "M_GlassDoor", Tint = C(0.03f, 0.03f, 0.03f), Smoothness = 0.95f, Transparent = true, Alpha = 0.5f },
             new Spec { Name = "M_GlassFrosted", Tint = C(0.7f, 0.72f, 0.74f), Smoothness = 0.55f, Transparent = true, Alpha = 0.88f },
             new Spec { Name = "M_GlassDirty", Tint = C(0.16f, 0.16f, 0.14f), Smoothness = 0.4f, Transparent = true, Alpha = 0.75f },
-            new Spec { Name = "M_Curtain", Tint = C(0.33f, 0.3f, 0.26f), Smoothness = 0.1f, DoubleSided = true },
+            DoubleSided(S("M_Curtain", "rough_linen", 0.9f, C(0.95f, 0.7f, 0.45f), 0.3f)),
+            Plain("M_CurtainRod", C(0.16f, 0.14f, 0.12f), 0.55f, 0.8f),
             new Spec { Name = "M_CurtainLit", Tint = C(0.55f, 0.45f, 0.35f), Smoothness = 0.1f, Emission = C(1f, 0.62f, 0.32f) * 1.4f },
             new Spec { Name = "M_LampGlass", Tint = C(0.95f, 0.85f, 0.65f), Smoothness = 0.9f, Emission = C(1f, 0.7f, 0.38f) * 6f },
             new Spec { Name = "M_LampLens", Tint = C(0.9f, 0.92f, 0.95f), Smoothness = 0.9f, Emission = C(0.85f, 0.9f, 1f) * 9f },
@@ -182,6 +189,11 @@ namespace BeforeItWasYou.EditorTools
             if (painting != null)
             {
                 ArtImport.LitMaterial($"{Folder}/M_Painting.mat", painting, null, null, Color.white, new Vector2(1f / 0.34f, 1f / 0.42f), 0.35f);
+                // Lienzo del marco fancy_picture_frame_02: sus UV ocupan (0.145-0.854, 0.045-0.949); se reescala para que
+                // el óleo llene el lienzo completo.
+                var canvas = ArtImport.LitMaterial($"{Folder}/M_PaintingCanvas.mat", painting, null, null, Color.white, new Vector2(1f / 0.709f, 1f / 0.904f), 0.35f);
+                canvas.SetTextureOffset("_BaseMap", new Vector2(-0.145f / 0.709f, -0.045f / 0.904f));
+                EditorUtility.SetDirty(canvas);
             }
         }
 

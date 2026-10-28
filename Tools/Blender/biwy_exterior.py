@@ -68,10 +68,7 @@ def window(b, axis, face, outward, a0, a1, z0, z1, frosted=False, lit=False):
         G.orient(f, axis, outward, b)
     # Cortina (o estor) por dentro: tela iluminada solo si la habitación tiene luz.
     if not frosted:
-        cd = 0.22
-        quad = [P(ia0 - 0.05, iz0 - 0.02, cd), P(ia1 + 0.05, iz0 - 0.02, cd), P(ia1 + 0.05, iz1 + 0.06, cd), P(ia0 - 0.05, iz1 + 0.06, cd)]
-        f = b.face(quad, "M_CurtainLit" if lit else "M_Curtain")
-        G.orient(f, axis, outward, b)
+        curtains(b, P, axis, outward, ia0 - 0.08, ia1 + 0.08, iz0 - 0.04, iz1 + 0.08, 0.22, "M_CurtainLit" if lit else "M_Curtain")
     # Jambas exteriores (casing), dintel con vierteaguas y alféizar.
     cw, cp = 0.10, 0.025
     slab(a0 - cw, a0, z0, z1 + cw, -cp, 0.0, "M_Trim")
@@ -79,6 +76,38 @@ def window(b, axis, face, outward, a0, a1, z0, z1, frosted=False, lit=False):
     slab(a0 - cw - 0.02, a1 + cw + 0.02, z1 + cw, z1 + cw + 0.035, -cp - 0.015, 0.0, "M_Trim")
     slab(a0 - cw - 0.04, a1 + cw + 0.04, z0 - 0.055, z0, -0.07, 0.05, "M_Trim")
     slab(a0 - cw + 0.01, a1 + cw - 0.01, z0 - 0.11, z0 - 0.055, -0.03, 0.0, "M_Trim")
+
+
+def curtains(b, P, axis, outward, a0, a1, z0, z1, depth, mat):
+    """Dos paños corridos con pliegues (onda irregular) que se juntan en el centro, y barra por encima."""
+    mid = (a0 + a1) / 2
+    for (lo, hi, phase) in ((a0, mid + 0.02, 0.0), (mid - 0.02, a1, 1.3)):
+        width = hi - lo
+        folds = max(3, int(round(width / 0.11)))
+        steps = folds * 4
+        prev = None
+        for k in range(steps + 1):
+            a = lo + width * k / steps
+            t = 2 * math.pi * folds * k / steps + phase
+            # Amplitud mayor junto a los bordes recogidos; la tela cae algo más separada abajo.
+            amp = 0.022 + 0.008 * math.sin(phase + k * 0.7)
+            d_top = depth + 0.02 + amp * math.sin(t)
+            d_bot = depth + 0.03 + amp * 1.25 * math.sin(t + 0.25)
+            cur = (P(a, z0, d_bot), P(a, z1, d_top))
+            if prev is not None:
+                f = b.face([prev[0], cur[0], cur[1], prev[1]], mat, uv_mode="auto")
+                if f is not None:
+                    f.smooth = True
+                    G.orient(f, axis, outward, b)
+            prev = cur
+    # Barra metálica y soportes.
+    def slab(a_lo, a_hi, z_lo, z_hi, d_lo, d_hi, m):
+        pts = [P(a_lo, z_lo, d_lo), P(a_hi, z_hi, d_hi)]
+        b.box(min(p[0] for p in pts), min(p[1] for p in pts), min(p[2] for p in pts),
+              max(p[0] for p in pts), max(p[1] for p in pts), max(p[2] for p in pts), m)
+    slab(a0 - 0.06, a1 + 0.06, z1 + 0.01, z1 + 0.03, depth + 0.01, depth + 0.03, "M_CurtainRod")
+    for a in (a0 - 0.04, a1 + 0.04):
+        slab(a - 0.01, a + 0.01, z1 + 0.005, z1 + 0.035, 0.0, depth + 0.03, "M_CurtainRod")
 
 
 def door_frame(b, axis, face, outward, a0, a1, z0, height=2.10):

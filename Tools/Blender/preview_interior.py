@@ -106,6 +106,18 @@ for item in items:
                 nt.links.new(t.outputs["Color"], bsdf.inputs["Base Color"])
                 if mm["alpha"] != "OPAQUE":
                     nt.links.new(t.outputs["Alpha"], bsdf.inputs["Alpha"])
+        if model == "fancy_picture_frame_02":
+            # Igual que InteriorBuilder: el lienzo del marco lleva el óleo (UV 0.145-0.854 x 0.045-0.949).
+            mat = bpy.data.materials.get(manifest["materials"][1]["name"])
+            nt = mat.node_tree
+            tex = next(n for n in nt.nodes if n.type == "TEX_IMAGE")
+            tex.image = bpy.data.images.load(os.path.join(ART, "Textures/Paintings/painting_meadow.jpg"))
+            uv = nt.nodes.new("ShaderNodeTexCoord")
+            mp = nt.nodes.new("ShaderNodeMapping")
+            mp.inputs["Scale"].default_value = (1 / 0.709, 1 / 0.904, 1)
+            mp.inputs["Location"].default_value = (-0.145 / 0.709, -0.045 / 0.904, 0)
+            nt.links.new(uv.outputs["UV"], mp.inputs["Vector"])
+            nt.links.new(mp.outputs["Vector"], tex.inputs["Vector"])
         for o in new:
             o.hide_render = True
         loaded[model] = {o.name.split(".")[0]: o for o in new if o.type == "MESH"}

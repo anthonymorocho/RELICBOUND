@@ -184,6 +184,18 @@ namespace BeforeItWasYou.EditorTools
             }
             var go = EnvironmentBuilder.MeshCopy(asset, variant ?? model, parent, position, yaw, scale);
             if (go == null) return;
+            if (model == "fancy_picture_frame_02")
+            {
+                // El lienzo blanco del modelo pasa a ser el óleo de la sala.
+                var renderer = go.GetComponent<MeshRenderer>();
+                var materials = renderer.sharedMaterials;
+                var canvas = ExteriorMaterials.Get("M_PaintingCanvas");
+                if (materials.Length > 1 && canvas != null)
+                {
+                    materials[1] = canvas;
+                    renderer.sharedMaterials = materials;
+                }
+            }
             if (collide)
             {
                 var box = go.AddComponent<BoxCollider>();
