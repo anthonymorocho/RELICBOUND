@@ -21,8 +21,51 @@ jobs:
           dotnet-version: "8.0.x"
       - run: dotnet test Tests/BeforeItWasYou.Core.Tests --logger "console;verbosity=normal"
 
+  # Si la variable del repositorio UNITY_RUNNER vale "local", todo se ejecuta en el PC del usuario
+  # (runner autoalojado con etiqueta "unity", Unity instalado y GPU): minutos en lugar de una hora.
+  unity-local:
+    name: Unity en el PC local (GPU)
+    if: vars.UNITY_RUNNER == 'local'
+    runs-on: [self-hosted, windows, unity]
+    timeout-minutes: 90
+    env:
+      UNITY_EXE: ${{ vars.UNITY_EDITOR_PATH || 'C:\Program Files\Unity\Hub\Editor\6000.3.27f1\Editor\Unity.exe' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+          clean: false
+      - name: Configurar proyecto, generar escenas y capturar evidencias
+        shell: pwsh
+        run: |
+          & "$env:UNITY_EXE" -batchmode -projectPath "$PWD" -executeMethod BeforeItWasYou.EditorTools.CiPipeline.RunFromCommandLine -logFile build.log | Out-Default
+          if ($LASTEXITCODE -ne 0) { Get-Content build.log -Tail 80; exit $LASTEXITCODE }
+      - name: Tests EditMode
+        shell: pwsh
+        run: |
+          & "$env:UNITY_EXE" -batchmode -projectPath "$PWD" -runTests -testPlatform EditMode -testResults test-results/editmode.xml -logFile editmode.log | Out-Default
+          if ($LASTEXITCODE -ne 0) { Get-Content editmode.log -Tail 60; exit $LASTEXITCODE }
+      - name: Tests PlayMode (recorrido del jugador y capturas)
+        shell: pwsh
+        run: |
+          & "$env:UNITY_EXE" -batchmode -projectPath "$PWD" -runTests -testPlatform PlayMode -testResults test-results/playmode.xml -logFile playmode.log | Out-Default
+          if ($LASTEXITCODE -ne 0) { Get-Content playmode.log -Tail 60; exit $LASTEXITCODE }
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence
+          path: Evidence/
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: unity-test-results
+          path: |
+            test-results
+            *.log
+
   unity:
     name: Configurar, generar escenas, testear y capturar
+    if: vars.UNITY_RUNNER != 'local'
     runs-on: ubuntu-latest
     environment: UNITY_LICENSE
     permissions:
